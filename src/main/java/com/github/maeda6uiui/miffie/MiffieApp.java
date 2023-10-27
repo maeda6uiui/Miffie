@@ -17,7 +17,7 @@ public class MiffieApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(this.getClass().getResource("miffie_main_view.fxml"));
-        var scene = new Scene(root, 1024, 768);
+        var scene = new Scene(root, 1000, 400);
 
         stage.setTitle("Miffie - MIF Editor");
         stage.setScene(scene);

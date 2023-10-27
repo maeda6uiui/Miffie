@@ -70,8 +70,6 @@
                <items>
                   <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="Copy" />
                   <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste" text="Paste" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="miClearAll" mnemonicParsing="false" onAction="#onActionMiClearAll" text="Clear All" />
                </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
