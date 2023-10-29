@@ -1,15 +1,20 @@
 package com.github.maeda6uiui.miffie;
 
+import com.github.dabasan.jxm.mif.SkyType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Controller for the GUI components
  *
  * @author maeda6uiui
  */
-public class MiffieMainController {
+public class MiffieMainController implements Initializable {
     @FXML
     private MenuItem miNew;
     @FXML
@@ -58,7 +63,7 @@ public class MiffieMainController {
     @FXML
     private TextField tfPD1Filepath;
     @FXML
-    private ComboBox cbSkyType;
+    private ComboBox<SkyType> cbSkyType;
     @FXML
     private TextField tfImage1Filepath;
     @FXML
@@ -72,6 +77,11 @@ public class MiffieMainController {
     private TextArea taMissionBriefing;
     @FXML
     private Button btnPreviewMissionBriefing;
+
+    @Override
+    public void initialize(URL location,ResourceBundle resources){
+
+    }
 
     @FXML
     protected void onActionMiNew(ActionEvent event) {
