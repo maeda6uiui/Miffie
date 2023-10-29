@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 /**
  * Settings
@@ -53,28 +54,39 @@ public class MiffieSettings {
          *
          * @return CSS string
          */
-        public String getCSS() {
+        public Optional<String> getCSS() {
+            String ret;
             switch (name) {
                 case "system":
-                    return null;
+                    ret = null;
+                    break;
                 case "primer_light":
-                    return new PrimerLight().getUserAgentStylesheet();
+                    ret = new PrimerLight().getUserAgentStylesheet();
+                    break;
                 case "primer_dark":
-                    return new PrimerDark().getUserAgentStylesheet();
+                    ret = new PrimerDark().getUserAgentStylesheet();
+                    break;
                 case "nord_light":
-                    return new NordLight().getUserAgentStylesheet();
+                    ret = new NordLight().getUserAgentStylesheet();
+                    break;
                 case "nord_dark":
-                    return new NordDark().getUserAgentStylesheet();
+                    ret = new NordDark().getUserAgentStylesheet();
+                    break;
                 case "cupertino_light":
-                    return new CupertinoLight().getUserAgentStylesheet();
+                    ret = new CupertinoLight().getUserAgentStylesheet();
+                    break;
                 case "cupertino_dark":
-                    return new CupertinoDark().getUserAgentStylesheet();
+                    ret = new CupertinoDark().getUserAgentStylesheet();
+                    break;
                 case "dracula":
-                    return new Dracula().getUserAgentStylesheet();
+                    ret = new Dracula().getUserAgentStylesheet();
+                    break;
                 default:
                     logger.warn("Unsupported theme '{}' specified", name);
-                    return null;
+                    ret = null;
             }
+
+            return Optional.ofNullable(ret);
         }
     }
 
