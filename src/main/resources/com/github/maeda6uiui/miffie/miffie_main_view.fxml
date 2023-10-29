@@ -54,28 +54,28 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="%menuFile.text">
           <items>
-            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#onActionMiNew" text="New" />
-            <MenuItem fx:id="miOpen" mnemonicParsing="false" onAction="#onActionMiOpen" text="Open…" />
+            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#onActionMiNew" text="%miNew.text" />
+            <MenuItem fx:id="miOpen" mnemonicParsing="false" onAction="#onActionMiOpen" text="%miOpen.text" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="miSave" mnemonicParsing="false" onAction="#onActionMiSave" text="Save" />
-            <MenuItem fx:id="miSaveAs" mnemonicParsing="false" onAction="#onActionMiSaveAs" text="Save As…" />
+            <MenuItem fx:id="miSave" mnemonicParsing="false" onAction="#onActionMiSave" text="%miSave.text" />
+            <MenuItem fx:id="miSaveAs" mnemonicParsing="false" onAction="#onActionMiSaveAs" text="%miSaveAs.text" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="miPreferences" mnemonicParsing="false" onAction="#onActionMiPreferences" text="Preferences…" />
+            <MenuItem fx:id="miPreferences" mnemonicParsing="false" onAction="#onActionMiPreferences" text="%miPreferences.text" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onActionMiQuit" text="Quit" />
+            <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onActionMiQuit" text="%miQuit.text" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="%menuEdit.text">
                <items>
-                  <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="Copy" />
-                  <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste" text="Paste" />
+                  <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="%miCopy.text" />
+                  <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste" text="%miPaste.text" />
                </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Help">
+        <Menu mnemonicParsing="false" text="%menuHelp.text">
           <items>
-            <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onActionMiAbout" text="About…" />
+            <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onActionMiAbout" text="%miAbout.text" />
           </items>
         </Menu>
       </menus>
@@ -99,16 +99,16 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="lblMissionShortName" text="Mission Short Name" />
-                  <Label fx:id="lblMissionLongName" text="Mission Long Name" GridPane.rowIndex="1" />
-                  <Label fx:id="lblBD1Filepath" text="BD1 Filepath" GridPane.rowIndex="2" />
-                  <Label fx:id="lblPD1Filepath" text="PD1 Filepath" GridPane.rowIndex="3" />
-                  <Label fx:id="lblSkyType" text="Sky Type" GridPane.rowIndex="4" />
-                  <Label fx:id="lblImage1Filepath" text="Image 1 Filepath" GridPane.rowIndex="5" />
-                  <Label fx:id="lblImage2Filepath" text="Image 2 Filepath" GridPane.rowIndex="6" />
-                  <Label fx:id="lblArticleDefinitionFilepath" text="Article Definition Filepath" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="ckbExtraHitcheck" mnemonicParsing="false" text="Extra Hitcheck" GridPane.rowIndex="8" />
-                  <CheckBox fx:id="ckbDarkScreen" mnemonicParsing="false" text="Dark Screen" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label fx:id="lblMissionShortName" text="%lblMissionShortName.text" />
+                  <Label fx:id="lblMissionLongName" text="%lblMissionLongName.text" GridPane.rowIndex="1" />
+                  <Label fx:id="lblBD1Filepath" text="%lblBD1Filepath.text" GridPane.rowIndex="2" />
+                  <Label fx:id="lblPD1Filepath" text="%lblPD1Filepath.text" GridPane.rowIndex="3" />
+                  <Label fx:id="lblSkyType" text="%lblSkyType.text" GridPane.rowIndex="4" />
+                  <Label fx:id="lblImage1Filepath" text="%lblImage1Filepath.text" GridPane.rowIndex="5" />
+                  <Label fx:id="lblImage2Filepath" text="%lblImage2Filepath.text" GridPane.rowIndex="6" />
+                  <Label fx:id="lblArticleDefinitionFilepath" text="%lblArticleDefinitionFilepath.text" GridPane.rowIndex="7" />
+                  <CheckBox fx:id="ckbExtraHitcheck" mnemonicParsing="false" text="%ckbExtraHitcheck.text" GridPane.rowIndex="8" />
+                  <CheckBox fx:id="ckbDarkScreen" mnemonicParsing="false" text="%ckbDarkScreen.text" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <TextField fx:id="tfMissionShortName" GridPane.columnIndex="1" />
                   <TextField fx:id="tfMissionLongName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="tfBD1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -126,7 +126,7 @@
                <children>
                   <HBox alignment="CENTER" prefWidth="200.0">
                      <children>
-                        <Label fx:id="lblMissionBriefing" text="Mission Briefing" />
+                        <Label fx:id="lblMissionBriefing" text="%lblMissionBriefing.text" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" />
@@ -142,7 +142,7 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btnPreviewMissionBriefing" mnemonicParsing="false" onAction="#onActionBtnPreviewMissionBriefing" text="Preview" />
+                        <Button fx:id="btnPreviewMissionBriefing" mnemonicParsing="false" onAction="#onActionBtnPreviewMissionBriefing" text="%btnPreviewMissionBriefing.text" />
                      </children>
                      <VBox.margin>
                         <Insets />

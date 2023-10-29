@@ -5,8 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.util.Callback;
+import javafx.util.Pair;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -63,7 +66,7 @@ public class MiffieMainController implements Initializable {
     @FXML
     private TextField tfPD1Filepath;
     @FXML
-    private ComboBox<SkyType> cbSkyType;
+    private ComboBox<Pair<SkyType, String>> cbSkyType;
     @FXML
     private TextField tfImage1Filepath;
     @FXML
@@ -79,8 +82,33 @@ public class MiffieMainController implements Initializable {
     private Button btnPreviewMissionBriefing;
 
     @Override
-    public void initialize(URL location,ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
+        var skyTypes = new ArrayList<Pair<SkyType, String>>();
+        skyTypes.add(new Pair<>(SkyType.NONE, resources.getString("cbSkyType.text.none")));
+        skyTypes.add(new Pair<>(SkyType.SUNNY, resources.getString("cbSkyType.text.sunny")));
+        skyTypes.add(new Pair<>(SkyType.CLOUDY, resources.getString("cbSkyType.text.cloudy")));
+        skyTypes.add(new Pair<>(SkyType.NIGHT, resources.getString("cbSkyType.text.night")));
+        skyTypes.add(new Pair<>(SkyType.EVENING, resources.getString("cbSkyType.text.evening")));
+        skyTypes.add(new Pair<>(SkyType.WILDERNESS, resources.getString("cbSkyType.text.wilderness")));
 
+        cbSkyType.getItems().addAll(skyTypes);
+        cbSkyType.setValue(skyTypes.get(0));
+
+        Callback<ListView<Pair<SkyType, String>>, ListCell<Pair<SkyType, String>>> factory
+                = lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Pair<SkyType, String> item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setText("");
+                } else {
+                    setText(item.getValue());
+                }
+            }
+        };
+        cbSkyType.setCellFactory(factory);
+        cbSkyType.setButtonCell(factory.call(null));
     }
 
     @FXML
@@ -129,7 +157,7 @@ public class MiffieMainController implements Initializable {
     }
 
     @FXML
-    protected void onActionBtnPreviewMissionBriefing(ActionEvent event){
+    protected void onActionBtnPreviewMissionBriefing(ActionEvent event) {
 
     }
 }
