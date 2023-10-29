@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 import javafx.util.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -81,8 +83,11 @@ public class MiffieMainController implements Initializable {
     @FXML
     private Button btnPreviewMissionBriefing;
 
+    private static final Logger logger = LoggerFactory.getLogger(MiffieMainController.class);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Combobox
         var skyTypes = new ArrayList<Pair<SkyType, String>>();
         skyTypes.add(new Pair<>(SkyType.NONE, resources.getString("cbSkyType.text.none")));
         skyTypes.add(new Pair<>(SkyType.SUNNY, resources.getString("cbSkyType.text.sunny")));
@@ -109,6 +114,29 @@ public class MiffieMainController implements Initializable {
         };
         cbSkyType.setCellFactory(factory);
         cbSkyType.setButtonCell(factory.call(null));
+
+        //Initial values
+        MiffieSettings.get().ifPresent(settings -> {
+            MiffieSettings.InitialValue.MainView ivMain = settings.initialValue.mainView;
+
+            ckbExtraHitcheck.setSelected(ivMain.ckbExtraHitcheck);
+            ckbDarkScreen.setSelected(ivMain.ckbDarkScreen);
+            tfMissionShortName.setText(ivMain.tfMissionShortName);
+            tfMissionLongName.setText(ivMain.tfMissionLongName);
+            tfBD1Filepath.setText(ivMain.tfBD1Filepath);
+            tfPD1Filepath.setText(ivMain.tfPD1Filepath);
+
+            if (ivMain.cbSkyBox >= 0 && ivMain.cbSkyBox < skyTypes.size()) {
+                cbSkyType.setValue(skyTypes.get(ivMain.cbSkyBox));
+            } else {
+                logger.warn("Initial index of cbSkyBox out of range (got {})", ivMain.cbSkyBox);
+            }
+
+            tfImage1Filepath.setText(ivMain.tfImage1Filepath);
+            tfImage2Filepath.setText(ivMain.tfImage2Filepath);
+            tfArticleDefinitionFilepath.setText(ivMain.tfArticleDefinitionFilepath);
+            taMissionBriefing.setText(ivMain.taMissionBriefing);
+        });
     }
 
     @FXML

@@ -165,4 +165,13 @@ public class MiffieSettings {
 
         return instance;
     }
+
+    /**
+     * Returns currently retained {@link MiffieSettings} instance.
+     *
+     * @return Settings
+     */
+    public static Optional<MiffieSettings> get() {
+        return Optional.ofNullable(instance);
+    }
 }
