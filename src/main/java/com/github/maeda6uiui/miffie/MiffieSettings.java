@@ -22,10 +22,10 @@ public class MiffieSettings {
     private static final Logger logger = LoggerFactory.getLogger(MiffieSettings.class);
 
     public static class LanguageSettings {
-        public String name;
+        public String code;
 
         public LanguageSettings() {
-            name = "english";
+            code = "en";
         }
     }
 

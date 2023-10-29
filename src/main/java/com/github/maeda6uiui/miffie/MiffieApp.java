@@ -29,7 +29,7 @@ public class MiffieApp extends Application {
         var loader = new URLClassLoader(new URL[]{propertiesDir.toUri().toURL()});
         ResourceBundle rb = ResourceBundle.getBundle(
                 "main_view",
-                Locale.of(settings.languageSettings.name),
+                Locale.of(settings.languageSettings.code),
                 loader
         );
 
