@@ -1,5 +1,6 @@
 package com.github.maeda6uiui.miffie;
 
+import atlantafx.base.theme.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -32,6 +33,37 @@ public class MiffieSettings {
             title = "Miffie - MIF Editor";
             width = 1000;
             height = 400;
+        }
+    }
+
+    public static class ThemeSettings {
+        public String name;
+
+        public ThemeSettings() {
+            name = "system";
+        }
+
+        public String getCSS() {
+            switch (name) {
+                case "system":
+                    return null;
+                case "primer_light":
+                    return new PrimerLight().getUserAgentStylesheet();
+                case "primer_dark":
+                    return new PrimerDark().getUserAgentStylesheet();
+                case "nord_light":
+                    return new NordLight().getUserAgentStylesheet();
+                case "nord_dark":
+                    return new NordDark().getUserAgentStylesheet();
+                case "cupertino_light":
+                    return new CupertinoLight().getUserAgentStylesheet();
+                case "cupertino_dark":
+                    return new CupertinoDark().getUserAgentStylesheet();
+                case "dracula":
+                    return new Dracula().getUserAgentStylesheet();
+                default:
+                    throw new IllegalArgumentException("Unsupported theme: " + name);
+            }
         }
     }
 
@@ -73,6 +105,8 @@ public class MiffieSettings {
     public LanguageSettings languageSettings;
     @JsonProperty("window")
     public WindowSettings windowSettings;
+    @JsonProperty("theme")
+    public ThemeSettings themeSettings;
     public InitialValue initialValue;
 
     public static MiffieSettings instance;
@@ -80,6 +114,7 @@ public class MiffieSettings {
     private MiffieSettings() {
         languageSettings = new LanguageSettings();
         windowSettings = new WindowSettings();
+        themeSettings = new ThemeSettings();
         initialValue = new InitialValue();
     }
 

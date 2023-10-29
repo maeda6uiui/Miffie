@@ -1,6 +1,7 @@
 module com.github.maeda6uiui.miffie {
     requires javafx.controls;
     requires javafx.fxml;
+    requires atlantafx.base;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.dataformat.yaml;
