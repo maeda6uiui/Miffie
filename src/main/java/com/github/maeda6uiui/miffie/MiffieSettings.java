@@ -4,6 +4,8 @@ import atlantafx.base.theme.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +18,8 @@ import java.nio.file.Paths;
  * @author maeda6uiui
  */
 public class MiffieSettings {
+    private static final Logger logger = LoggerFactory.getLogger(MiffieSettings.class);
+
     public static class LanguageSettings {
         public String name;
 
@@ -40,9 +44,15 @@ public class MiffieSettings {
         public String name;
 
         public ThemeSettings() {
-            name = "system";
+            name = "primer_light";
         }
 
+        /**
+         * Returns CSS string.
+         * Returns null if {@code name} is equal to {@code system} or if {@code name} is an unknown value.
+         *
+         * @return CSS string
+         */
         public String getCSS() {
             switch (name) {
                 case "system":
@@ -62,7 +72,8 @@ public class MiffieSettings {
                 case "dracula":
                     return new Dracula().getUserAgentStylesheet();
                 default:
-                    throw new IllegalArgumentException("Unsupported theme: " + name);
+                    logger.warn("Unsupported theme '{}' specified", name);
+                    return null;
             }
         }
     }
@@ -130,11 +141,14 @@ public class MiffieSettings {
      */
     public static MiffieSettings load(String yamlFilepath, boolean reload) throws IOException {
         if (!reload && instance != null) {
+            logger.info("Return currently retained settings as requested");
             return instance;
         }
 
         Path settingsFile = Paths.get(yamlFilepath);
         if (!Files.exists(settingsFile)) {
+            logger.warn("Setting file ({}) was not found, return default settings instead", settingsFile);
+
             instance = new MiffieSettings();
             return instance;
         }
