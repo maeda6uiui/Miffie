@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class MiffieApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        MiffieSettings settings = MiffieSettings.load("./Data/settings.yaml", false);
+        MiffieSettings settings = MiffieSettings.load("./Data/settings.yaml");
 
         Path propertiesDir = Paths.get("./Data/Properties");
         var loader = new URLClassLoader(new URL[]{propertiesDir.toUri().toURL()});

@@ -131,20 +131,13 @@ public class MiffieSettings {
 
     /**
      * Loads settings from a YAML file.
-     * This method returns previously loaded settings if {@code reload==false}
-     * and the setting instance currently retained is not null.
+     * This method returns default settings if the file specified does not exist.
      *
      * @param yamlFilepath Filepath of the YAML file
-     * @param reload       Reloads settings if true
      * @return Settings
      * @throws IOException If it fails to load from the YAML file specified
      */
-    public static MiffieSettings load(String yamlFilepath, boolean reload) throws IOException {
-        if (!reload && instance != null) {
-            logger.info("Return currently retained settings as requested");
-            return instance;
-        }
-
+    public static MiffieSettings load(String yamlFilepath) throws IOException {
         Path settingsFile = Paths.get(yamlFilepath);
         if (!Files.exists(settingsFile)) {
             logger.warn("Setting file ({}) was not found, return default settings instead", settingsFile);
