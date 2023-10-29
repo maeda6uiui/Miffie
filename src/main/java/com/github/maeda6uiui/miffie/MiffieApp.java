@@ -23,17 +23,27 @@ import java.util.ResourceBundle;
 public class MiffieApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Path settingDir = Paths.get("./Data/Properties");
-        var loader = new URLClassLoader(new URL[]{settingDir.toUri().toURL()});
-        ResourceBundle rb = ResourceBundle.getBundle("main_view", Locale.getDefault(), loader);
+        MiffieSettings settings = MiffieSettings.load("./Data/settings.yaml", false);
+
+        Path propertiesDir = Paths.get("./Data/Properties");
+        var loader = new URLClassLoader(new URL[]{propertiesDir.toUri().toURL()});
+        ResourceBundle rb = ResourceBundle.getBundle(
+                "main_view",
+                Locale.of(settings.languageSettings.name),
+                loader
+        );
 
         Parent root = FXMLLoader.load(
                 Objects.requireNonNull(this.getClass().getResource("main_view.fxml")),
                 rb
         );
-        var scene = new Scene(root, 1000, 400);
+        var scene = new Scene(
+                root,
+                settings.windowSettings.width,
+                settings.windowSettings.height
+        );
 
-        stage.setTitle("Miffie - MIF Editor");
+        stage.setTitle(settings.windowSettings.title);
         stage.setScene(scene);
         stage.show();
     }

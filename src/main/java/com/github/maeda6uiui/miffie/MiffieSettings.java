@@ -15,11 +15,23 @@ import java.nio.file.Paths;
  * @author maeda6uiui
  */
 public class MiffieSettings {
-    public static class Language {
+    public static class LanguageSettings {
         public String name;
 
-        public Language() {
+        public LanguageSettings() {
             name = "english";
+        }
+    }
+
+    public static class WindowSettings {
+        public String title;
+        public int width;
+        public int height;
+
+        public WindowSettings() {
+            title = "Miffie - MIF Editor";
+            width = 1000;
+            height = 400;
         }
     }
 
@@ -57,13 +69,17 @@ public class MiffieSettings {
         }
     }
 
-    public Language language;
+    @JsonProperty("language")
+    public LanguageSettings languageSettings;
+    @JsonProperty("window")
+    public WindowSettings windowSettings;
     public InitialValue initialValue;
 
     public static MiffieSettings instance;
 
     private MiffieSettings() {
-        language = new Language();
+        languageSettings = new LanguageSettings();
+        windowSettings = new WindowSettings();
         initialValue = new InitialValue();
     }
 
