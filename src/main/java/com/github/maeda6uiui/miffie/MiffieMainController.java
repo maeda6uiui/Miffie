@@ -67,6 +67,13 @@ public class MiffieMainController {
     private TextField tfArticleDefinitionFilepath;
 
     @FXML
+    private Label lblMissionBriefing;
+    @FXML
+    private TextArea taMissionBriefing;
+    @FXML
+    private Button btnPreviewMissionBriefing;
+
+    @FXML
     protected void onActionMiNew(ActionEvent event) {
 
     }
@@ -108,6 +115,11 @@ public class MiffieMainController {
 
     @FXML
     protected void onActionMiAbout(ActionEvent event) {
+
+    }
+
+    @FXML
+    protected void onActionBtnPreviewMissionBriefing(ActionEvent event){
 
     }
 }
