@@ -1,0 +1,7 @@
+languages:
+  - name: English
+    code: en
+  - name: 日本語 (Japanese)
+    code: ja
+  - name: Русский (Russian)
+    code: ru
