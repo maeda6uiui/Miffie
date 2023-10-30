@@ -44,6 +44,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -56,21 +57,42 @@
       <menus>
         <Menu mnemonicParsing="false" text="%menuFile.text">
           <items>
-            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#onActionMiNew" text="%miNew.text" />
-            <MenuItem fx:id="miOpen" mnemonicParsing="false" onAction="#onActionMiOpen" text="%miOpen.text" />
+            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#onActionMiNew" text="%miNew.text">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            <MenuItem fx:id="miOpen" mnemonicParsing="false" onAction="#onActionMiOpen" text="%miOpen.text">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="miSave" mnemonicParsing="false" onAction="#onActionMiSave" text="%miSave.text" />
-            <MenuItem fx:id="miSaveAs" mnemonicParsing="false" onAction="#onActionMiSaveAs" text="%miSaveAs.text" />
+            <MenuItem fx:id="miSave" mnemonicParsing="false" onAction="#onActionMiSave" text="%miSave.text">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            <MenuItem fx:id="miSaveAs" mnemonicParsing="false" onAction="#onActionMiSaveAs" text="%miSaveAs.text">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="miPreferences" mnemonicParsing="false" onAction="#onActionMiPreferences" text="%miPreferences.text" />
+            <MenuItem fx:id="miPreferences" mnemonicParsing="false" onAction="#onActionMiPreferences" text="%miPreferences.text">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="COMMA" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onActionMiQuit" text="%miQuit.text" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="%menuEdit.text">
                <items>
-                  <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="%miCopy.text" />
-                  <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste" text="%miPaste.text" />
+                  <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="%miCopy.text">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste" text="%miPaste.text">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
                </items>
         </Menu>
         <Menu mnemonicParsing="false" text="%menuHelp.text">
