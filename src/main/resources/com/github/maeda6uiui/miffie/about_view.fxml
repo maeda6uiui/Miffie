@@ -22,7 +22,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="lblAppName" text="%about.lblAppName.text">
+                  <Label fx:id="lblAppName" text="%lblAppName.text">
                      <font>
                         <Font size="40.0" />
                      </font>
@@ -43,8 +43,8 @@
          <children>
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
               <buttons>
-                  <Button fx:id="btnCopy" mnemonicParsing="false" onAction="#onActionBtnCopy" text="%about.btnCopy.text" />
-                <Button fx:id="btnOK" mnemonicParsing="false" onAction="#onActionBtnOK" text="%about.btnOK.text" />
+                  <Button fx:id="btnCopy" mnemonicParsing="false" onAction="#onActionBtnCopy" text="%btnCopy.text" />
+                <Button fx:id="btnOK" mnemonicParsing="false" onAction="#onActionBtnOK" text="%btnOK.text" />
               </buttons>
             </ButtonBar>
          </children>
