@@ -83,6 +83,8 @@ public class MiffieMainController implements Initializable {
     @FXML
     private Button btnPreviewMissionBriefing;
 
+    private MiffieMainViewModel viewModel;
+
     private static final Logger logger = LoggerFactory.getLogger(MiffieMainController.class);
 
     @Override
@@ -137,6 +139,21 @@ public class MiffieMainController implements Initializable {
             tfArticleDefinitionFilepath.setText(ivMain.tfArticleDefinitionFilepath);
             taMissionBriefing.setText(ivMain.taMissionBriefing);
         });
+
+        //Set up view model
+        viewModel = new MiffieMainViewModel();
+
+        viewModel.missionShortNameProperty().bind(tfMissionShortName.textProperty());
+        viewModel.missionLongNameProperty().bind(tfMissionLongName.textProperty());
+        viewModel.bd1FilepathProperty().bind(tfBD1Filepath.textProperty());
+        viewModel.pd1FilepathProperty().bind(tfPD1Filepath.textProperty());
+        viewModel.skyTypeProperty().bind(cbSkyType.getSelectionModel().selectedItemProperty());
+        viewModel.image1FilepathProperty().bind(tfImage1Filepath.textProperty());
+        viewModel.image2FilepathProperty().bind(tfImage2Filepath.textProperty());
+        viewModel.articleDefinitionFilepathProperty().bind(tfArticleDefinitionFilepath.textProperty());
+        viewModel.extraHitcheckProperty().bind(ckbExtraHitcheck.selectedProperty());
+        viewModel.darkScreenProperty().bind(ckbDarkScreen.selectedProperty());
+        viewModel.missionBriefingProperty().bind(taMissionBriefing.textProperty());
     }
 
     @FXML
