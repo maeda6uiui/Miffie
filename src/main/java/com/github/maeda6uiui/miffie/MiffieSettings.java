@@ -96,7 +96,7 @@ public class MiffieSettings {
             public String tfMissionLongName;
             public String tfBD1Filepath;
             public String tfPD1Filepath;
-            public int cbSkyBox;
+            public int cbSkyType;
             public String tfImage1Filepath;
             public String tfImage2Filepath;
             public String tfArticleDefinitionFilepath;
@@ -114,7 +114,7 @@ public class MiffieSettings {
             mainView.tfMissionLongName = "";
             mainView.tfBD1Filepath = ".\\";
             mainView.tfPD1Filepath = ".\\addon\\";
-            mainView.cbSkyBox = 0;
+            mainView.cbSkyType = 0;
             mainView.tfImage1Filepath = ".\\data\\briefing\\np.bmp";
             mainView.tfImage2Filepath = "";
             mainView.tfArticleDefinitionFilepath = "";

@@ -126,10 +126,10 @@ public class MiffieMainController implements Initializable {
             tfBD1Filepath.setText(ivMain.tfBD1Filepath);
             tfPD1Filepath.setText(ivMain.tfPD1Filepath);
 
-            if (ivMain.cbSkyBox >= 0 && ivMain.cbSkyBox < skyTypes.size()) {
-                cbSkyType.setValue(skyTypes.get(ivMain.cbSkyBox));
+            if (ivMain.cbSkyType >= 0 && ivMain.cbSkyType < skyTypes.size()) {
+                cbSkyType.setValue(skyTypes.get(ivMain.cbSkyType));
             } else {
-                logger.warn("Initial index of cbSkyBox out of range (got {})", ivMain.cbSkyBox);
+                logger.warn("Initial index of cbSkyBox out of range (got {})", ivMain.cbSkyType);
             }
 
             tfImage1Filepath.setText(ivMain.tfImage1Filepath);
