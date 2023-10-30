@@ -2,6 +2,7 @@ package com.github.maeda6uiui.miffie;
 
 import com.github.dabasan.jxm.mif.SkyType;
 import javafx.beans.property.*;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.util.Pair;
 
 /**
@@ -14,7 +15,7 @@ public class MiffieMainViewModel {
     private StringProperty missionLongName;
     private StringProperty bd1Filepath;
     private StringProperty pd1Filepath;
-    private ObjectProperty<Pair<SkyType, String>> skyType;
+    private ObjectProperty<SingleSelectionModel<Pair<SkyType, String>>> skyType;
     private StringProperty image1Filepath;
     private StringProperty image2Filepath;
     private StringProperty articleDefinitionFilepath;
@@ -88,15 +89,15 @@ public class MiffieMainViewModel {
         this.pd1Filepath.set(pd1Filepath);
     }
 
-    public Pair<SkyType, String> getSkyType() {
+    public SingleSelectionModel<Pair<SkyType, String>> getSkyType() {
         return skyType.get();
     }
 
-    public ObjectProperty<Pair<SkyType, String>> skyTypeProperty() {
+    public ObjectProperty<SingleSelectionModel<Pair<SkyType, String>>> skyTypeProperty() {
         return skyType;
     }
 
-    public void setSkyType(Pair<SkyType, String> skyType) {
+    public void setSkyType(SingleSelectionModel<Pair<SkyType, String>> skyType) {
         this.skyType.set(skyType);
     }
 

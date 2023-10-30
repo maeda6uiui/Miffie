@@ -147,7 +147,7 @@ public class MiffieMainController implements Initializable {
         viewModel.missionLongNameProperty().bindBidirectional(tfMissionLongName.textProperty());
         viewModel.bd1FilepathProperty().bindBidirectional(tfBD1Filepath.textProperty());
         viewModel.pd1FilepathProperty().bindBidirectional(tfPD1Filepath.textProperty());
-        viewModel.skyTypeProperty().bindBidirectional(cbSkyType.valueProperty());
+        viewModel.skyTypeProperty().bindBidirectional(cbSkyType.selectionModelProperty());
         viewModel.image1FilepathProperty().bindBidirectional(tfImage1Filepath.textProperty());
         viewModel.image2FilepathProperty().bindBidirectional(tfImage2Filepath.textProperty());
         viewModel.articleDefinitionFilepathProperty().bindBidirectional(tfArticleDefinitionFilepath.textProperty());
