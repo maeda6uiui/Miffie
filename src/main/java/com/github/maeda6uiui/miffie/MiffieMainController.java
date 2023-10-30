@@ -143,17 +143,17 @@ public class MiffieMainController implements Initializable {
         //Set up view model
         viewModel = new MiffieMainViewModel();
 
-        viewModel.missionShortNameProperty().bind(tfMissionShortName.textProperty());
-        viewModel.missionLongNameProperty().bind(tfMissionLongName.textProperty());
-        viewModel.bd1FilepathProperty().bind(tfBD1Filepath.textProperty());
-        viewModel.pd1FilepathProperty().bind(tfPD1Filepath.textProperty());
-        viewModel.skyTypeProperty().bind(cbSkyType.getSelectionModel().selectedItemProperty());
-        viewModel.image1FilepathProperty().bind(tfImage1Filepath.textProperty());
-        viewModel.image2FilepathProperty().bind(tfImage2Filepath.textProperty());
-        viewModel.articleDefinitionFilepathProperty().bind(tfArticleDefinitionFilepath.textProperty());
-        viewModel.extraHitcheckProperty().bind(ckbExtraHitcheck.selectedProperty());
-        viewModel.darkScreenProperty().bind(ckbDarkScreen.selectedProperty());
-        viewModel.missionBriefingProperty().bind(taMissionBriefing.textProperty());
+        viewModel.missionShortNameProperty().bindBidirectional(tfMissionShortName.textProperty());
+        viewModel.missionLongNameProperty().bindBidirectional(tfMissionLongName.textProperty());
+        viewModel.bd1FilepathProperty().bindBidirectional(tfBD1Filepath.textProperty());
+        viewModel.pd1FilepathProperty().bindBidirectional(tfPD1Filepath.textProperty());
+        viewModel.skyTypeProperty().bindBidirectional(cbSkyType.valueProperty());
+        viewModel.image1FilepathProperty().bindBidirectional(tfImage1Filepath.textProperty());
+        viewModel.image2FilepathProperty().bindBidirectional(tfImage2Filepath.textProperty());
+        viewModel.articleDefinitionFilepathProperty().bindBidirectional(tfArticleDefinitionFilepath.textProperty());
+        viewModel.extraHitcheckProperty().bindBidirectional(ckbExtraHitcheck.selectedProperty());
+        viewModel.darkScreenProperty().bindBidirectional(ckbDarkScreen.selectedProperty());
+        viewModel.missionBriefingProperty().bindBidirectional(taMissionBriefing.textProperty());
     }
 
     @FXML
