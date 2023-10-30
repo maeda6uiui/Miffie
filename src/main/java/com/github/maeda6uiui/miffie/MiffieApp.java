@@ -45,7 +45,7 @@ public class MiffieApp extends Application {
                 settings.windowSettings.height
         );
 
-        stage.setTitle(settings.windowSettings.title);
+        stage.setTitle("Miffie - MIF Editor");
         stage.setScene(scene);
         stage.show();
     }

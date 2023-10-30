@@ -30,12 +30,10 @@ public class MiffieSettings {
     }
 
     public static class WindowSettings {
-        public String title;
         public int width;
         public int height;
 
         public WindowSettings() {
-            title = "Miffie - MIF Editor";
             width = 1000;
             height = 400;
         }
