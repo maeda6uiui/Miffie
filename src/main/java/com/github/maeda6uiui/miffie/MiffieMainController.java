@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the GUI components
+ * Controller for the main view
  *
  * @author maeda6uiui
  */
