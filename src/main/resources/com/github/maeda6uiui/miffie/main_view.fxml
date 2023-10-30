@@ -55,49 +55,49 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="%main.menuFile.text">
+        <Menu mnemonicParsing="false" text="%menuFile.text">
           <items>
-            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#onActionMiNew" text="%main.miNew.text">
+            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#onActionMiNew" text="%miNew.text">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-            <MenuItem fx:id="miOpen" mnemonicParsing="false" onAction="#onActionMiOpen" text="%main.miOpen.text">
+            <MenuItem fx:id="miOpen" mnemonicParsing="false" onAction="#onActionMiOpen" text="%miOpen.text">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="miSave" mnemonicParsing="false" onAction="#onActionMiSave" text="%main.miSave.text">
+            <MenuItem fx:id="miSave" mnemonicParsing="false" onAction="#onActionMiSave" text="%miSave.text">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-            <MenuItem fx:id="miSaveAs" mnemonicParsing="false" onAction="#onActionMiSaveAs" text="%main.miSaveAs.text">
+            <MenuItem fx:id="miSaveAs" mnemonicParsing="false" onAction="#onActionMiSaveAs" text="%miSaveAs.text">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="miPreferences" mnemonicParsing="false" onAction="#onActionMiPreferences" text="%main.miPreferences.text">
+            <MenuItem fx:id="miPreferences" mnemonicParsing="false" onAction="#onActionMiPreferences" text="%miPreferences.text">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="COMMA" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onActionMiQuit" text="%main.miQuit.text" />
+            <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onActionMiQuit" text="%miQuit.text" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="%main.menuEdit.text">
+        <Menu mnemonicParsing="false" text="%menuEdit.text">
                <items>
-                  <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="%main.miCopy.text">
+                  <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="%miCopy.text">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste" text="%main.miPaste.text">
+                  <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste" text="%miPaste.text">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
                </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="%main.menuHelp.text">
+        <Menu mnemonicParsing="false" text="%menuHelp.text">
           <items>
-            <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onActionMiAbout" text="%main.miAbout.text" />
+            <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onActionMiAbout" text="%miAbout.text" />
           </items>
         </Menu>
       </menus>
@@ -121,16 +121,16 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="lblMissionShortName" text="%main.lblMissionShortName.text" />
-                  <Label fx:id="lblMissionLongName" text="%main.lblMissionLongName.text" GridPane.rowIndex="1" />
-                  <Label fx:id="lblBD1Filepath" text="%main.lblBD1Filepath.text" GridPane.rowIndex="2" />
-                  <Label fx:id="lblPD1Filepath" text="%main.lblPD1Filepath.text" GridPane.rowIndex="3" />
-                  <Label fx:id="lblSkyType" text="%main.lblSkyType.text" GridPane.rowIndex="4" />
-                  <Label fx:id="lblImage1Filepath" text="%main.lblImage1Filepath.text" GridPane.rowIndex="5" />
-                  <Label fx:id="lblImage2Filepath" text="%main.lblImage2Filepath.text" GridPane.rowIndex="6" />
-                  <Label fx:id="lblArticleDefinitionFilepath" text="%main.lblArticleDefinitionFilepath.text" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="ckbExtraHitcheck" mnemonicParsing="false" text="%main.ckbExtraHitcheck.text" GridPane.rowIndex="8" />
-                  <CheckBox fx:id="ckbDarkScreen" mnemonicParsing="false" text="%main.ckbDarkScreen.text" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label fx:id="lblMissionShortName" text="%lblMissionShortName.text" />
+                  <Label fx:id="lblMissionLongName" text="%lblMissionLongName.text" GridPane.rowIndex="1" />
+                  <Label fx:id="lblBD1Filepath" text="%lblBD1Filepath.text" GridPane.rowIndex="2" />
+                  <Label fx:id="lblPD1Filepath" text="%lblPD1Filepath.text" GridPane.rowIndex="3" />
+                  <Label fx:id="lblSkyType" text="%lblSkyType.text" GridPane.rowIndex="4" />
+                  <Label fx:id="lblImage1Filepath" text="%lblImage1Filepath.text" GridPane.rowIndex="5" />
+                  <Label fx:id="lblImage2Filepath" text="%lblImage2Filepath.text" GridPane.rowIndex="6" />
+                  <Label fx:id="lblArticleDefinitionFilepath" text="%lblArticleDefinitionFilepath.text" GridPane.rowIndex="7" />
+                  <CheckBox fx:id="ckbExtraHitcheck" mnemonicParsing="false" text="%ckbExtraHitcheck.text" GridPane.rowIndex="8" />
+                  <CheckBox fx:id="ckbDarkScreen" mnemonicParsing="false" text="%ckbDarkScreen.text" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <TextField fx:id="tfMissionShortName" GridPane.columnIndex="1" />
                   <TextField fx:id="tfMissionLongName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="tfBD1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -148,7 +148,7 @@
                <children>
                   <HBox alignment="CENTER" prefWidth="200.0">
                      <children>
-                        <Label fx:id="lblMissionBriefing" text="%main.lblMissionBriefing.text" />
+                        <Label fx:id="lblMissionBriefing" text="%lblMissionBriefing.text" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" />
@@ -164,7 +164,7 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btnPreviewMissionBriefing" mnemonicParsing="false" onAction="#onActionBtnPreviewMissionBriefing" text="%main.btnPreviewMissionBriefing.text" />
+                        <Button fx:id="btnPreviewMissionBriefing" mnemonicParsing="false" onAction="#onActionBtnPreviewMissionBriefing" text="%btnPreviewMissionBriefing.text" />
                      </children>
                      <VBox.margin>
                         <Insets />
