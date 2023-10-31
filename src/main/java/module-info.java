@@ -8,6 +8,6 @@ module com.github.maeda6uiui.miffie {
     requires org.slf4j;
     requires com.github.dabasan.jxm.mif;
 
-    opens com.github.maeda6uiui.miffie to javafx.fxml;
+    opens com.github.maeda6uiui.miffie to javafx.fxml, com.fasterxml.jackson.databind;
     exports com.github.maeda6uiui.miffie;
 }
