@@ -3,7 +3,7 @@
 # to apply changes you have made in this setting file.
 
 language:
-  code: ja
+  code: en
 window:
   width: 1000
   height: 400
