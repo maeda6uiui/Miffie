@@ -1,0 +1,38 @@
+# This setting file is loaded when the application is started.
+# Restart of the application is required 
+# to apply changes you have made in this setting file.
+
+language:
+  code: en
+window:
+  width: 1000
+  height: 400
+theme:
+  # Accepted value is one of the following:
+  # - system
+  # - primer_light
+  # - primer_dark
+  # - nord_light
+  # - nord_dark
+  # - cupertino_light
+  # - cupertino_dark
+  # - dracula
+  name: primer_light
+initialValue:
+  main:
+    tfMissionShortName:
+    tfMissionLongName:
+    tfBD1Filepath: .\
+    tfPD1Filepath: .\addon\
+    cbSkyType: 0
+    tfImage1Filepath: .\data\briefing\np.bmp
+    tfImage2Filepath: "!"
+    tfArticleDefinitionFilepath: "!"
+    ckbExtraHitcheck: false
+    ckbDarkScreen: false
+    taMissionBriefing:
+mif:
+  maxNumLines: 10
+  maxNumHalfWidthCharactersInLine: 30
+  readEncoding: shift-jis
+  writeEncoding: shift-jis
