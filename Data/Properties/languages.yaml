@@ -1,7 +1,10 @@
-languages:
+ga:
   - name: English
     code: en
   - name: 日本語 (Japanese)
     code: ja
   - name: Русский (Russian)
     code: ru
+beta:
+  - name: 한국어 (Korean)
+    code: ko
