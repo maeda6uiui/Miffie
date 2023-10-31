@@ -204,8 +204,8 @@
         </TabPane>
         <ButtonBar prefHeight="40.0" prefWidth="200.0">
             <buttons>
-                <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel"/>
-                <Button fx:id="btnOK" mnemonicParsing="false" text="OK"/>
+                <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onActionBtnCancel" text="Cancel"/>
+                <Button fx:id="btnOK" mnemonicParsing="false" onAction="#onActionBtnOK" text="OK"/>
             </buttons>
             <VBox.margin>
                 <Insets/>
