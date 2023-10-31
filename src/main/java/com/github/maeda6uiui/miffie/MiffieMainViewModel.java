@@ -5,6 +5,8 @@ import javafx.beans.property.*;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.util.Pair;
 
+import java.util.List;
+
 /**
  * View model for the main view
  *
@@ -23,9 +25,11 @@ public class MiffieMainViewModel {
     private BooleanProperty darkScreen;
     private StringProperty missionBriefing;
 
+    private List<Pair<SkyType, String>> cbSkyTypeItems;
+
     private MiffieMIFModel mifModel;
 
-    public MiffieMainViewModel() {
+    public MiffieMainViewModel(List<Pair<SkyType, String>> cbSkyTypeItems) {
         missionShortName = new SimpleStringProperty();
         missionLongName = new SimpleStringProperty();
         bd1Filepath = new SimpleStringProperty();
@@ -37,6 +41,8 @@ public class MiffieMainViewModel {
         extraHitcheck = new SimpleBooleanProperty();
         darkScreen = new SimpleBooleanProperty();
         missionBriefing = new SimpleStringProperty();
+
+        this.cbSkyTypeItems = cbSkyTypeItems;
 
         mifModel = new MiffieMIFModel();
     }

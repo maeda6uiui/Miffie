@@ -90,16 +90,16 @@ public class MiffieMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Combobox
-        var skyTypes = new ArrayList<Pair<SkyType, String>>();
-        skyTypes.add(new Pair<>(SkyType.NONE, resources.getString("cbSkyType.text.none")));
-        skyTypes.add(new Pair<>(SkyType.SUNNY, resources.getString("cbSkyType.text.sunny")));
-        skyTypes.add(new Pair<>(SkyType.CLOUDY, resources.getString("cbSkyType.text.cloudy")));
-        skyTypes.add(new Pair<>(SkyType.NIGHT, resources.getString("cbSkyType.text.night")));
-        skyTypes.add(new Pair<>(SkyType.EVENING, resources.getString("cbSkyType.text.evening")));
-        skyTypes.add(new Pair<>(SkyType.WILDERNESS, resources.getString("cbSkyType.text.wilderness")));
+        var cbSkyTypeItems = new ArrayList<Pair<SkyType, String>>();
+        cbSkyTypeItems.add(new Pair<>(SkyType.NONE, resources.getString("cbSkyType.text.none")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.SUNNY, resources.getString("cbSkyType.text.sunny")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.CLOUDY, resources.getString("cbSkyType.text.cloudy")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.NIGHT, resources.getString("cbSkyType.text.night")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.EVENING, resources.getString("cbSkyType.text.evening")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.WILDERNESS, resources.getString("cbSkyType.text.wilderness")));
 
-        cbSkyType.getItems().addAll(skyTypes);
-        cbSkyType.setValue(skyTypes.get(0));
+        cbSkyType.getItems().addAll(cbSkyTypeItems);
+        cbSkyType.setValue(cbSkyTypeItems.get(0));
 
         Callback<ListView<Pair<SkyType, String>>, ListCell<Pair<SkyType, String>>> factory
                 = lv -> new ListCell<>() {
@@ -128,8 +128,8 @@ public class MiffieMainController implements Initializable {
             tfBD1Filepath.setText(ivMain.tfBD1Filepath);
             tfPD1Filepath.setText(ivMain.tfPD1Filepath);
 
-            if (ivMain.cbSkyType >= 0 && ivMain.cbSkyType < skyTypes.size()) {
-                cbSkyType.setValue(skyTypes.get(ivMain.cbSkyType));
+            if (ivMain.cbSkyType >= 0 && ivMain.cbSkyType < cbSkyTypeItems.size()) {
+                cbSkyType.setValue(cbSkyTypeItems.get(ivMain.cbSkyType));
             } else {
                 logger.warn("Initial index of cbSkyBox out of range (got {})", ivMain.cbSkyType);
             }
@@ -141,7 +141,7 @@ public class MiffieMainController implements Initializable {
         });
 
         //Set up view model
-        viewModel = new MiffieMainViewModel();
+        viewModel = new MiffieMainViewModel(cbSkyTypeItems);
 
         viewModel.missionShortNameProperty().bindBidirectional(tfMissionShortName.textProperty());
         viewModel.missionLongNameProperty().bindBidirectional(tfMissionLongName.textProperty());
