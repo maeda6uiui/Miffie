@@ -114,8 +114,8 @@ public class MiffieSettings {
             mainView.tfPD1Filepath = ".\\addon\\";
             mainView.cbSkyType = 0;
             mainView.tfImage1Filepath = ".\\data\\briefing\\np.bmp";
-            mainView.tfImage2Filepath = "";
-            mainView.tfArticleDefinitionFilepath = "";
+            mainView.tfImage2Filepath = "!";
+            mainView.tfArticleDefinitionFilepath = "!";
             mainView.ckbExtraHitcheck = false;
             mainView.ckbDarkScreen = false;
             mainView.taMissionBriefing = "";
