@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author maeda6uiui
  */
-public class MiffieMainViewModel {
+public class MainViewModel {
     private StringProperty missionShortName;
     private StringProperty missionLongName;
     private StringProperty bd1Filepath;
@@ -29,7 +29,7 @@ public class MiffieMainViewModel {
 
     private MiffieMIFModel mifModel;
 
-    public MiffieMainViewModel(List<Pair<SkyType, String>> cbSkyTypeItems) {
+    public MainViewModel(List<Pair<SkyType, String>> cbSkyTypeItems) {
         missionShortName = new SimpleStringProperty();
         missionLongName = new SimpleStringProperty();
         bd1Filepath = new SimpleStringProperty();

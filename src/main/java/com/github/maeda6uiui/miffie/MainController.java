@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  *
  * @author maeda6uiui
  */
-public class MiffieMainController implements Initializable {
+public class MainController implements Initializable {
     @FXML
     private MenuItem miNew;
     @FXML
@@ -83,9 +83,9 @@ public class MiffieMainController implements Initializable {
     @FXML
     private Button btnPreviewMissionBriefing;
 
-    private MiffieMainViewModel viewModel;
+    private MainViewModel viewModel;
 
-    private static final Logger logger = LoggerFactory.getLogger(MiffieMainController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -141,7 +141,7 @@ public class MiffieMainController implements Initializable {
         });
 
         //Set up view model
-        viewModel = new MiffieMainViewModel(cbSkyTypeItems);
+        viewModel = new MainViewModel(cbSkyTypeItems);
 
         viewModel.missionShortNameProperty().bindBidirectional(tfMissionShortName.textProperty());
         viewModel.missionLongNameProperty().bindBidirectional(tfMissionLongName.textProperty());
