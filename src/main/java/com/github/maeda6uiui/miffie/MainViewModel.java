@@ -1,10 +1,15 @@
 package com.github.maeda6uiui.miffie;
 
+import com.github.dabasan.jxm.mif.MissionInfo;
 import com.github.dabasan.jxm.mif.SkyType;
 import javafx.beans.property.*;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.util.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,6 +18,8 @@ import java.util.List;
  * @author maeda6uiui
  */
 public class MainViewModel {
+    private static final Logger logger = LoggerFactory.getLogger(MainViewModel.class);
+
     private StringProperty missionShortName;
     private StringProperty missionLongName;
     private StringProperty bd1Filepath;
@@ -26,6 +33,9 @@ public class MainViewModel {
     private StringProperty missionBriefing;
 
     private List<Pair<SkyType, String>> cbSkyTypeItems;
+
+    private BooleanProperty loadError;
+    private BooleanProperty saveError;
 
     private MiffieMIFModel mifModel;
 
@@ -44,7 +54,61 @@ public class MainViewModel {
 
         this.cbSkyTypeItems = cbSkyTypeItems;
 
+        loadError = new SimpleBooleanProperty();
+        saveError = new SimpleBooleanProperty();
+
         mifModel = new MiffieMIFModel();
+    }
+
+    public void loadMIF(File file, String encoding) {
+        MissionInfo missionInfo;
+        try {
+            missionInfo = mifModel.loadMIF(file, encoding);
+        } catch (IOException e) {
+            logger.error("Failed to load MIF file", e);
+            this.setLoadError(true);
+
+            return;
+        }
+
+        this.setMissionShortName(missionInfo.missionTitle);
+        this.setMissionLongName(missionInfo.missionFullname);
+        this.setBd1Filepath(missionInfo.pathnameOfBlock);
+        this.setPd1Filepath(missionInfo.pathnameOfPoint);
+        this.setSkyType(missionInfo.skyType);
+        this.setImage1Filepath(missionInfo.pathnameOfImage1);
+        this.setImage2Filepath(missionInfo.pathnameOfImage2);
+        this.setArticleDefinitionFilepath(missionInfo.pathnameOfObj);
+        this.setExtraHitcheck(missionInfo.extraCollision);
+        this.setDarkScreen(missionInfo.darkScreen);
+        this.setMissionBriefing(missionInfo.briefingText);
+
+        this.setLoadError(false);
+    }
+
+    public void saveMIF(File file, String encoding) {
+        var missionInfo = new MissionInfo()
+                .setMissionTitle(this.getMissionShortName())
+                .setMissionFullname(this.getMissionLongName())
+                .setPathnameOfBlock(this.getBd1Filepath())
+                .setPathnameOfPoint(this.getPd1Filepath())
+                .setSkyType(this.getSkyType())
+                .setPathnameOfImage1(this.getImage1Filepath())
+                .setPathnameOfImage2(this.getImage2Filepath())
+                .setPathnameOfObj(this.getArticleDefinitionFilepath())
+                .setExtraCollision(this.isExtraHitcheck())
+                .setDarkScreen(this.isDarkScreen())
+                .setBriefingText(this.getMissionBriefing());
+        try {
+            mifModel.saveMIF(missionInfo, file, encoding);
+        } catch (IOException e) {
+            logger.error("Failed to save MIF file", e);
+            this.setSaveError(true);
+
+            return;
+        }
+
+        this.setSaveError(false);
     }
 
     public String getMissionShortName() {
@@ -95,16 +159,20 @@ public class MainViewModel {
         this.pd1Filepath.set(pd1Filepath);
     }
 
-    public SingleSelectionModel<Pair<SkyType, String>> getSkyType() {
-        return skyType.get();
+    public SkyType getSkyType() {
+        return skyType.get().getSelectedItem().getKey();
     }
 
     public ObjectProperty<SingleSelectionModel<Pair<SkyType, String>>> skyTypeProperty() {
         return skyType;
     }
 
-    public void setSkyType(SingleSelectionModel<Pair<SkyType, String>> skyType) {
-        this.skyType.set(skyType);
+    public void setSkyType(SkyType skyType) {
+        cbSkyTypeItems
+                .stream()
+                .filter(p -> p.getKey() == skyType)
+                .findFirst()
+                .ifPresent(p -> this.skyType.get().select(p));
     }
 
     public String getImage1Filepath() {
@@ -167,15 +235,43 @@ public class MainViewModel {
         this.darkScreen.set(darkScreen);
     }
 
-    public String getMissionBriefing() {
-        return missionBriefing.get();
+    public List<String> getMissionBriefing() {
+        return missionBriefing.get().lines().toList();
     }
 
     public StringProperty missionBriefingProperty() {
         return missionBriefing;
     }
 
-    public void setMissionBriefing(String missionBriefing) {
-        this.missionBriefing.set(missionBriefing);
+    public void setMissionBriefing(List<String> missionBriefing) {
+        final String LINE_SEPARATOR = System.lineSeparator();
+        var sb = new StringBuilder();
+        missionBriefing.forEach(line -> sb.append(line + LINE_SEPARATOR));
+
+        this.missionBriefing.set(sb.toString());
+    }
+
+    public boolean isLoadError() {
+        return loadError.get();
+    }
+
+    public BooleanProperty loadErrorProperty() {
+        return loadError;
+    }
+
+    public void setLoadError(boolean loadError) {
+        this.loadError.set(loadError);
+    }
+
+    public boolean isSaveError() {
+        return saveError.get();
+    }
+
+    public BooleanProperty saveErrorProperty() {
+        return saveError;
+    }
+
+    public void setSaveError(boolean saveError) {
+        this.saveError.set(saveError);
     }
 }

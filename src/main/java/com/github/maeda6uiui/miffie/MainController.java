@@ -5,11 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -163,12 +165,30 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiOpen(ActionEvent event) {
+        var fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(lblMissionShortName.getScene().getWindow());
+        if (file == null) {
+            return;
+        }
 
+        MiffieSettings.get().ifPresent(settings -> {
+            String encoding = settings.mifSettings.readEncoding;
+            viewModel.loadMIF(file, encoding);
+        });
     }
 
     @FXML
     protected void onActionMiSave(ActionEvent event) {
+        var fileChooser = new FileChooser();
+        File file = fileChooser.showSaveDialog(lblMissionShortName.getScene().getWindow());
+        if (file == null) {
+            return;
+        }
 
+        MiffieSettings.get().ifPresent(settings -> {
+            String encoding = settings.mifSettings.writeEncoding;
+            viewModel.saveMIF(file, encoding);
+        });
     }
 
     @FXML
