@@ -81,7 +81,7 @@ public class MainController implements Initializable {
     @FXML
     private TextArea taMissionBriefing;
     @FXML
-    private Button btnPreviewMissionBriefing;
+    private Button btnCheckTextLength;
 
     private MainViewModel viewModel;
 
@@ -202,7 +202,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    protected void onActionBtnPreviewMissionBriefing(ActionEvent event) {
+    protected void onActionBtnCheckTextLength(ActionEvent event) {
 
     }
 }

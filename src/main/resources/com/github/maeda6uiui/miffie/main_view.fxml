@@ -32,12 +32,26 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.input.*?>
-<?import javafx.scene.layout.*?>
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.github.maeda6uiui.miffie.MainController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.maeda6uiui.miffie.MainController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -45,64 +59,52 @@
                     <items>
                         <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#onActionMiNew" text="%miNew.text">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
                         <MenuItem fx:id="miOpen" mnemonicParsing="false" onAction="#onActionMiOpen" text="%miOpen.text">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="miSave" mnemonicParsing="false" onAction="#onActionMiSave" text="%miSave.text">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="miSaveAs" mnemonicParsing="false" onAction="#onActionMiSaveAs"
-                                  text="%miSaveAs.text">
+                        <MenuItem fx:id="miSaveAs" mnemonicParsing="false" onAction="#onActionMiSaveAs" text="%miSaveAs.text">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="miPreferences" mnemonicParsing="false" onAction="#onActionMiPreferences"
-                                  text="%miPreferences.text">
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="miPreferences" mnemonicParsing="false" onAction="#onActionMiPreferences" text="%miPreferences.text">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="COMMA" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="COMMA" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onActionMiQuit"
-                                  text="%miQuit.text"/>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onActionMiQuit" text="%miQuit.text" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menuEdit.text">
                     <items>
                         <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="%miCopy.text">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste"
-                                  text="%miPaste.text">
+                        <MenuItem fx:id="miPaste" mnemonicParsing="false" onAction="#onActionMiPaste" text="%miPaste.text">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menuHelp.text">
                     <items>
-                        <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onActionMiAbout"
-                                  text="%miAbout.text"/>
+                        <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onActionMiAbout" text="%miAbout.text" />
                     </items>
                 </Menu>
             </menus>
@@ -111,90 +113,84 @@
             <items>
                 <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label fx:id="lblMissionShortName" text="%lblMissionShortName.text"/>
-                        <Label fx:id="lblMissionLongName" text="%lblMissionLongName.text" GridPane.rowIndex="1"/>
-                        <Label fx:id="lblBD1Filepath" text="%lblBD1Filepath.text" GridPane.rowIndex="2"/>
-                        <Label fx:id="lblPD1Filepath" text="%lblPD1Filepath.text" GridPane.rowIndex="3"/>
-                        <Label fx:id="lblSkyType" text="%lblSkyType.text" GridPane.rowIndex="4"/>
-                        <Label fx:id="lblImage1Filepath" text="%lblImage1Filepath.text" GridPane.rowIndex="5"/>
-                        <Label fx:id="lblImage2Filepath" text="%lblImage2Filepath.text" GridPane.rowIndex="6"/>
-                        <Label fx:id="lblArticleDefinitionFilepath" text="%lblArticleDefinitionFilepath.text"
-                               GridPane.rowIndex="7"/>
-                        <CheckBox fx:id="ckbExtraHitcheck" mnemonicParsing="false" text="%ckbExtraHitcheck.text"
-                                  GridPane.rowIndex="8"/>
-                        <CheckBox fx:id="ckbDarkScreen" mnemonicParsing="false" text="%ckbDarkScreen.text"
-                                  GridPane.columnIndex="1" GridPane.rowIndex="8"/>
-                        <TextField fx:id="tfMissionShortName" GridPane.columnIndex="1"/>
-                        <TextField fx:id="tfMissionLongName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                        <TextField fx:id="tfBD1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                        <TextField fx:id="tfPD1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <ComboBox fx:id="cbSkyType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                        <TextField fx:id="tfImage1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-                        <TextField fx:id="tfImage2Filepath" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                        <TextField fx:id="tfArticleDefinitionFilepath" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                        <Label fx:id="lblMissionShortName" text="%lblMissionShortName.text" />
+                        <Label fx:id="lblMissionLongName" text="%lblMissionLongName.text" GridPane.rowIndex="1" />
+                        <Label fx:id="lblBD1Filepath" text="%lblBD1Filepath.text" GridPane.rowIndex="2" />
+                        <Label fx:id="lblPD1Filepath" text="%lblPD1Filepath.text" GridPane.rowIndex="3" />
+                        <Label fx:id="lblSkyType" text="%lblSkyType.text" GridPane.rowIndex="4" />
+                        <Label fx:id="lblImage1Filepath" text="%lblImage1Filepath.text" GridPane.rowIndex="5" />
+                        <Label fx:id="lblImage2Filepath" text="%lblImage2Filepath.text" GridPane.rowIndex="6" />
+                        <Label fx:id="lblArticleDefinitionFilepath" text="%lblArticleDefinitionFilepath.text" GridPane.rowIndex="7" />
+                        <CheckBox fx:id="ckbExtraHitcheck" mnemonicParsing="false" text="%ckbExtraHitcheck.text" GridPane.rowIndex="8" />
+                        <CheckBox fx:id="ckbDarkScreen" mnemonicParsing="false" text="%ckbDarkScreen.text" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextField fx:id="tfMissionShortName" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfMissionLongName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfBD1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="tfPD1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="cbSkyType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="tfImage1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="tfImage2Filepath" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="tfArticleDefinitionFilepath" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                     </children>
                     <padding>
-                        <Insets left="5.0" right="5.0" top="5.0"/>
+                        <Insets left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </GridPane>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <HBox alignment="CENTER" prefWidth="200.0">
                             <children>
-                                <Label fx:id="lblMissionBriefing" text="%lblMissionBriefing.text"/>
+                                <Label fx:id="lblMissionBriefing" text="%lblMissionBriefing.text" />
                             </children>
                             <VBox.margin>
-                                <Insets bottom="5.0"/>
+                                <Insets bottom="5.0" />
                             </VBox.margin>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                             <children>
-                                <TextArea fx:id="taMissionBriefing" prefHeight="200.0" prefWidth="200.0"
-                                          HBox.hgrow="ALWAYS"/>
+                                <TextArea fx:id="taMissionBriefing" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                             </children>
                             <padding>
-                                <Insets top="5.0"/>
+                                <Insets top="5.0" />
                             </padding>
                         </HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefWidth="200.0">
                             <children>
-                                <Button fx:id="btnPreviewMissionBriefing" mnemonicParsing="false"
-                                        onAction="#onActionBtnPreviewMissionBriefing"
-                                        text="%btnPreviewMissionBriefing.text"/>
+                                <Button fx:id="btnCheckTextLength" mnemonicParsing="false" onAction="#onActionBtnCheckTextLength" text="%btnCheckTextLength.text" />
                             </children>
                             <VBox.margin>
-                                <Insets/>
+                                <Insets />
                             </VBox.margin>
                             <padding>
-                                <Insets top="5.0"/>
+                                <Insets top="5.0" />
                             </padding>
                         </HBox>
                     </children>
                     <padding>
-                        <Insets left="5.0" right="5.0" top="5.0"/>
+                        <Insets left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </VBox>
             </items>
             <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
             <VBox.margin>
-                <Insets/>
+                <Insets />
             </VBox.margin>
         </SplitPane>
     </children>
