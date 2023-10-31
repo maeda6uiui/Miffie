@@ -123,14 +123,14 @@ public class MiffieSettings {
     }
 
     public static class MIFSettings {
-        public int maxNumRows;
-        public int maxNumHalfWidthCharactersInRow;
+        public int maxNumLines;
+        public int maxNumHalfWidthCharactersInLine;
         public String defaultReadEncoding;
         public String defaultWriteEncoding;
 
         public MIFSettings() {
-            maxNumRows = 10;
-            maxNumHalfWidthCharactersInRow = 30;
+            maxNumLines = 10;
+            maxNumHalfWidthCharactersInLine = 30;
             defaultReadEncoding = "shift-jis";
             defaultWriteEncoding = "shift-jis";
         }
