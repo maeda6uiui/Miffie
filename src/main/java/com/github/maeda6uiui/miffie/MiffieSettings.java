@@ -41,50 +41,80 @@ public class MiffieSettings {
 
     public static class ThemeSettings {
         public String name;
+        public String fromFile;
 
         public ThemeSettings() {
             name = "primer_light";
         }
 
+        private boolean isValidString(String s) {
+            return s != null && !s.isEmpty();
+        }
+
         /**
          * Returns CSS string.
-         * Returns null if {@code name} is equal to {@code system} or if {@code name} is an unknown value.
+         * This method first attempts to return built-in CSS if {@code name} is provided.
+         * If it fails to look up built-in CSS or if {@code name} is not provided,
+         * then it refers to {@code fromFile} and attempts to read CSS from file.
+         * This method returns empty value if both attempts are failed or
+         * if neither {@code name} nor {@code fromFile} is provided.
          *
          * @return CSS string
          */
         public Optional<String> getCSS() {
-            String ret;
-            switch (name) {
-                case "system":
-                    ret = null;
-                    break;
-                case "primer_light":
-                    ret = new PrimerLight().getUserAgentStylesheet();
-                    break;
-                case "primer_dark":
-                    ret = new PrimerDark().getUserAgentStylesheet();
-                    break;
-                case "nord_light":
-                    ret = new NordLight().getUserAgentStylesheet();
-                    break;
-                case "nord_dark":
-                    ret = new NordDark().getUserAgentStylesheet();
-                    break;
-                case "cupertino_light":
-                    ret = new CupertinoLight().getUserAgentStylesheet();
-                    break;
-                case "cupertino_dark":
-                    ret = new CupertinoDark().getUserAgentStylesheet();
-                    break;
-                case "dracula":
-                    ret = new Dracula().getUserAgentStylesheet();
-                    break;
-                default:
-                    logger.warn("Unsupported theme '{}' specified", name);
-                    ret = null;
+            if (!this.isValidString(name) && !this.isValidString(fromFile)) {
+                return Optional.empty();
             }
 
-            return Optional.ofNullable(ret);
+            if (this.isValidString(name)) {
+                String css = null;
+                switch (name) {
+                    case "primer_light":
+                        css = new PrimerLight().getUserAgentStylesheet();
+                        break;
+                    case "primer_dark":
+                        css = new PrimerDark().getUserAgentStylesheet();
+                        break;
+                    case "nord_light":
+                        css = new NordLight().getUserAgentStylesheet();
+                        break;
+                    case "nord_dark":
+                        css = new NordDark().getUserAgentStylesheet();
+                        break;
+                    case "cupertino_light":
+                        css = new CupertinoLight().getUserAgentStylesheet();
+                        break;
+                    case "cupertino_dark":
+                        css = new CupertinoDark().getUserAgentStylesheet();
+                        break;
+                    case "dracula":
+                        css = new Dracula().getUserAgentStylesheet();
+                        break;
+                    default:
+                        logger.warn("Unsupported theme '{}' specified", name);
+                        break;
+                }
+
+                if (css != null) {
+                    return Optional.of(css);
+                }
+            }
+            if (this.isValidString(fromFile)) {
+                String css = null;
+                try {
+                    Path cssFile = Paths.get(fromFile);
+                    css = Files.readString(cssFile);
+                } catch (IOException e) {
+                    logger.warn("Failed to load CSS from file ({})", fromFile);
+                }
+
+                if (css != null) {
+                    return Optional.of(css);
+                }
+            }
+
+            logger.warn("Failed to get CSS string");
+            return Optional.empty();
         }
     }
 
