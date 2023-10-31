@@ -38,6 +38,7 @@ public class MainViewModel {
     private BooleanProperty saveError;
 
     private MiffieMIFModel mifModel;
+    private MiffieSettings.MIFSettings mifSettings;
 
     public MainViewModel(List<Pair<SkyType, String>> cbSkyTypeItems) {
         missionShortName = new SimpleStringProperty();
@@ -58,12 +59,14 @@ public class MainViewModel {
         saveError = new SimpleBooleanProperty();
 
         mifModel = new MiffieMIFModel();
+
+        MiffieSettings.get().ifPresent(settings -> mifSettings = settings.mifSettings);
     }
 
-    public void loadMIF(File file, String encoding) {
+    public void loadMIF(File file) {
         MissionInfo missionInfo;
         try {
-            missionInfo = mifModel.loadMIF(file, encoding);
+            missionInfo = mifModel.loadMIF(file, mifSettings.readEncoding);
         } catch (IOException e) {
             logger.error("Failed to load MIF file", e);
             this.setLoadError(true);
@@ -86,7 +89,7 @@ public class MainViewModel {
         this.setLoadError(false);
     }
 
-    public void saveMIF(File file, String encoding) {
+    public void saveMIF(File file) {
         var missionInfo = new MissionInfo()
                 .setMissionTitle(this.getMissionShortName())
                 .setMissionFullname(this.getMissionLongName())
@@ -100,7 +103,7 @@ public class MainViewModel {
                 .setDarkScreen(this.isDarkScreen())
                 .setBriefingText(this.getMissionBriefing());
         try {
-            mifModel.saveMIF(missionInfo, file, encoding);
+            mifModel.saveMIF(missionInfo, file, mifSettings.writeEncoding);
         } catch (IOException e) {
             logger.error("Failed to save MIF file", e);
             this.setSaveError(true);
