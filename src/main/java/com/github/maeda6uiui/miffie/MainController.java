@@ -87,6 +87,8 @@ public class MainController implements Initializable {
 
     private MainViewModel viewModel;
 
+    private File currentFile;
+
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Override
@@ -171,29 +173,29 @@ public class MainController implements Initializable {
             return;
         }
 
-        MiffieSettings.get().ifPresent(settings -> {
-            String encoding = settings.mifSettings.readEncoding;
-            viewModel.loadMIF(file, encoding);
-        });
+        viewModel.loadMIF(file);
+        currentFile = file;
     }
 
     @FXML
     protected void onActionMiSave(ActionEvent event) {
+        if (currentFile == null) {
+            this.onActionMiSaveAs(event);
+        } else {
+            viewModel.saveMIF(currentFile);
+        }
+    }
+
+    @FXML
+    protected void onActionMiSaveAs(ActionEvent event) {
         var fileChooser = new FileChooser();
         File file = fileChooser.showSaveDialog(lblMissionShortName.getScene().getWindow());
         if (file == null) {
             return;
         }
 
-        MiffieSettings.get().ifPresent(settings -> {
-            String encoding = settings.mifSettings.writeEncoding;
-            viewModel.saveMIF(file, encoding);
-        });
-    }
-
-    @FXML
-    protected void onActionMiSaveAs(ActionEvent event) {
-
+        viewModel.saveMIF(file);
+        currentFile = file;
     }
 
     @FXML
