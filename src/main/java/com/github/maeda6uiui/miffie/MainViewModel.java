@@ -34,8 +34,8 @@ public class MainViewModel {
 
     private List<Pair<SkyType, String>> cbSkyTypeItems;
 
-    private BooleanProperty loadError;
-    private BooleanProperty saveError;
+    private StringProperty errorMessageLoad;
+    private StringProperty errorMessageSave;
 
     private MiffieMIFModel mifModel;
     private MiffieSettings.MIFSettings mifSettings;
@@ -55,8 +55,8 @@ public class MainViewModel {
 
         this.cbSkyTypeItems = cbSkyTypeItems;
 
-        loadError = new SimpleBooleanProperty();
-        saveError = new SimpleBooleanProperty();
+        errorMessageLoad = new SimpleStringProperty();
+        errorMessageSave = new SimpleStringProperty();
 
         mifModel = new MiffieMIFModel();
 
@@ -69,7 +69,7 @@ public class MainViewModel {
             missionInfo = mifModel.loadMIF(file, mifSettings.readEncoding);
         } catch (IOException e) {
             logger.error("Failed to load MIF file", e);
-            this.setLoadError(true);
+            this.setErrorMessageLoad(e.toString());
 
             return;
         }
@@ -86,7 +86,7 @@ public class MainViewModel {
         this.setDarkScreen(missionInfo.darkScreen);
         this.setMissionBriefing(missionInfo.briefingText);
 
-        this.setLoadError(false);
+        this.setErrorMessageLoad("");
     }
 
     public void saveMIF(File file) {
@@ -106,12 +106,12 @@ public class MainViewModel {
             mifModel.saveMIF(missionInfo, file, mifSettings.writeEncoding);
         } catch (IOException e) {
             logger.error("Failed to save MIF file", e);
-            this.setSaveError(true);
+            this.setErrorMessageSave(e.toString());
 
             return;
         }
 
-        this.setSaveError(false);
+        this.setErrorMessageSave("");
     }
 
     public String getMissionShortName() {
@@ -254,27 +254,27 @@ public class MainViewModel {
         this.missionBriefing.set(sb.toString());
     }
 
-    public boolean isLoadError() {
-        return loadError.get();
+    public String getErrorMessageLoad() {
+        return errorMessageLoad.get();
     }
 
-    public BooleanProperty loadErrorProperty() {
-        return loadError;
+    public StringProperty errorMessageLoadProperty() {
+        return errorMessageLoad;
     }
 
-    public void setLoadError(boolean loadError) {
-        this.loadError.set(loadError);
+    public void setErrorMessageLoad(String errorMessageLoad) {
+        this.errorMessageLoad.set(errorMessageLoad);
     }
 
-    public boolean isSaveError() {
-        return saveError.get();
+    public String getErrorMessageSave() {
+        return errorMessageSave.get();
     }
 
-    public BooleanProperty saveErrorProperty() {
-        return saveError;
+    public StringProperty errorMessageSaveProperty() {
+        return errorMessageSave;
     }
 
-    public void setSaveError(boolean saveError) {
-        this.saveError.set(saveError);
+    public void setErrorMessageSave(String errorMessageSave) {
+        this.errorMessageSave.set(errorMessageSave);
     }
 }
