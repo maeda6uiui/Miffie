@@ -122,6 +122,20 @@ public class MiffieSettings {
         }
     }
 
+    public static class MIFSettings {
+        public int maxNumRows;
+        public int maxNumHalfWidthCharactersInRow;
+        public String defaultReadEncoding;
+        public String defaultWriteEncoding;
+
+        public MIFSettings() {
+            maxNumRows = 10;
+            maxNumHalfWidthCharactersInRow = 30;
+            defaultReadEncoding = "shift-jis";
+            defaultWriteEncoding = "shift-jis";
+        }
+    }
+
     @JsonProperty("language")
     public LanguageSettings languageSettings;
     @JsonProperty("window")
@@ -129,6 +143,8 @@ public class MiffieSettings {
     @JsonProperty("theme")
     public ThemeSettings themeSettings;
     public InitialValue initialValue;
+    @JsonProperty("mif")
+    public MIFSettings mifSettings;
 
     public static MiffieSettings instance;
 
@@ -137,6 +153,7 @@ public class MiffieSettings {
         windowSettings = new WindowSettings();
         themeSettings = new ThemeSettings();
         initialValue = new InitialValue();
+        mifSettings = new MIFSettings();
     }
 
     /**
