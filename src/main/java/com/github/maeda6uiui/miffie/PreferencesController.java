@@ -19,7 +19,7 @@ public class PreferencesController implements Initializable {
     @FXML
     private Button btnOK;
     @FXML
-    private ComboBox<?> cbLDisplayLanguage;
+    private ComboBox<DisplayLanguage> cbLDisplayLanguage;
     @FXML
     private ComboBox<?> cbTTheme;
     @FXML
