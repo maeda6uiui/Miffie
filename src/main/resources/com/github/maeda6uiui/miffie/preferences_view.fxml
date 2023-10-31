@@ -27,12 +27,19 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                        <GridPane>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
                               <Label fx:id="lblLDisplayLanguage" text="Display Language" />
-                              <ComboBox fx:id="cbLDisplayLanguage" prefWidth="150.0" />
+                              <ComboBox fx:id="cbLDisplayLanguage" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
-                        </HBox>
+                        </GridPane>
                      </children>
                   </VBox>
                </content>
@@ -44,21 +51,29 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <HBox prefWidth="200.0" spacing="30.0">
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
                               <Label fx:id="lblWWindowSize" text="Window Size" />
+                              <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="30.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                                 <children>
+                                    <TextField fx:id="tfWWindowWidth" promptText="Width" />
+                                    <Label fx:id="lblWCross" text="x" />
+                                    <TextField fx:id="tfWWindowHeight" promptText="Height" />
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                           <padding>
-                              <Insets left="30.0" />
-                           </padding>
-                           <children>
-                              <TextField fx:id="tfWWindowWidth" promptText="Width" />
-                              <Label fx:id="lblWCross" text="x" />
-                              <TextField fx:id="tfWWindowHeight" promptText="Height" />
-                           </children>
-                        </HBox>
+                        </GridPane>
                      </children>
                   </VBox>
                </content>
@@ -70,12 +85,19 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
                               <Label fx:id="lblTTheme" text="Theme" />
-                              <ComboBox fx:id="cbTTheme" prefWidth="150.0" />
+                              <ComboBox fx:id="cbTTheme" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
-                        </HBox>
+                        </GridPane>
                      </children>
                   </VBox>
                </content>
