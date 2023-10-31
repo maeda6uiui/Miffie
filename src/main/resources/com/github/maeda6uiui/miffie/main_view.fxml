@@ -142,7 +142,7 @@
                         <TextField fx:id="tfMissionLongName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="tfBD1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="tfPD1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="cbSkyType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="cbSkyType" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField fx:id="tfImage1Filepath" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <TextField fx:id="tfImage2Filepath" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <TextField fx:id="tfArticleDefinitionFilepath" GridPane.columnIndex="1" GridPane.rowIndex="7" />
