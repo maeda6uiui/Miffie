@@ -61,6 +61,8 @@ public class PreferencesController implements Initializable {
     @FXML
     private Label lblTTheme;
     @FXML
+    private Label lblTUseCustomTheme;
+    @FXML
     private Label lblWCross;
     @FXML
     private Label lblWWindowSize;
@@ -91,12 +93,19 @@ public class PreferencesController implements Initializable {
     @FXML
     private TextField tfMWriteEncoding;
     @FXML
+    private TextField tfTCustomThemeFilepath;
+    @FXML
     private TextField tfWWindowHeight;
     @FXML
     private TextField tfWWindowWidth;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @FXML
+    public void onActionCbTTheme(ActionEvent event) {
 
     }
 
