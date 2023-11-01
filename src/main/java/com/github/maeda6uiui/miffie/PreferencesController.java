@@ -19,6 +19,8 @@ public class PreferencesController implements Initializable {
     @FXML
     private Button btnOK;
     @FXML
+    private Button btnTBrowseCustomTheme;
+    @FXML
     private ComboBox<DisplayLanguage> cbLDisplayLanguage;
     @FXML
     private ComboBox<MiffieTheme> cbTTheme;
@@ -116,6 +118,11 @@ public class PreferencesController implements Initializable {
 
     @FXML
     protected void onActionBtnOK(ActionEvent event) {
+
+    }
+
+    @FXML
+    protected void onActionBtnTBrowseCustomTheme(ActionEvent event) {
 
     }
 }

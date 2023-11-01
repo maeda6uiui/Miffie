@@ -90,12 +90,20 @@
                                     <children>
                                         <Label fx:id="lblTTheme" text="%lblTTheme.text"/>
                                         <ComboBox fx:id="cbTTheme" onAction="#onActionCbTTheme" prefWidth="150.0"
-                                                  GridPane.columnIndex="1"/>
+                                                  GridPane.columnIndex="1" GridPane.columnSpan="2"/>
                                         <Label fx:id="lblTCustomTheme" text="%lblTCustomTheme.text"
                                                GridPane.rowIndex="1"/>
-                                        <TextField fx:id="tfTCustomThemeFilepath" disable="true"
-                                                   promptText="%tfTCustomThemeFilepath.promptText"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1"
+                                              GridPane.rowIndex="1">
+                                            <children>
+                                                <TextField fx:id="tfTCustomThemeFilepath" disable="true"
+                                                           promptText="%tfTCustomThemeFilepath.promptText"
+                                                           HBox.hgrow="ALWAYS"/>
+                                                <Button fx:id="btnTBrowseCustomTheme" mnemonicParsing="false"
+                                                        onAction="#onActionBtnTBrowseCustomTheme"
+                                                        text="%btnTBrowseCustomTheme.text"/>
+                                            </children>
+                                        </HBox>
                                     </children>
                                 </GridPane>
                             </children>
