@@ -1,9 +1,9 @@
 package com.github.maeda6uiui.miffie;
 
 /**
- * Data class for window theme info
+ * Record for window theme info
  *
  * @author maeda6uiui
  */
-public class MiffieTheme {
+public record MiffieTheme(String name, String displayName) {
 }

@@ -21,7 +21,7 @@ public class PreferencesController implements Initializable {
     @FXML
     private ComboBox<DisplayLanguage> cbLDisplayLanguage;
     @FXML
-    private ComboBox<?> cbTTheme;
+    private ComboBox<MiffieTheme> cbTTheme;
     @FXML
     private CheckBox ckbIVDarkScreen;
     @FXML
