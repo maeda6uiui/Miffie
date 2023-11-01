@@ -3,17 +3,28 @@ package com.github.maeda6uiui.miffie;
 import com.github.dabasan.jxm.mif.SkyType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -22,6 +33,8 @@ import java.util.ResourceBundle;
  * @author maeda6uiui
  */
 public class MainController implements Initializable {
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+
     @FXML
     private MenuItem miNew;
     @FXML
@@ -88,8 +101,6 @@ public class MainController implements Initializable {
     private MainViewModel viewModel;
 
     private File currentFile;
-
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -198,9 +209,38 @@ public class MainController implements Initializable {
         currentFile = file;
     }
 
+    private void openPreferencesDialog(String locale) {
+        try {
+            Path propertiesDir = Paths.get("./Data/Properties");
+            var loader = new URLClassLoader(new URL[]{propertiesDir.toUri().toURL()});
+            ResourceBundle rb = ResourceBundle.getBundle(
+                    "preferences_view",
+                    Locale.of(locale),
+                    loader
+            );
+
+            Parent root = FXMLLoader.load(
+                    Objects.requireNonNull(this.getClass().getResource("preferences_view.fxml")),
+                    rb
+            );
+            var scene = new Scene(root);
+            var preferencesDialog = new Stage();
+            preferencesDialog.setScene(scene);
+            preferencesDialog.initOwner(lblMissionShortName.getScene().getWindow());
+            preferencesDialog.initModality(Modality.WINDOW_MODAL);
+            preferencesDialog.setTitle(rb.getString("title.text"));
+            preferencesDialog.showAndWait();
+        } catch (IOException e) {
+            logger.error("Failed to open preferences dialog", e);
+        }
+    }
+
     @FXML
     protected void onActionMiPreferences(ActionEvent event) {
-
+        MiffieSettings.get().ifPresentOrElse(
+                settings -> this.openPreferencesDialog(settings.languageSettings.code),
+                () -> this.openPreferencesDialog("en")
+        );
     }
 
     @FXML
