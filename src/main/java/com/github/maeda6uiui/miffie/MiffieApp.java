@@ -58,7 +58,7 @@ public class MiffieApp extends Application {
     public static void main(String[] args) {
         logger.info("Starting the Miffie app...");
         logger.info("args: {}", Arrays.toString(args));
-        
+
         launch(args);
     }
 }
