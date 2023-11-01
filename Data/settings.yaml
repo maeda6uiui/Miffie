@@ -2,7 +2,7 @@ language:
   code: en
 window:
   width: 1000
-  height: 400
+  height: 500
 theme:
   name: primer_light
   fromFile:
