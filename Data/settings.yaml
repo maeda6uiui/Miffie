@@ -5,6 +5,7 @@ window:
   height: 400
 theme:
   name: primer_light
+  fromFile:
 initialValue:
   main:
     tfMissionShortName:

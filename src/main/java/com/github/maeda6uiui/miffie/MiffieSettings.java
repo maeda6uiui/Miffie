@@ -47,73 +47,79 @@ public class MiffieSettings {
             name = "primer_light";
         }
 
-        private boolean isValidString(String s) {
-            return s != null && !s.isEmpty();
+        private String getBuiltInCSS() {
+            String css = null;
+            switch (name) {
+                case "primer_light":
+                    css = new PrimerLight().getUserAgentStylesheet();
+                    break;
+                case "primer_dark":
+                    css = new PrimerDark().getUserAgentStylesheet();
+                    break;
+                case "nord_light":
+                    css = new NordLight().getUserAgentStylesheet();
+                    break;
+                case "nord_dark":
+                    css = new NordDark().getUserAgentStylesheet();
+                    break;
+                case "cupertino_light":
+                    css = new CupertinoLight().getUserAgentStylesheet();
+                    break;
+                case "cupertino_dark":
+                    css = new CupertinoDark().getUserAgentStylesheet();
+                    break;
+                case "dracula":
+                    css = new Dracula().getUserAgentStylesheet();
+                    break;
+                default:
+                    logger.error("Unsupported theme '{}' specified", name);
+                    break;
+            }
+
+            return css;
+        }
+
+        private String loadCustomCSS() {
+            String css = null;
+            try {
+                Path cssFile = Paths.get(fromFile);
+                css = Files.readString(cssFile);
+            } catch (IOException e) {
+                logger.error("Failed to load CSS from file", e);
+            }
+
+            return css;
         }
 
         /**
          * Returns CSS string.
-         * This method first attempts to return built-in CSS if {@code name} is provided.
-         * If it fails to look up built-in CSS or if {@code name} is not provided,
-         * then it refers to {@code fromFile} and attempts to read CSS from file.
-         * This method returns empty value if both attempts are failed or
-         * if neither {@code name} nor {@code fromFile} is provided.
+         * This method attempts to load custom CSS from file if {@code name} is "custom"
+         * and a valid string is set to {@code fromFile}.
+         * It returns no CSS if "system" is set to {@code name}.
          *
          * @return CSS string
          */
         public Optional<String> getCSS() {
-            if (!this.isValidString(name) && !this.isValidString(fromFile)) {
-                return Optional.empty();
+            if (name != null && !name.isEmpty()) {
+                if (name.equals("system")) {
+                    logger.info("'system' is specified as a theme. Return no CSS");
+                    return Optional.empty();
+                }
+                if (name.equals("custom")) {
+                    if (fromFile == null || fromFile.isEmpty()) {
+                        logger.warn(
+                                "'custom' is specified as a theme, " +
+                                        "but fromFile is not a valid string. Return no CSS");
+                        return Optional.empty();
+                    }
+
+                    return Optional.ofNullable(this.loadCustomCSS());
+                }
+
+                return Optional.ofNullable(this.getBuiltInCSS());
             }
 
-            if (this.isValidString(name)) {
-                String css = null;
-                switch (name) {
-                    case "primer_light":
-                        css = new PrimerLight().getUserAgentStylesheet();
-                        break;
-                    case "primer_dark":
-                        css = new PrimerDark().getUserAgentStylesheet();
-                        break;
-                    case "nord_light":
-                        css = new NordLight().getUserAgentStylesheet();
-                        break;
-                    case "nord_dark":
-                        css = new NordDark().getUserAgentStylesheet();
-                        break;
-                    case "cupertino_light":
-                        css = new CupertinoLight().getUserAgentStylesheet();
-                        break;
-                    case "cupertino_dark":
-                        css = new CupertinoDark().getUserAgentStylesheet();
-                        break;
-                    case "dracula":
-                        css = new Dracula().getUserAgentStylesheet();
-                        break;
-                    default:
-                        logger.warn("Unsupported theme '{}' specified", name);
-                        break;
-                }
-
-                if (css != null) {
-                    return Optional.of(css);
-                }
-            }
-            if (this.isValidString(fromFile)) {
-                String css = null;
-                try {
-                    Path cssFile = Paths.get(fromFile);
-                    css = Files.readString(cssFile);
-                } catch (IOException e) {
-                    logger.warn("Failed to load CSS from file ({})", fromFile);
-                }
-
-                if (css != null) {
-                    return Optional.of(css);
-                }
-            }
-
-            logger.warn("Failed to get CSS string");
+            logger.warn("Theme name is not specified. Return no CSS");
             return Optional.empty();
         }
     }
