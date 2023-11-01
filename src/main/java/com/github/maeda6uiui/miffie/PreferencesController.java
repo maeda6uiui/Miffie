@@ -61,7 +61,7 @@ public class PreferencesController implements Initializable {
     @FXML
     private Label lblTTheme;
     @FXML
-    private Label lblTUseCustomTheme;
+    private Label lblTCustomTheme;
     @FXML
     private Label lblWCross;
     @FXML

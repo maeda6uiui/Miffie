@@ -91,7 +91,7 @@
                                         <Label fx:id="lblTTheme" text="%lblTTheme.text"/>
                                         <ComboBox fx:id="cbTTheme" onAction="#onActionCbTTheme" prefWidth="150.0"
                                                   GridPane.columnIndex="1"/>
-                                        <Label fx:id="lblTUseCustomTheme" text="%lblTUseCustomTheme.text"
+                                        <Label fx:id="lblTCustomTheme" text="%lblTCustomTheme.text"
                                                GridPane.rowIndex="1"/>
                                         <TextField fx:id="tfTCustomThemeFilepath" disable="true"
                                                    promptText="%tfTCustomThemeFilepath.promptText"
