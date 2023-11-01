@@ -223,7 +223,7 @@ public class MainController implements Initializable {
                     Objects.requireNonNull(this.getClass().getResource("preferences_view.fxml")),
                     rb
             );
-            var scene = new Scene(root, 800, 800);
+            var scene = new Scene(root, 600, 400);
             var preferencesDialog = new Stage();
             preferencesDialog.setScene(scene);
             preferencesDialog.initOwner(lblMissionShortName.getScene().getWindow());
