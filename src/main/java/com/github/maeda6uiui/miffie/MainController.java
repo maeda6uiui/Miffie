@@ -239,7 +239,10 @@ public class MainController implements Initializable {
     protected void onActionMiPreferences(ActionEvent event) {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> this.openPreferencesDialog(settings.languageSettings.code),
-                () -> this.openPreferencesDialog("en")
+                () -> {
+                    logger.error("Settings is not available. Fall back to default locale 'en'");
+                    this.openPreferencesDialog("en");
+                }
         );
     }
 
