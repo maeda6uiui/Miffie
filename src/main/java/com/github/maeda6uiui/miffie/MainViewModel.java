@@ -61,6 +61,13 @@ public class MainViewModel {
         mifModel = new MiffieMIFModel();
 
         MiffieSettings.get().ifPresent(settings -> mifSettings = settings.mifSettings);
+        MiffieSettings.get().ifPresentOrElse(
+                settings -> mifSettings = settings.mifSettings,
+                () -> {
+                    logger.error("Settings is not available. Fall back to default settings");
+                    mifSettings = new MiffieSettings.MIFSettings();
+                }
+        );
     }
 
     public void loadMIF(File file) {
