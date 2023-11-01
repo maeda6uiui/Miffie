@@ -16,57 +16,73 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </padding>
                             <children>
-                                <GridPane vgap="15.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Label fx:id="lblLDisplayLanguage" text="%lblLDisplayLanguage.text"/>
-                                        <ComboBox fx:id="cbLDisplayLanguage" prefWidth="150.0"
-                                                  GridPane.columnIndex="1"/>
-                                    </children>
-                                </GridPane>
+                                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <GridPane vgap="15.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
+                                            <children>
+                                                <Label fx:id="lblLDisplayLanguage" text="%lblLDisplayLanguage.text"/>
+                                                <ComboBox fx:id="cbLDisplayLanguage" prefWidth="150.0"
+                                                          GridPane.columnIndex="1">
+                                                    <GridPane.margin>
+                                                        <Insets bottom="3.0" top="3.0"/>
+                                                    </GridPane.margin>
+                                                </ComboBox>
+                                            </children>
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                        </GridPane>
+                                    </content>
+                                </ScrollPane>
                             </children>
                         </VBox>
                     </content>
                 </Tab>
                 <Tab text="%tabWindow.text">
                     <content>
-                        <VBox spacing="10.0">
+                        <VBox>
                             <padding>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </padding>
                             <children>
-                                <GridPane vgap="15.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Label fx:id="lblWWindowSize" text="%lblWWindowSize.text"/>
-                                        <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="30.0"
-                                              GridPane.columnSpan="2" GridPane.rowIndex="1">
-                                            <padding>
-                                                <Insets left="30.0"/>
-                                            </padding>
+                                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <GridPane vgap="15.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
                                             <children>
-                                                <TextField fx:id="tfWWindowWidth"
-                                                           promptText="%tfWWindowWidth.promptText"/>
-                                                <Label fx:id="lblWCross" text="x"/>
-                                                <TextField fx:id="tfWWindowHeight"
-                                                           promptText="%tfWWindowHeight.promptText"/>
+                                                <Label fx:id="lblWWindowSize" text="%lblWWindowSize.text"/>
+                                                <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0"
+                                                      GridPane.columnIndex="1">
+                                                    <children>
+                                                        <TextField fx:id="tfWWindowWidth"
+                                                                   promptText="%tfWWindowWidth.promptText"
+                                                                   HBox.hgrow="ALWAYS"/>
+                                                        <Label fx:id="lblWCross" text="x"/>
+                                                        <TextField fx:id="tfWWindowHeight"
+                                                                   promptText="%tfWWindowHeight.promptText"
+                                                                   HBox.hgrow="ALWAYS"/>
+                                                    </children>
+                                                </HBox>
                                             </children>
-                                        </HBox>
-                                    </children>
-                                </GridPane>
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                        </GridPane>
+                                    </content>
+                                </ScrollPane>
                             </children>
                         </VBox>
                     </content>
@@ -78,35 +94,42 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </padding>
                             <children>
-                                <GridPane vgap="15.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Label fx:id="lblTTheme" text="%lblTTheme.text"/>
-                                        <ComboBox fx:id="cbTTheme" onAction="#onActionCbTTheme" prefWidth="150.0"
-                                                  GridPane.columnIndex="1" GridPane.columnSpan="2"/>
-                                        <Label fx:id="lblTCustomTheme" text="%lblTCustomTheme.text"
-                                               GridPane.rowIndex="1"/>
-                                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1"
-                                              GridPane.rowIndex="1">
+                                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <GridPane vgap="15.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
                                             <children>
-                                                <TextField fx:id="tfTCustomThemeFilepath" disable="true"
-                                                           promptText="%tfTCustomThemeFilepath.promptText"
-                                                           HBox.hgrow="ALWAYS"/>
-                                                <Button fx:id="btnTBrowseCustomTheme" mnemonicParsing="false"
-                                                        onAction="#onActionBtnTBrowseCustomTheme"
-                                                        text="%btnTBrowseCustomTheme.text"/>
+                                                <Label fx:id="lblTTheme" text="%lblTTheme.text"/>
+                                                <ComboBox fx:id="cbTTheme" onAction="#onActionCbTTheme"
+                                                          prefWidth="150.0" GridPane.columnIndex="1"/>
+                                                <Label fx:id="lblTCustomTheme" text="%lblTCustomTheme.text"
+                                                       GridPane.rowIndex="1"/>
+                                                <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1"
+                                                      GridPane.rowIndex="1">
+                                                    <children>
+                                                        <TextField fx:id="tfTCustomThemeFilepath" disable="true"
+                                                                   promptText="%tfTCustomThemeFilepath.promptText"
+                                                                   HBox.hgrow="ALWAYS"/>
+                                                        <Button fx:id="btnTBrowseCustomTheme" mnemonicParsing="false"
+                                                                onAction="#onActionBtnTBrowseCustomTheme"
+                                                                text="%btnTBrowseCustomTheme.text"/>
+                                                    </children>
+                                                </HBox>
                                             </children>
-                                        </HBox>
-                                    </children>
-                                </GridPane>
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                        </GridPane>
+                                    </content>
+                                </ScrollPane>
                             </children>
                         </VBox>
                     </content>
@@ -118,109 +141,129 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </padding>
                             <children>
-                                <GridPane vgap="10.0" VBox.vgrow="ALWAYS">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Label fx:id="lblIVMissionShortName" text="%lblIVMissionShortName.text"/>
-                                        <Label fx:id="lblIVMissionLongName" text="%lblIVMissionLongName.text"
-                                               GridPane.rowIndex="1"/>
-                                        <Label fx:id="lblIVBD1Filepath" text="%lblIVBD1Filepath.text"
-                                               GridPane.rowIndex="2"/>
-                                        <Label fx:id="lblIVPD1Filepath" text="%lblIVPD1Filepath.text"
-                                               GridPane.rowIndex="3"/>
-                                        <Label fx:id="lblIVSkyType" text="%lblIVSkyType.text" GridPane.rowIndex="4"/>
-                                        <Label fx:id="lblIVImage1Filepath" text="%lblIVImage1Filepath.text"
-                                               GridPane.rowIndex="5"/>
-                                        <Label fx:id="lblIVImage2Filepath" text="%lblIVImage2Filepath.text"
-                                               GridPane.rowIndex="6"/>
-                                        <Label fx:id="lblIVArticleDefinitionFilepath"
-                                               text="%lblIVArticleDefinitionFilepath.text" GridPane.rowIndex="7"/>
-                                        <Label fx:id="lblIVExtraHitcheck" text="%lblIVExtraHitcheck.text"
-                                               GridPane.rowIndex="8"/>
-                                        <Label fx:id="lblIVDarkScreen" text="%lblIVDarkScreen.text"
-                                               GridPane.rowIndex="9"/>
-                                        <Label fx:id="lblIVMissionBriefing" text="%lblIVMissionBriefing.text"
-                                               GridPane.rowIndex="10" GridPane.rowSpan="2"/>
-                                        <TextField fx:id="tfIVMissionShortName" GridPane.columnIndex="1"/>
-                                        <TextField fx:id="tfIVMissionLongName" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="1"/>
-                                        <TextField fx:id="tfIVBD1Filepath" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="2"/>
-                                        <TextField fx:id="tfIVPD1Filepath" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="3"/>
-                                        <TextField fx:id="tfIVSkyType" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                                        <TextField fx:id="tfIVImage1Filepath" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="5"/>
-                                        <TextField fx:id="tfIVImage2Filepath" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="6"/>
-                                        <TextField fx:id="tfIVArticleDefinitionFilepath" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="7"/>
-                                        <CheckBox fx:id="ckbIVExtraHitcheck" mnemonicParsing="false"
-                                                  text="%ckbIVExtraHitcheck.text" GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="8"/>
-                                        <CheckBox fx:id="ckbIVDarkScreen" mnemonicParsing="false"
-                                                  text="%ckbIVDarkScreen.text" GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="9"/>
-                                        <TextArea fx:id="taIVMissionBriefing" prefHeight="200.0" prefWidth="200.0"
-                                                  GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.rowSpan="2"/>
-                                    </children>
-                                </GridPane>
+                                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <GridPane vgap="15.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
+                                            <children>
+                                                <Label fx:id="lblIVMissionShortName"
+                                                       text="%lblIVMissionShortName.text"/>
+                                                <Label fx:id="lblIVMissionLongName" text="%lblIVMissionLongName.text"
+                                                       GridPane.rowIndex="1"/>
+                                                <Label fx:id="lblIVBD1Filepath" text="%lblIVBD1Filepath.text"
+                                                       GridPane.rowIndex="2"/>
+                                                <Label fx:id="lblIVPD1Filepath" text="%lblIVPD1Filepath.text"
+                                                       GridPane.rowIndex="3"/>
+                                                <Label fx:id="lblIVSkyType" text="%lblIVSkyType.text"
+                                                       GridPane.rowIndex="4"/>
+                                                <Label fx:id="lblIVImage1Filepath" text="%lblIVImage1Filepath.text"
+                                                       GridPane.rowIndex="5"/>
+                                                <Label fx:id="lblIVImage2Filepath" text="%lblIVImage2Filepath.text"
+                                                       GridPane.rowIndex="6"/>
+                                                <Label fx:id="lblIVArticleDefinitionFilepath"
+                                                       text="%lblIVArticleDefinitionFilepath.text"
+                                                       GridPane.rowIndex="7"/>
+                                                <Label fx:id="lblIVExtraHitcheck" text="%lblIVExtraHitcheck.text"
+                                                       GridPane.rowIndex="8"/>
+                                                <Label fx:id="lblIVDarkScreen" text="%lblIVDarkScreen.text"
+                                                       GridPane.rowIndex="9"/>
+                                                <Label fx:id="lblIVMissionBriefing" text="%lblIVMissionBriefing.text"
+                                                       GridPane.rowIndex="10" GridPane.rowSpan="2"/>
+                                                <TextField fx:id="tfIVMissionShortName" GridPane.columnIndex="1"/>
+                                                <TextField fx:id="tfIVMissionLongName" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="1"/>
+                                                <TextField fx:id="tfIVBD1Filepath" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="2"/>
+                                                <TextField fx:id="tfIVPD1Filepath" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="3"/>
+                                                <TextField fx:id="tfIVSkyType" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="4"/>
+                                                <TextField fx:id="tfIVImage1Filepath" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="5"/>
+                                                <TextField fx:id="tfIVImage2Filepath" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="6"/>
+                                                <TextField fx:id="tfIVArticleDefinitionFilepath"
+                                                           GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                                                <CheckBox fx:id="ckbIVExtraHitcheck" mnemonicParsing="false"
+                                                          text="%ckbIVExtraHitcheck.text" GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="8"/>
+                                                <CheckBox fx:id="ckbIVDarkScreen" mnemonicParsing="false"
+                                                          text="%ckbIVDarkScreen.text" GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="9"/>
+                                                <TextArea fx:id="taIVMissionBriefing" prefHeight="200.0"
+                                                          prefWidth="200.0" GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="10" GridPane.rowSpan="2"/>
+                                            </children>
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                        </GridPane>
+                                    </content>
+                                </ScrollPane>
                             </children>
                         </VBox>
                     </content>
                 </Tab>
                 <Tab text="%tabMIF.text">
                     <content>
-                        <VBox spacing="5.0">
+                        <VBox>
                             <padding>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </padding>
                             <children>
-                                <GridPane vgap="15.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Label fx:id="lblMMaxNumLines" text="%lblMMaxNumLines.text"/>
-                                        <Label fx:id="lblMMaxNumHalfWidthCharactersInLine"
-                                               text="%lblMMaxNumHalfWidthCharactersInLine.text" GridPane.rowIndex="1"/>
-                                        <Label fx:id="lblMReadEncoding" text="%lblMReadEncoding.text"
-                                               GridPane.rowIndex="2"/>
-                                        <Label fx:id="lblMWriteEncoding" text="%lblMWriteEncoding.text"
-                                               GridPane.rowIndex="3"/>
-                                        <TextField fx:id="tfMMaxNumLines" GridPane.columnIndex="1"/>
-                                        <TextField fx:id="tfMMaxNumHalfWidthCharactersInLine" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="1"/>
-                                        <TextField fx:id="tfMReadEncoding" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="2"/>
-                                        <TextField fx:id="tfMWriteEncoding" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="3"/>
-                                    </children>
-                                </GridPane>
+                                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <GridPane vgap="15.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
+                                            <children>
+                                                <Label fx:id="lblMMaxNumLines" text="%lblMMaxNumLines.text"/>
+                                                <Label fx:id="lblMMaxNumHalfWidthCharactersInLine"
+                                                       text="%lblMMaxNumHalfWidthCharactersInLine.text"
+                                                       GridPane.rowIndex="1"/>
+                                                <Label fx:id="lblMReadEncoding" text="%lblMReadEncoding.text"
+                                                       GridPane.rowIndex="2"/>
+                                                <Label fx:id="lblMWriteEncoding" text="%lblMWriteEncoding.text"
+                                                       GridPane.rowIndex="3"/>
+                                                <TextField fx:id="tfMMaxNumLines" GridPane.columnIndex="1"/>
+                                                <TextField fx:id="tfMMaxNumHalfWidthCharactersInLine"
+                                                           GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                                <TextField fx:id="tfMReadEncoding" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="2"/>
+                                                <TextField fx:id="tfMWriteEncoding" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="3"/>
+                                            </children>
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                        </GridPane>
+                                    </content>
+                                </ScrollPane>
                             </children>
                         </VBox>
                     </content>
