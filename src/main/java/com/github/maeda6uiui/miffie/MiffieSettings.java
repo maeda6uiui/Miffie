@@ -95,7 +95,7 @@ public class MiffieSettings {
          * Returns CSS string.
          * This method attempts to load custom CSS from file if {@code name} is "custom"
          * and a valid string is set to {@code fromFile}.
-         * It returns no CSS if "system" is set to {@code name}.
+         * It returns no CSS if {@code name} is "system".
          *
          * @return CSS string
          */
