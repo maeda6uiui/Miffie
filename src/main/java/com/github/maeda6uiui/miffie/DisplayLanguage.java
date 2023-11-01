@@ -1,33 +1,23 @@
 package com.github.maeda6uiui.miffie;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Data class for display language info
  *
  * @author maeda6uiui
  */
 public class DisplayLanguage {
-    public static class GeneralAvailable {
-        public String name;
-        public String code;
-    }
+    public String code;
+    public String localName;
+    public String enName;
+    public boolean beta = false;
 
-    public static class Beta {
-        public String name;
-        public String code;
-    }
+    @Override
+    public String toString() {
+        String ret = String.format("%s (%s)", localName, code);
+        if (beta) {
+            ret += " |beta";
+        }
 
-    @JsonProperty("ga")
-    public List<GeneralAvailable> gaLanguages;
-    @JsonProperty("beta")
-    public List<Beta> betaLanguages;
-
-    public DisplayLanguage() {
-        gaLanguages = new ArrayList<>();
-        betaLanguages = new ArrayList<>();
+        return ret;
     }
 }

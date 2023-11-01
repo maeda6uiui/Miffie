@@ -1,10 +1,13 @@
-ga:
-  - name: English
-    code: en
-  - name: 日本語 (Japanese)
-    code: ja
-  - name: Русский (Russian)
-    code: ru
-beta:
-  - name: 한국어 (Korean)
-    code: ko
+- code: en
+  localName: English
+  enName: English
+- code: ja
+  localName: 日本語
+  enName: Japanese
+- code: ru
+  localName: Русский
+  enName: Russian
+- code: ko
+  localName: 한국어
+  enName: Korean
+  beta: true
