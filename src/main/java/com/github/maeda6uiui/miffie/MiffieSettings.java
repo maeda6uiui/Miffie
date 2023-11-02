@@ -45,6 +45,7 @@ public class MiffieSettings {
 
         public ThemeSettings() {
             name = "primer_light";
+            fromFile = "";
         }
 
         private String getBuiltInCSS() {

@@ -47,6 +47,7 @@ public class PreferencesViewModel {
     public PreferencesViewModel() {
         lDisplayLanguage = new SimpleObjectProperty<>();
         tTheme = new SimpleObjectProperty<>();
+        tCustomThemeFilepath = new SimpleStringProperty();
         ivDarkScreen = new SimpleBooleanProperty();
         ivExtraHitcheck = new SimpleBooleanProperty();
         ivMissionBriefing = new SimpleStringProperty();
@@ -62,7 +63,6 @@ public class PreferencesViewModel {
         mMaxNumLines = new SimpleIntegerProperty();
         mReadEncoding = new SimpleStringProperty();
         mWriteEncoding = new SimpleStringProperty();
-        tCustomThemeFilepath = new SimpleStringProperty();
         wWindowHeight = new SimpleIntegerProperty();
         wWindowWidth = new SimpleIntegerProperty();
     }
@@ -78,6 +78,7 @@ public class PreferencesViewModel {
     public boolean populate(
             ComboBox<DisplayLanguage> cbLDisplayLanguage,
             ComboBox<MiffieTheme> cbTTheme) {
+        //Combobox
         if (DisplayLanguages.get().isEmpty()) {
             logger.error("Cannot populate the preferences view because language list is empty");
             return false;
@@ -125,6 +126,44 @@ public class PreferencesViewModel {
         cbTTheme.setCellFactory(themeFactory);
         cbTTheme.setButtonCell(themeFactory.call(null));
 
+        //Initial value
+        MiffieSettings.get().ifPresent(settings -> {
+            cbLDisplayLanguageItems
+                    .stream()
+                    .filter(p -> p.code.equals(settings.languageSettings.code))
+                    .findFirst()
+                    .ifPresent(this::setlDisplayLanguage);
+
+            cbTThemeItems
+                    .stream()
+                    .filter(p -> p.name().equals(settings.themeSettings.name))
+                    .findFirst()
+                    .ifPresent(this::settTheme);
+            this.settCustomThemeFilepath(settings.themeSettings.fromFile);
+
+            MiffieSettings.InitialValue.MainView ivMainView = settings.initialValue.mainView;
+            this.setIvDarkScreen(ivMainView.ckbDarkScreen);
+            this.setIvExtraHitcheck(ivMainView.ckbExtraHitcheck);
+            this.setIvMissionBriefing(ivMainView.taMissionBriefing);
+            this.setIvArticleDefinitionFilepath(ivMainView.tfArticleDefinitionFilepath);
+            this.setIvBD1Filepath(ivMainView.tfBD1Filepath);
+            this.setIvImage1Filepath(ivMainView.tfImage1Filepath);
+            this.setIvImage2Filepath(ivMainView.tfImage2Filepath);
+            this.setIvMissionLongName(ivMainView.tfMissionLongName);
+            this.setIvMissionShortName(ivMainView.tfMissionShortName);
+            this.setIvPD1Filepath(ivMainView.tfPD1Filepath);
+            this.setIvSkyType(ivMainView.cbSkyType);
+
+            MiffieSettings.MIFSettings mifSettings = settings.mifSettings;
+            this.setmMaxNumHalfWidthCharactersInLine(mifSettings.maxNumHalfWidthCharactersInLine);
+            this.setmMaxNumLines(mifSettings.maxNumLines);
+            this.setmReadEncoding(mifSettings.readEncoding);
+            this.setmWriteEncoding(mifSettings.writeEncoding);
+
+            this.setwWindowHeight(settings.windowSettings.height);
+            this.setwWindowWidth(settings.windowSettings.width);
+        });
+
         return true;
     }
 
@@ -144,8 +183,8 @@ public class PreferencesViewModel {
         return lDisplayLanguage;
     }
 
-    public void setlDisplayLanguage(SingleSelectionModel<DisplayLanguage> lDisplayLanguage) {
-        this.lDisplayLanguage.set(lDisplayLanguage);
+    public void setlDisplayLanguage(DisplayLanguage displayLanguage) {
+        this.lDisplayLanguage.get().select(displayLanguage);
     }
 
     public SingleSelectionModel<MiffieTheme> gettTheme() {
@@ -156,8 +195,8 @@ public class PreferencesViewModel {
         return tTheme;
     }
 
-    public void settTheme(SingleSelectionModel<MiffieTheme> tTheme) {
-        this.tTheme.set(tTheme);
+    public void settTheme(MiffieTheme theme) {
+        this.tTheme.get().select(theme);
     }
 
     public boolean isIvDarkScreen() {
