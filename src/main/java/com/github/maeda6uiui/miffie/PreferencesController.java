@@ -31,6 +31,10 @@ public class PreferencesController implements Initializable {
     @FXML
     private Button btnTBrowseCustomTheme;
     @FXML
+    private Button btnTPreviewTheme;
+    @FXML
+    private Button btnMValidateEncoding;
+    @FXML
     private ComboBox<DisplayLanguage> cbLDisplayLanguage;
     @FXML
     private ComboBox<MiffieTheme> cbTTheme;
@@ -164,6 +168,11 @@ public class PreferencesController implements Initializable {
         }
     }
 
+    private void closeWindow() {
+        Stage stage = (Stage) lblLDisplayLanguage.getScene().getWindow();
+        stage.close();
+    }
+
     @FXML
     public void onActionCbTTheme(ActionEvent event) {
         if (cbTTheme.getSelectionModel().getSelectedItem().name().equals("custom")) {
@@ -172,6 +181,7 @@ public class PreferencesController implements Initializable {
         } else {
             tfTCustomThemeFilepath.setDisable(true);
             btnTBrowseCustomTheme.setDisable(true);
+            tfTCustomThemeFilepath.setText("");
         }
     }
 
@@ -196,8 +206,13 @@ public class PreferencesController implements Initializable {
         tfTCustomThemeFilepath.setText(file.toString());
     }
 
-    private void closeWindow() {
-        Stage stage = (Stage) lblLDisplayLanguage.getScene().getWindow();
-        stage.close();
+    @FXML
+    protected void onActionBtnTPreviewTheme(ActionEvent event) {
+
+    }
+
+    @FXML
+    protected void onActionBtnMValidateEncoding(ActionEvent event) {
+
     }
 }
