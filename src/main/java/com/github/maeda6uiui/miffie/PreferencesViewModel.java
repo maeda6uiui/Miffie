@@ -80,11 +80,11 @@ public class PreferencesViewModel {
             ComboBox<MiffieTheme> cbTTheme) {
         if (DisplayLanguages.get().isEmpty()) {
             logger.error("Cannot populate the preferences view because language list is empty");
-            return true;
+            return false;
         }
         if (MiffieThemes.get().isEmpty()) {
             logger.error("Cannot populate the preferences view because theme list is empty");
-            return true;
+            return false;
         }
 
         cbLDisplayLanguageItems = DisplayLanguages.get().get().getSortedList();
@@ -125,7 +125,7 @@ public class PreferencesViewModel {
         cbTTheme.setCellFactory(themeFactory);
         cbTTheme.setButtonCell(themeFactory.call(null));
 
-        return false;
+        return true;
     }
 
     public boolean isMIFReadEncodingSupported() {

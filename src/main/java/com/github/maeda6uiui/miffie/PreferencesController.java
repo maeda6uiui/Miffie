@@ -1,11 +1,11 @@
 package com.github.maeda6uiui.miffie;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,10 +156,8 @@ public class PreferencesController implements Initializable {
 
         boolean b = viewModel.populate(cbLDisplayLanguage, cbTTheme);
         if (!b) {
-            logger.error("Failed to initialize the preferences view");
-
-            Stage stage = (Stage) lblLDisplayLanguage.getScene().getWindow();
-            stage.close();
+            logger.error("Failed to initialize the preferences view, this application will be terminated");
+            Platform.exit();
         }
     }
 
