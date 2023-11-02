@@ -3,14 +3,20 @@ package com.github.maeda6uiui.miffie;
 import com.github.dabasan.jxm.mif.MissionInfo;
 import com.github.dabasan.jxm.mif.SkyType;
 import javafx.beans.property.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.SingleSelectionModel;
+import javafx.util.Callback;
 import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * View model for the main view
@@ -40,7 +46,7 @@ public class MainViewModel {
     private MiffieMIFModel mifModel;
     private MiffieSettings.MIFSettings mifSettings;
 
-    public MainViewModel(List<Pair<SkyType, String>> cbSkyTypeItems) {
+    public MainViewModel() {
         missionShortName = new SimpleStringProperty();
         missionLongName = new SimpleStringProperty();
         bd1Filepath = new SimpleStringProperty();
@@ -53,21 +59,83 @@ public class MainViewModel {
         darkScreen = new SimpleBooleanProperty();
         missionBriefing = new SimpleStringProperty();
 
-        this.cbSkyTypeItems = cbSkyTypeItems;
-
         errorMessageLoad = new SimpleStringProperty();
         errorMessageSave = new SimpleStringProperty();
 
         mifModel = new MiffieMIFModel();
 
-        MiffieSettings.get().ifPresent(settings -> mifSettings = settings.mifSettings);
         MiffieSettings.get().ifPresentOrElse(
                 settings -> mifSettings = settings.mifSettings,
                 () -> {
-                    logger.error("Settings is not available. Fall back to default settings");
+                    logger.warn("Settings is not available. Fall back to default settings");
                     mifSettings = new MiffieSettings.MIFSettings();
                 }
         );
+    }
+
+    /**
+     * Populate the view.
+     * Call this method after binding is done.
+     *
+     * @param resources Resources for i18n
+     * @param cbSkyType Combobox for sky type
+     * @return {@code true} if success, {@code false} if error
+     */
+    public boolean populate(
+            ResourceBundle resources,
+            ComboBox<Pair<SkyType, String>> cbSkyType) {
+        //Combobox
+        cbSkyTypeItems = new ArrayList<Pair<SkyType, String>>();
+        cbSkyTypeItems.add(new Pair<>(SkyType.NONE, resources.getString("cbSkyType.text.none")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.SUNNY, resources.getString("cbSkyType.text.sunny")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.CLOUDY, resources.getString("cbSkyType.text.cloudy")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.NIGHT, resources.getString("cbSkyType.text.night")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.EVENING, resources.getString("cbSkyType.text.evening")));
+        cbSkyTypeItems.add(new Pair<>(SkyType.WILDERNESS, resources.getString("cbSkyType.text.wilderness")));
+
+        cbSkyType.getItems().addAll(cbSkyTypeItems);
+        cbSkyType.setValue(cbSkyTypeItems.get(0));
+
+        Callback<ListView<Pair<SkyType, String>>, ListCell<Pair<SkyType, String>>> factory
+                = lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Pair<SkyType, String> item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setText("");
+                } else {
+                    setText(item.getValue());
+                }
+            }
+        };
+        cbSkyType.setCellFactory(factory);
+        cbSkyType.setButtonCell(factory.call(null));
+
+        //Initial value
+        if (MiffieSettings.get().isEmpty()) {
+            logger.error("Cannot populate the view because settings is empty");
+            return false;
+        }
+
+        MiffieSettings.InitialValue.MainView ivMainView = MiffieSettings.get().get().initialValue.mainView;
+        this.setMissionShortName(ivMainView.tfMissionShortName);
+        this.setMissionLongName(ivMainView.tfMissionLongName);
+        this.setBd1Filepath(ivMainView.tfBD1Filepath);
+        this.setPd1Filepath(ivMainView.tfPD1Filepath);
+        if (ivMainView.cbSkyType >= 0 && ivMainView.cbSkyType < cbSkyTypeItems.size()) {
+            cbSkyType.setValue(cbSkyTypeItems.get(ivMainView.cbSkyType));
+        } else {
+            logger.warn("Initial index of cbSkyBox out of range (got {})", ivMainView.cbSkyType);
+        }
+        this.setImage1Filepath(ivMainView.tfImage1Filepath);
+        this.setImage2Filepath(ivMainView.tfImage2Filepath);
+        this.setArticleDefinitionFilepath(ivMainView.tfArticleDefinitionFilepath);
+        this.setExtraHitcheck(ivMainView.ckbExtraHitcheck);
+        this.setDarkScreen(ivMainView.ckbDarkScreen);
+        this.setMissionBriefing(ivMainView.taMissionBriefing);
+
+        return true;
     }
 
     public void loadMIF(File file) {
@@ -259,6 +327,10 @@ public class MainViewModel {
         missionBriefing.forEach(line -> sb.append(line + LINE_SEPARATOR));
 
         this.missionBriefing.set(sb.toString());
+    }
+
+    public void setMissionBriefing(String missionBriefing) {
+        this.missionBriefing.set(missionBriefing);
     }
 
     public String getErrorMessageLoad() {

@@ -1,6 +1,7 @@
 package com.github.maeda6uiui.miffie;
 
 import com.github.dabasan.jxm.mif.SkyType;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -104,60 +103,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Combobox
-        var cbSkyTypeItems = new ArrayList<Pair<SkyType, String>>();
-        cbSkyTypeItems.add(new Pair<>(SkyType.NONE, resources.getString("cbSkyType.text.none")));
-        cbSkyTypeItems.add(new Pair<>(SkyType.SUNNY, resources.getString("cbSkyType.text.sunny")));
-        cbSkyTypeItems.add(new Pair<>(SkyType.CLOUDY, resources.getString("cbSkyType.text.cloudy")));
-        cbSkyTypeItems.add(new Pair<>(SkyType.NIGHT, resources.getString("cbSkyType.text.night")));
-        cbSkyTypeItems.add(new Pair<>(SkyType.EVENING, resources.getString("cbSkyType.text.evening")));
-        cbSkyTypeItems.add(new Pair<>(SkyType.WILDERNESS, resources.getString("cbSkyType.text.wilderness")));
-
-        cbSkyType.getItems().addAll(cbSkyTypeItems);
-        cbSkyType.setValue(cbSkyTypeItems.get(0));
-
-        Callback<ListView<Pair<SkyType, String>>, ListCell<Pair<SkyType, String>>> factory
-                = lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(Pair<SkyType, String> item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setText("");
-                } else {
-                    setText(item.getValue());
-                }
-            }
-        };
-        cbSkyType.setCellFactory(factory);
-        cbSkyType.setButtonCell(factory.call(null));
-
-        //Initial values
-        MiffieSettings.get().ifPresent(settings -> {
-            MiffieSettings.InitialValue.MainView ivMain = settings.initialValue.mainView;
-
-            ckbExtraHitcheck.setSelected(ivMain.ckbExtraHitcheck);
-            ckbDarkScreen.setSelected(ivMain.ckbDarkScreen);
-            tfMissionShortName.setText(ivMain.tfMissionShortName);
-            tfMissionLongName.setText(ivMain.tfMissionLongName);
-            tfBD1Filepath.setText(ivMain.tfBD1Filepath);
-            tfPD1Filepath.setText(ivMain.tfPD1Filepath);
-
-            if (ivMain.cbSkyType >= 0 && ivMain.cbSkyType < cbSkyTypeItems.size()) {
-                cbSkyType.setValue(cbSkyTypeItems.get(ivMain.cbSkyType));
-            } else {
-                logger.warn("Initial index of cbSkyBox out of range (got {})", ivMain.cbSkyType);
-            }
-
-            tfImage1Filepath.setText(ivMain.tfImage1Filepath);
-            tfImage2Filepath.setText(ivMain.tfImage2Filepath);
-            tfArticleDefinitionFilepath.setText(ivMain.tfArticleDefinitionFilepath);
-            taMissionBriefing.setText(ivMain.taMissionBriefing);
-        });
-
-        //Set up view model
-        viewModel = new MainViewModel(cbSkyTypeItems);
-
+        viewModel = new MainViewModel();
         viewModel.missionShortNameProperty().bindBidirectional(tfMissionShortName.textProperty());
         viewModel.missionLongNameProperty().bindBidirectional(tfMissionLongName.textProperty());
         viewModel.bd1FilepathProperty().bindBidirectional(tfBD1Filepath.textProperty());
@@ -169,6 +115,12 @@ public class MainController implements Initializable {
         viewModel.extraHitcheckProperty().bindBidirectional(ckbExtraHitcheck.selectedProperty());
         viewModel.darkScreenProperty().bindBidirectional(ckbDarkScreen.selectedProperty());
         viewModel.missionBriefingProperty().bindBidirectional(taMissionBriefing.textProperty());
+
+        boolean b = viewModel.populate(resources, cbSkyType);
+        if (!b) {
+            logger.error("Failed to initialize the main view, this application will be terminated");
+            Platform.exit();
+        }
     }
 
     @FXML
