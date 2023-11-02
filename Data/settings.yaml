@@ -8,8 +8,8 @@ theme:
   fromFile:
 initialValue:
   main:
-    tfMissionShortName:
-    tfMissionLongName:
+    tfMissionShortName: ""
+    tfMissionLongName: ""
     tfBD1Filepath: .\
     tfPD1Filepath: .\addon\
     cbSkyType: 0
@@ -18,7 +18,7 @@ initialValue:
     tfArticleDefinitionFilepath: "!"
     ckbExtraHitcheck: false
     ckbDarkScreen: false
-    taMissionBriefing:
+    taMissionBriefing: ""
 mif:
   maxNumLines: 10
   maxNumHalfWidthCharactersInLine: 30
