@@ -1,0 +1,19 @@
+themes:
+  - name: primer_light
+    displayName: Primer Light
+  - name: primer_dark
+    displayName: Primer Dark
+  - name: nord_light
+    displayName: Nord Light
+  - name: nord_dark
+    displayName: Nord Dark
+  - name: cupertino_light
+    displayName: Cupertino Light
+  - name: cupertino_dark
+    displayName: Cupertino Dark
+  - name: dracula
+    displayName: Dracula
+  - name: system
+    displayName: System
+  - name: custom
+    displayName: Custom
