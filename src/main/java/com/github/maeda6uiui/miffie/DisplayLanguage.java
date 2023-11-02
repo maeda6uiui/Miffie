@@ -11,6 +11,10 @@ public class DisplayLanguage {
     public String enName;
     public boolean beta = false;
 
+    public String getEnName() {
+        return enName;
+    }
+
     @Override
     public String toString() {
         String ret = String.format("%s (%s)", localName, code);
