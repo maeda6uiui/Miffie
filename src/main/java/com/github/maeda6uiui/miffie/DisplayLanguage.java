@@ -19,7 +19,7 @@ public class DisplayLanguage {
     public String toString() {
         String ret = String.format("%s (%s)", localName, code);
         if (beta) {
-            ret += " |beta";
+            ret += " | beta";
         }
 
         return ret;
