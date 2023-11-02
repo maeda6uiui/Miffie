@@ -200,7 +200,7 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiQuit(ActionEvent event) {
-
+        Platform.exit();
     }
 
     @FXML
