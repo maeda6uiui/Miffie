@@ -1,13 +1,14 @@
-- code: en
-  localName: English
-  enName: English
-- code: ja
-  localName: 日本語
-  enName: Japanese
-- code: ru
-  localName: Русский
-  enName: Russian
-- code: ko
-  localName: 한국어
-  enName: Korean
-  beta: true
+languages:
+  - code: en
+    localName: English
+    enName: English
+  - code: ja
+    localName: 日本語
+    enName: Japanese
+  - code: ru
+    localName: Русский
+    enName: Russian
+  - code: ko
+    localName: 한국어
+    enName: Korean
+    beta: true
