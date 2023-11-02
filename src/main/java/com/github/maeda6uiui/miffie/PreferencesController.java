@@ -6,10 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -163,21 +166,38 @@ public class PreferencesController implements Initializable {
 
     @FXML
     public void onActionCbTTheme(ActionEvent event) {
-
+        if (cbTTheme.getSelectionModel().getSelectedItem().name().equals("custom")) {
+            tfTCustomThemeFilepath.setDisable(false);
+            btnTBrowseCustomTheme.setDisable(false);
+        } else {
+            tfTCustomThemeFilepath.setDisable(true);
+            btnTBrowseCustomTheme.setDisable(true);
+        }
     }
 
     @FXML
     protected void onActionBtnCancel(ActionEvent event) {
-
+        this.closeWindow();
     }
 
     @FXML
     protected void onActionBtnOK(ActionEvent event) {
-
+        this.closeWindow();
     }
 
     @FXML
     protected void onActionBtnTBrowseCustomTheme(ActionEvent event) {
+        var fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(lblLDisplayLanguage.getScene().getWindow());
+        if (file == null) {
+            return;
+        }
 
+        tfTCustomThemeFilepath.setText(file.toString());
+    }
+
+    private void closeWindow() {
+        Stage stage = (Stage) lblLDisplayLanguage.getScene().getWindow();
+        stage.close();
     }
 }
