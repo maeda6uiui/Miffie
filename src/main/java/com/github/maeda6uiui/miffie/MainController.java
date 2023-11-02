@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -99,7 +100,7 @@ public class MainController implements Initializable {
 
     private MainViewModel viewModel;
 
-    private File currentFile;
+    private Optional<File> currentFile;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -121,6 +122,8 @@ public class MainController implements Initializable {
             logger.error("Failed to initialize the main view, this application will be terminated");
             Platform.exit();
         }
+
+        currentFile = Optional.empty();
     }
 
     @FXML
@@ -137,16 +140,15 @@ public class MainController implements Initializable {
         }
 
         viewModel.loadMIF(file);
-        currentFile = file;
+        currentFile = Optional.of(file);
     }
 
     @FXML
     protected void onActionMiSave(ActionEvent event) {
-        if (currentFile == null) {
-            this.onActionMiSaveAs(event);
-        } else {
-            viewModel.saveMIF(currentFile);
-        }
+        currentFile.ifPresentOrElse(
+                viewModel::saveMIF,
+                () -> this.onActionMiSaveAs(event)
+        );
     }
 
     @FXML
@@ -158,7 +160,7 @@ public class MainController implements Initializable {
         }
 
         viewModel.saveMIF(file);
-        currentFile = file;
+        currentFile = Optional.of(file);
     }
 
     private void openPreferencesDialog(String locale) {
