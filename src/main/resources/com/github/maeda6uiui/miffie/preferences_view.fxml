@@ -20,7 +20,8 @@
                                     <content>
                                         <GridPane vgap="15.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                   percentWidth="30.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                                             </columnConstraints>
                                             <rowConstraints>
@@ -55,7 +56,8 @@
                                     <content>
                                         <GridPane vgap="15.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0"
+                                                                   prefWidth="100.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                                             </columnConstraints>
                                             <rowConstraints>
@@ -97,7 +99,8 @@
                                     <content>
                                         <GridPane vgap="15.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0"
+                                                                   prefWidth="100.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                                                 <ColumnConstraints/>
                                             </columnConstraints>
