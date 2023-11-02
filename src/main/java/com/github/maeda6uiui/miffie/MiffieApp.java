@@ -29,6 +29,8 @@ public class MiffieApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         MiffieSettings settings = MiffieSettings.load("./Data/settings.yaml");
+        DisplayLanguages.load("./Data/Properties/languages.yaml");
+        MiffieThemes.load("./Data/Properties/themes.yaml");
 
         Path propertiesDir = Paths.get("./Data/Properties");
         var loader = new URLClassLoader(new URL[]{propertiesDir.toUri().toURL()});
