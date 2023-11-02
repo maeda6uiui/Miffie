@@ -28,8 +28,7 @@
                                             </rowConstraints>
                                             <children>
                                                 <Label fx:id="lblLDisplayLanguage" text="%lblLDisplayLanguage.text"/>
-                                                <ComboBox fx:id="cbLDisplayLanguage" prefWidth="150.0"
-                                                          GridPane.columnIndex="1">
+                                                <ComboBox fx:id="cbLDisplayLanguage" GridPane.columnIndex="1">
                                                     <GridPane.margin>
                                                         <Insets/>
                                                     </GridPane.margin>
@@ -109,7 +108,7 @@
                                             <children>
                                                 <Label fx:id="lblTTheme" text="%lblTTheme.text"/>
                                                 <ComboBox fx:id="cbTTheme" onAction="#onActionCbTTheme"
-                                                          prefWidth="150.0" GridPane.columnIndex="1"/>
+                                                          GridPane.columnIndex="1"/>
                                                 <Label fx:id="lblTCustomTheme" text="%lblTCustomTheme.text"
                                                        GridPane.rowIndex="1"/>
                                                 <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1"
