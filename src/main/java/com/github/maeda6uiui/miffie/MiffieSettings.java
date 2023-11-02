@@ -182,7 +182,7 @@ public class MiffieSettings {
     @JsonProperty("mif")
     public MIFSettings mifSettings;
 
-    public static MiffieSettings instance;
+    private static MiffieSettings instance;
 
     private MiffieSettings() {
         languageSettings = new LanguageSettings();
