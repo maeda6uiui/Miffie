@@ -118,7 +118,8 @@
                                                         <TextField fx:id="tfTCustomThemeFilepath" disable="true"
                                                                    promptText="%tfTCustomThemeFilepath.promptText"
                                                                    HBox.hgrow="ALWAYS"/>
-                                                        <Button fx:id="btnTBrowseCustomTheme" mnemonicParsing="false"
+                                                        <Button fx:id="btnTBrowseCustomTheme" disable="true"
+                                                                mnemonicParsing="false"
                                                                 onAction="#onActionBtnTBrowseCustomTheme"
                                                                 text="%btnTBrowseCustomTheme.text"/>
                                                     </children>
