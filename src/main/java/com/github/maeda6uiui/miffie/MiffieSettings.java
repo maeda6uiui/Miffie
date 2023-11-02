@@ -185,7 +185,7 @@ public class MiffieSettings {
 
     private static MiffieSettings instance;
 
-    private MiffieSettings() {
+    public MiffieSettings() {
         languageSettings = new LanguageSettings();
         windowSettings = new WindowSettings();
         themeSettings = new ThemeSettings();
