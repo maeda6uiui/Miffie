@@ -185,6 +185,8 @@ public class PreferencesController implements Initializable {
     private void closeWindow() {
         Stage stage = (Stage) lblLDisplayLanguage.getScene().getWindow();
         stage.close();
+
+        viewModel.revertToPreviousTheme();
     }
 
     @FXML
