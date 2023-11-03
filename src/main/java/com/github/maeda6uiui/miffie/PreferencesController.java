@@ -117,6 +117,8 @@ public class PreferencesController implements Initializable {
 
     private PreferencesViewModel viewModel;
 
+    private ResourceBundle resources;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         viewModel = new PreferencesViewModel();
@@ -169,16 +171,15 @@ public class PreferencesController implements Initializable {
 
         viewModel.errorPreviewThemeProperty().addListener((obs, ov, nv) -> {
             if (nv != null && nv) {
-                String title = resources.getString("altTitle.error.text");
-                String msg = resources.getString("altErrorPreviewTheme.text");
-
                 var alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(title);
-                alert.setHeaderText(title);
-                alert.setContentText(msg);
+                alert.setTitle(resources.getString("alt.error.title.text"));
+                alert.setHeaderText(resources.getString("alt.error.header.text"));
+                alert.setContentText(resources.getString("alt.error.msg.previewTheme.text"));
                 alert.showAndWait();
             }
         });
+
+        this.resources = resources;
     }
 
     private void closeWindow() {
@@ -235,6 +236,20 @@ public class PreferencesController implements Initializable {
 
     @FXML
     protected void onActionBtnMValidateEncodings(ActionEvent event) {
-
+        boolean bReadEncoding = viewModel.isMIFReadEncodingSupported();
+        boolean bWriteEncoding = viewModel.isMIFWriteEncodingSupported();
+        if (bReadEncoding && bWriteEncoding) {
+            var alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(resources.getString("alt.info.title.text"));
+            alert.setHeaderText(resources.getString("alt.info.header.text"));
+            alert.setContentText(resources.getString("alt.info.msg.validateMIFEncodings.text"));
+            alert.showAndWait();
+        } else {
+            var alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(resources.getString("alt.error.title.text"));
+            alert.setHeaderText(resources.getString("alt.error.header.text"));
+            alert.setContentText(resources.getString("alt.error.msg.validateMIFEncodings.text"));
+            alert.showAndWait();
+        }
     }
 }
