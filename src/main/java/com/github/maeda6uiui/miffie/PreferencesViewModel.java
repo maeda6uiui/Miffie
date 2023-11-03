@@ -1,5 +1,6 @@
 package com.github.maeda6uiui.miffie;
 
+import javafx.application.Application;
 import javafx.beans.property.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * View model for the preferences view
@@ -44,6 +46,10 @@ public class PreferencesViewModel {
     private List<DisplayLanguage> cbLDisplayLanguageItems;
     private List<MiffieTheme> cbTThemeItems;
 
+
+    private BooleanProperty errorPreviewTheme;
+    private String currentUserStylesheet;
+
     public PreferencesViewModel() {
         lDisplayLanguage = new SimpleObjectProperty<>();
         tTheme = new SimpleObjectProperty<>();
@@ -65,6 +71,9 @@ public class PreferencesViewModel {
         mWriteEncoding = new SimpleStringProperty();
         wWindowHeight = new SimpleIntegerProperty();
         wWindowWidth = new SimpleIntegerProperty();
+
+        errorPreviewTheme = new SimpleBooleanProperty();
+        currentUserStylesheet = Application.getUserAgentStylesheet();
     }
 
     /**
@@ -165,6 +174,32 @@ public class PreferencesViewModel {
         });
 
         return true;
+    }
+
+    public void previewSelectedTheme() {
+        MiffieTheme selectedTheme = this.gettTheme().getSelectedItem();
+
+        var themeSettings = new MiffieSettings.ThemeSettings();
+        themeSettings.name = selectedTheme.name();
+        if (selectedTheme.name().equals("custom")) {
+            themeSettings.fromFile = this.gettCustomThemeFilepath();
+        }
+
+        Optional<String> css = themeSettings.getCSS();
+        css.ifPresentOrElse(
+                s -> {
+                    Application.setUserAgentStylesheet(s);
+                    this.setErrorPreviewTheme(false);
+                },
+                () -> {
+                    this.setErrorPreviewTheme(true);
+                    logger.warn("Failed to load and apply CSS");
+                }
+        );
+    }
+
+    public void revertToPreviousTheme() {
+        Application.setUserAgentStylesheet(currentUserStylesheet);
     }
 
     public boolean isMIFReadEncodingSupported() {
@@ -413,5 +448,17 @@ public class PreferencesViewModel {
 
     public void setwWindowWidth(int wWindowWidth) {
         this.wWindowWidth.set(wWindowWidth);
+    }
+
+    public boolean getErrorPreviewTheme() {
+        return errorPreviewTheme.get();
+    }
+
+    public BooleanProperty errorPreviewThemeProperty() {
+        return errorPreviewTheme;
+    }
+
+    public void setErrorPreviewTheme(boolean errorPreviewTheme) {
+        this.errorPreviewTheme.set(errorPreviewTheme);
     }
 }

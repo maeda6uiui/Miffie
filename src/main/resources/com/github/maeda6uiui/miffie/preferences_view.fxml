@@ -3,8 +3,9 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21"
       fx:controller="com.github.maeda6uiui.miffie.PreferencesController">
     <children>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
@@ -273,9 +274,9 @@
                                                 <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0"
                                                       GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                     <children>
-                                                        <Button fx:id="btnMValidateEncoding" mnemonicParsing="false"
-                                                                onAction="#onActionBtnMValidateEncoding"
-                                                                text="%btnMValidateEncoding.text"/>
+                                                        <Button fx:id="btnMValidateEncodings" mnemonicParsing="false"
+                                                                onAction="#onActionBtnMValidateEncodings"
+                                                                text="%btnMValidateEncodings.text"/>
                                                     </children>
                                                 </HBox>
                                             </children>

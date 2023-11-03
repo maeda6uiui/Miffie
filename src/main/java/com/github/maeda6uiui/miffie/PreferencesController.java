@@ -33,7 +33,7 @@ public class PreferencesController implements Initializable {
     @FXML
     private Button btnTPreviewTheme;
     @FXML
-    private Button btnMValidateEncoding;
+    private Button btnMValidateEncodings;
     @FXML
     private ComboBox<DisplayLanguage> cbLDisplayLanguage;
     @FXML
@@ -166,6 +166,19 @@ public class PreferencesController implements Initializable {
             logger.error("Failed to initialize the preferences view, this application will be terminated");
             Platform.exit();
         }
+
+        viewModel.errorPreviewThemeProperty().addListener((obs, ov, nv) -> {
+            if (nv != null && nv) {
+                String title = resources.getString("altTitle.error.text");
+                String msg = resources.getString("altErrorPreviewTheme.text");
+
+                var alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(title);
+                alert.setHeaderText(title);
+                alert.setContentText(msg);
+                alert.showAndWait();
+            }
+        });
     }
 
     private void closeWindow() {
@@ -182,6 +195,12 @@ public class PreferencesController implements Initializable {
             tfTCustomThemeFilepath.setDisable(true);
             btnTBrowseCustomTheme.setDisable(true);
             tfTCustomThemeFilepath.setText("");
+        }
+
+        if (cbTTheme.getSelectionModel().getSelectedItem().name().equals("system")) {
+            btnTPreviewTheme.setDisable(true);
+        } else {
+            btnTPreviewTheme.setDisable(false);
         }
     }
 
@@ -208,11 +227,14 @@ public class PreferencesController implements Initializable {
 
     @FXML
     protected void onActionBtnTPreviewTheme(ActionEvent event) {
-
+        lblLDisplayLanguage.getScene().getWindow().setOnCloseRequest(e -> {
+            viewModel.revertToPreviousTheme();
+        });
+        viewModel.previewSelectedTheme();
     }
 
     @FXML
-    protected void onActionBtnMValidateEncoding(ActionEvent event) {
+    protected void onActionBtnMValidateEncodings(ActionEvent event) {
 
     }
 }
