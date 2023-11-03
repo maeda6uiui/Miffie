@@ -228,9 +228,6 @@ public class PreferencesController implements Initializable {
 
     @FXML
     protected void onActionBtnTPreviewTheme(ActionEvent event) {
-        lblLDisplayLanguage.getScene().getWindow().setOnCloseRequest(e -> {
-            viewModel.revertToPreviousTheme();
-        });
         viewModel.previewSelectedTheme();
     }
 
