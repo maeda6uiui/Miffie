@@ -243,12 +243,23 @@ public class PreferencesController implements Initializable {
             alert.setHeaderText(resources.getString("alt.info.header.text"));
             alert.setContentText(resources.getString("alt.info.msg.validateMIFEncodings.text"));
             alert.showAndWait();
-        } else {
-            var alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(resources.getString("alt.error.title.text"));
-            alert.setHeaderText(resources.getString("alt.error.header.text"));
-            alert.setContentText(resources.getString("alt.error.msg.validateMIFEncodings.text"));
-            alert.showAndWait();
+
+            return;
         }
+
+        var alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(resources.getString("alt.error.title.text"));
+        alert.setHeaderText(resources.getString("alt.error.header.text"));
+
+        String msg = resources.getString("alt.error.msg.validateMIFEncodings.text");
+        String repMsg = "";
+        if (!bReadEncoding) {
+            repMsg = msg.replace("${encoding}", tfMReadEncoding.getText());
+        } else {
+            repMsg = msg.replace("${encoding}", tfMWriteEncoding.getText());
+        }
+        alert.setContentText(repMsg);
+        
+        alert.showAndWait();
     }
 }

@@ -203,11 +203,19 @@ public class PreferencesViewModel {
     }
 
     public boolean isMIFReadEncodingSupported() {
-        return Charset.isSupported(mReadEncoding.get());
+        try {
+            return Charset.isSupported(this.getmReadEncoding());
+        } catch (RuntimeException e) {
+            return false;
+        }
     }
 
     public boolean isMIFWriteEncodingSupported() {
-        return Charset.isSupported(mWriteEncoding.get());
+        try {
+            return Charset.isSupported(this.getmWriteEncoding());
+        } catch (RuntimeException e) {
+            return false;
+        }
     }
 
     public SingleSelectionModel<DisplayLanguage> getlDisplayLanguage() {
