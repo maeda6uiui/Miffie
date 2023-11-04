@@ -179,6 +179,15 @@ public class PreferencesController implements Initializable {
                 alert.showAndWait();
             }
         });
+        viewModel.errorSaveSettingsProperty().addListener((obs, ov, nv) -> {
+            if (nv != null && nv) {
+                var alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(resources.getString("alt.title.error.text"));
+                alert.setHeaderText(resources.getString("alt.saveSettings.error.header.text"));
+                alert.setContentText(resources.getString("alt.saveSettings.error.content.text"));
+                alert.showAndWait();
+            }
+        });
 
         this.resources = resources;
     }
@@ -215,6 +224,7 @@ public class PreferencesController implements Initializable {
 
     @FXML
     protected void onActionBtnOK(ActionEvent event) {
+        viewModel.saveSettings();
         this.closeWindow();
     }
 

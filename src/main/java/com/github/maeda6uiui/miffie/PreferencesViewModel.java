@@ -10,6 +10,7 @@ import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Optional;
@@ -180,7 +181,7 @@ public class PreferencesViewModel {
     }
 
     public void previewSelectedTheme() {
-        MiffieTheme selectedTheme = this.gettTheme().getSelectedItem();
+        MiffieTheme selectedTheme = this.gettTheme();
 
         var themeSettings = new MiffieSettings.ThemeSettings();
         themeSettings.name = selectedTheme.name();
@@ -221,8 +222,52 @@ public class PreferencesViewModel {
         }
     }
 
-    public SingleSelectionModel<DisplayLanguage> getlDisplayLanguage() {
-        return lDisplayLanguage.get();
+    public void saveSettings() {
+        //Create a new instance of settings and populate it
+        var settings = new MiffieSettings();
+
+        settings.languageSettings.code = this.getlDisplayLanguage().code;
+
+        settings.windowSettings.width = this.getwWindowWidth();
+        settings.windowSettings.height = this.getwWindowHeight();
+
+        settings.themeSettings.name = this.gettTheme().name();
+        settings.themeSettings.fromFile = this.gettCustomThemeFilepath();
+
+        MiffieSettings.InitialValue.MainView ivMainView = settings.initialValue.mainView;
+        ivMainView.tfMissionShortName = this.getIvMissionShortName();
+        ivMainView.tfMissionLongName = this.getIvMissionLongName();
+        ivMainView.tfBD1Filepath = this.getIvBD1Filepath();
+        ivMainView.tfPD1Filepath = this.getIvPD1Filepath();
+        ivMainView.cbSkyType = this.getIvSkyType();
+        ivMainView.tfImage1Filepath = this.getIvImage1Filepath();
+        ivMainView.tfImage2Filepath = this.getIvImage2Filepath();
+        ivMainView.tfArticleDefinitionFilepath = this.getIvArticleDefinitionFilepath();
+        ivMainView.ckbExtraHitcheck = this.isIvExtraHitcheck();
+        ivMainView.ckbDarkScreen = this.isIvDarkScreen();
+        ivMainView.taMissionBriefing = this.getIvMissionBriefing();
+
+        MiffieSettings.MIFSettings mifSettings = settings.mifSettings;
+        mifSettings.maxNumLines = this.getmMaxNumLines();
+        mifSettings.maxNumHalfWidthCharactersInLine = this.getmMaxNumHalfWidthCharactersInLine();
+        mifSettings.readEncoding = this.getmReadEncoding();
+        mifSettings.writeEncoding = this.getmWriteEncoding();
+
+        //Save the settings
+        try {
+            settings.save(MiffieSettings.FILEPATH);
+        } catch (IOException e) {
+            logger.error("Failed to save the settings", e);
+            this.setErrorSaveSettings(true);
+
+            return;
+        }
+
+        this.setErrorSaveSettings(false);
+    }
+
+    public DisplayLanguage getlDisplayLanguage() {
+        return lDisplayLanguage.get().getSelectedItem();
     }
 
     public ObjectProperty<SingleSelectionModel<DisplayLanguage>> lDisplayLanguageProperty() {
@@ -233,8 +278,8 @@ public class PreferencesViewModel {
         this.lDisplayLanguage.get().select(displayLanguage);
     }
 
-    public SingleSelectionModel<MiffieTheme> gettTheme() {
-        return tTheme.get();
+    public MiffieTheme gettTheme() {
+        return tTheme.get().getSelectedItem();
     }
 
     public ObjectProperty<SingleSelectionModel<MiffieTheme>> tThemeProperty() {
