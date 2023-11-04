@@ -40,7 +40,7 @@ public class MiffieApp extends Application {
                 loader
         );
 
-        settings.themeSettings.getCSS().ifPresent(css -> Application.setUserAgentStylesheet(css));
+        settings.themeSettings.getCSS().ifPresent(Application::setUserAgentStylesheet);
 
         Parent root = FXMLLoader.load(
                 Objects.requireNonNull(this.getClass().getResource("main_view.fxml")),
