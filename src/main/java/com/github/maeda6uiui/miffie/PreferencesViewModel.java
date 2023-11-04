@@ -46,9 +46,10 @@ public class PreferencesViewModel {
     private List<DisplayLanguage> cbLDisplayLanguageItems;
     private List<MiffieTheme> cbTThemeItems;
 
+    private String currentUserStylesheet;
 
     private BooleanProperty errorPreviewTheme;
-    private String currentUserStylesheet;
+    private BooleanProperty errorSaveSettings;
 
     public PreferencesViewModel() {
         lDisplayLanguage = new SimpleObjectProperty<>();
@@ -72,8 +73,10 @@ public class PreferencesViewModel {
         wWindowHeight = new SimpleIntegerProperty();
         wWindowWidth = new SimpleIntegerProperty();
 
-        errorPreviewTheme = new SimpleBooleanProperty();
         currentUserStylesheet = Application.getUserAgentStylesheet();
+
+        errorPreviewTheme = new SimpleBooleanProperty();
+        errorSaveSettings = new SimpleBooleanProperty();
     }
 
     /**
@@ -468,5 +471,17 @@ public class PreferencesViewModel {
 
     public void setErrorPreviewTheme(boolean errorPreviewTheme) {
         this.errorPreviewTheme.set(errorPreviewTheme);
+    }
+
+    public boolean isErrorSaveSettings() {
+        return errorSaveSettings.get();
+    }
+
+    public BooleanProperty errorSaveSettingsProperty() {
+        return errorSaveSettings;
+    }
+
+    public void setErrorSaveSettings(boolean errorSaveSettings) {
+        this.errorSaveSettings.set(errorSaveSettings);
     }
 }
