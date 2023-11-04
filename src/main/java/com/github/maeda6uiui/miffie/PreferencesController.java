@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 /**
  * Controller for the preferences view
@@ -171,10 +172,10 @@ public class PreferencesController implements Initializable {
 
         viewModel.errorPreviewThemeProperty().addListener((obs, ov, nv) -> {
             if (nv != null && nv) {
-                var alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(resources.getString("alt.error.title.text"));
-                alert.setHeaderText(resources.getString("alt.error.header.text"));
-                alert.setContentText(resources.getString("alt.error.msg.previewTheme.text"));
+                var alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(resources.getString("alt.title.warn.text"));
+                alert.setHeaderText(resources.getString("alt.previewTheme.warn.header.text"));
+                alert.setContentText(resources.getString("alt.previewTheme.warn.content.text"));
                 alert.showAndWait();
             }
         });
@@ -237,29 +238,29 @@ public class PreferencesController implements Initializable {
     protected void onActionBtnMValidateEncodings(ActionEvent event) {
         boolean bReadEncoding = viewModel.isMIFReadEncodingSupported();
         boolean bWriteEncoding = viewModel.isMIFWriteEncodingSupported();
+
+        Alert alert;
         if (bReadEncoding && bWriteEncoding) {
-            var alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(resources.getString("alt.info.title.text"));
-            alert.setHeaderText(resources.getString("alt.info.header.text"));
-            alert.setContentText(resources.getString("alt.info.msg.validateMIFEncodings.text"));
-            alert.showAndWait();
-
-            return;
-        }
-
-        var alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resources.getString("alt.error.title.text"));
-        alert.setHeaderText(resources.getString("alt.error.header.text"));
-
-        String msg = resources.getString("alt.error.msg.validateMIFEncodings.text");
-        String repMsg = "";
-        if (!bReadEncoding) {
-            repMsg = msg.replace("${encoding}", tfMReadEncoding.getText());
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(resources.getString("alt.title.info.text"));
+            alert.setHeaderText(resources.getString("alt.validateMIFEncodings.info.header.text"));
+            alert.setContentText(resources.getString("alt.validateMIFEncodings.info.content.text"));
         } else {
-            repMsg = msg.replace("${encoding}", tfMWriteEncoding.getText());
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(resources.getString("alt.title.warn.text"));
+            alert.setHeaderText(resources.getString("alt.validateMIFEncodings.warn.header.text"));
+
+            Function<Boolean, String> bToS = b -> b ? "OK" : "NG";
+            String msgTemplate = resources.getString("alt.validateMIFEncodings.warn.content.text");
+            String msg = new StringReplacer(msgTemplate)
+                    .replace("${readEncoding}", tfMReadEncoding.getText())
+                    .replace("${isReadEncodingValid}", bToS.apply(bReadEncoding))
+                    .replace("${writeEncoding}", tfMWriteEncoding.getText())
+                    .replace("${isWriteEncodingValid}", bToS.apply(bWriteEncoding))
+                    .toString();
+            alert.setContentText(msg);
         }
-        alert.setContentText(repMsg);
-        
+
         alert.showAndWait();
     }
 }
