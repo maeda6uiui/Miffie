@@ -38,7 +38,7 @@ public class MiffieSettings {
 
         public WindowSettings() {
             width = 1000;
-            height = 400;
+            height = 500;
         }
     }
 
