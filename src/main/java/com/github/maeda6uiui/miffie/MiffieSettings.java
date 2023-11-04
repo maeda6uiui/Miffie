@@ -21,6 +21,8 @@ import java.util.Optional;
 public class MiffieSettings {
     private static final Logger logger = LoggerFactory.getLogger(MiffieSettings.class);
 
+    public static final String FILEPATH = "./Data/settings.yaml";
+
     public static class LanguageSettings {
         public String code;
 

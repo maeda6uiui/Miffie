@@ -21,6 +21,8 @@ import java.util.Optional;
 public class MiffieThemes {
     private static final Logger logger = LoggerFactory.getLogger(MiffieThemes.class);
 
+    public static final String FILEPATH = "./Data/Properties/themes.yaml";
+
     public List<MiffieTheme> themes;
 
     private static MiffieThemes instance;
