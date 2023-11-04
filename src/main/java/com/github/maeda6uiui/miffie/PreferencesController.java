@@ -171,7 +171,7 @@ public class PreferencesController implements Initializable {
         }
 
         viewModel.errorPreviewThemeProperty().addListener((obs, ov, nv) -> {
-            if (nv != null && nv) {
+            if (nv != null && !nv.isEmpty()) {
                 var alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(resources.getString("alt.title.warn.text"));
                 alert.setHeaderText(resources.getString("alt.previewTheme.warn.header.text"));
@@ -180,11 +180,20 @@ public class PreferencesController implements Initializable {
             }
         });
         viewModel.errorSaveSettingsProperty().addListener((obs, ov, nv) -> {
-            if (nv != null && nv) {
-                var alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(resources.getString("alt.title.error.text"));
-                alert.setHeaderText(resources.getString("alt.saveSettings.error.header.text"));
-                alert.setContentText(resources.getString("alt.saveSettings.error.content.text"));
+            if (nv != null) {
+                Alert alert;
+                if (!nv.isEmpty()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(resources.getString("alt.title.error.text"));
+                    alert.setHeaderText(resources.getString("alt.saveSettings.error.header.text"));
+                    alert.setContentText(resources.getString("alt.saveSettings.error.content.text"));
+                } else {
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle(resources.getString("alt.title.info.text"));
+                    alert.setHeaderText(resources.getString("alt.saveSettings.info.header.text"));
+                    alert.setContentText(resources.getString("alt.saveSettings.info.content.text"));
+                }
+
                 alert.showAndWait();
             }
         });

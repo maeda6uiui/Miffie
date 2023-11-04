@@ -49,8 +49,8 @@ public class PreferencesViewModel {
 
     private String currentUserStylesheet;
 
-    private BooleanProperty errorPreviewTheme;
-    private BooleanProperty errorSaveSettings;
+    private StringProperty errorPreviewTheme;
+    private StringProperty errorSaveSettings;
 
     public PreferencesViewModel() {
         lDisplayLanguage = new SimpleObjectProperty<>();
@@ -76,8 +76,8 @@ public class PreferencesViewModel {
 
         currentUserStylesheet = Application.getUserAgentStylesheet();
 
-        errorPreviewTheme = new SimpleBooleanProperty();
-        errorSaveSettings = new SimpleBooleanProperty();
+        errorPreviewTheme = new SimpleStringProperty();
+        errorSaveSettings = new SimpleStringProperty();
     }
 
     /**
@@ -189,14 +189,16 @@ public class PreferencesViewModel {
             themeSettings.fromFile = this.gettCustomThemeFilepath();
         }
 
+        this.setErrorPreviewTheme(null);
+
         Optional<String> css = themeSettings.getCSS();
         css.ifPresentOrElse(
                 s -> {
                     Application.setUserAgentStylesheet(s);
-                    this.setErrorPreviewTheme(false);
+                    this.setErrorPreviewTheme("");
                 },
                 () -> {
-                    this.setErrorPreviewTheme(true);
+                    this.setErrorPreviewTheme("Returned CSS is empty");
                     logger.warn("Failed to load and apply CSS");
                 }
         );
@@ -254,16 +256,18 @@ public class PreferencesViewModel {
         mifSettings.writeEncoding = this.getmWriteEncoding();
 
         //Save the settings
+        this.setErrorSaveSettings(null);
+
         try {
             settings.save(MiffieSettings.FILEPATH);
         } catch (IOException e) {
             logger.error("Failed to save the settings", e);
-            this.setErrorSaveSettings(true);
+            this.setErrorSaveSettings(e.toString());
 
             return;
         }
 
-        this.setErrorSaveSettings(false);
+        this.setErrorSaveSettings("");
     }
 
     public DisplayLanguage getlDisplayLanguage() {
@@ -506,27 +510,27 @@ public class PreferencesViewModel {
         this.wWindowWidth.set(wWindowWidth);
     }
 
-    public boolean getErrorPreviewTheme() {
+    public String getErrorPreviewTheme() {
         return errorPreviewTheme.get();
     }
 
-    public BooleanProperty errorPreviewThemeProperty() {
+    public StringProperty errorPreviewThemeProperty() {
         return errorPreviewTheme;
     }
 
-    public void setErrorPreviewTheme(boolean errorPreviewTheme) {
+    public void setErrorPreviewTheme(String errorPreviewTheme) {
         this.errorPreviewTheme.set(errorPreviewTheme);
     }
 
-    public boolean isErrorSaveSettings() {
+    public String getErrorSaveSettings() {
         return errorSaveSettings.get();
     }
 
-    public BooleanProperty errorSaveSettingsProperty() {
+    public StringProperty errorSaveSettingsProperty() {
         return errorSaveSettings;
     }
 
-    public void setErrorSaveSettings(boolean errorSaveSettings) {
+    public void setErrorSaveSettings(String errorSaveSettings) {
         this.errorSaveSettings.set(errorSaveSettings);
     }
 }
