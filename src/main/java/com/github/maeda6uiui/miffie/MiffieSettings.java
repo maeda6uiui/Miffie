@@ -1,6 +1,7 @@
 package com.github.maeda6uiui.miffie;
 
 import atlantafx.base.theme.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -102,6 +103,7 @@ public class MiffieSettings {
          *
          * @return CSS string
          */
+        @JsonIgnore
         public Optional<String> getCSS() {
             if (name != null && !name.isEmpty()) {
                 if (name.equals("system")) {
