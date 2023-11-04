@@ -185,7 +185,7 @@ public class MiffieSettings {
 
     private static MiffieSettings instance;
 
-    private MiffieSettings() {
+    public MiffieSettings() {
         languageSettings = new LanguageSettings();
         windowSettings = new WindowSettings();
         themeSettings = new ThemeSettings();
@@ -225,5 +225,13 @@ public class MiffieSettings {
      */
     public static Optional<MiffieSettings> get() {
         return Optional.ofNullable(instance);
+    }
+
+    public void save(String yamlFilepath) throws IOException {
+        var mapper = new ObjectMapper(new YAMLFactory());
+        String yaml = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+
+        Path settingsFile = Paths.get(yamlFilepath);
+        Files.writeString(settingsFile, yaml);
     }
 }
