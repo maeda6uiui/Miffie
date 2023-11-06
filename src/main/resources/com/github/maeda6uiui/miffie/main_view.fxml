@@ -84,6 +84,19 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menuEdit.text">
                     <items>
+                        <MenuItem fx:id="miUndo" mnemonicParsing="false" onAction="#onActionMiUndo" text="%miUndo.text">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP"
+                                                    shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="miRedo" mnemonicParsing="false" onAction="#onActionMiRedo" text="%miRedo.text">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP"
+                                                    shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
                         <MenuItem fx:id="miCopy" mnemonicParsing="false" onAction="#onActionMiCopy" text="%miCopy.text">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP"
