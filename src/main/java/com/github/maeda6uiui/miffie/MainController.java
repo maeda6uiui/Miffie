@@ -9,6 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -128,8 +131,29 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    protected void onDragDroppedMainView(ActionEvent event) {
+    protected void onDragOverMainView(DragEvent event) {
+        if (event.getDragboard().hasFiles()) {
+            event.acceptTransferModes(TransferMode.COPY);
+        }
 
+        event.consume();
+    }
+
+    @FXML
+    protected void onDragDroppedMainView(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        boolean ok = false;
+        if (db.hasFiles()) {
+            //Open the first file
+            File file = db.getFiles().get(0);
+            viewModel.loadMIF(file);
+            currentFile = file;
+
+            ok = true;
+        }
+
+        event.setDropCompleted(ok);
+        event.consume();
     }
 
     @FXML
