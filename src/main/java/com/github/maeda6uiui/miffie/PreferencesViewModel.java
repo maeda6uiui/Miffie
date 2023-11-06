@@ -1,5 +1,6 @@
 package com.github.maeda6uiui.miffie;
 
+import com.github.dabasan.jxm.mif.SkyType;
 import javafx.application.Application;
 import javafx.beans.property.*;
 import javafx.scene.control.ComboBox;
@@ -7,13 +8,16 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.util.Callback;
+import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 /**
  * View model for the preferences view
@@ -23,6 +27,7 @@ import java.util.Optional;
 public class PreferencesViewModel {
     private static final Logger logger = LoggerFactory.getLogger(PreferencesViewModel.class);
 
+    private ObjectProperty<SingleSelectionModel<Pair<SkyType, String>>> ivSkyType;
     private ObjectProperty<SingleSelectionModel<DisplayLanguage>> lDisplayLanguage;
     private ObjectProperty<SingleSelectionModel<MiffieTheme>> tTheme;
     private BooleanProperty ivDarkScreen;
@@ -35,7 +40,6 @@ public class PreferencesViewModel {
     private StringProperty ivMissionLongName;
     private StringProperty ivMissionShortName;
     private StringProperty ivPD1Filepath;
-    private IntegerProperty ivSkyType;
     private IntegerProperty mMaxNumHalfWidthCharactersInLine;
     private IntegerProperty mMaxNumLines;
     private StringProperty mReadEncoding;
@@ -44,6 +48,7 @@ public class PreferencesViewModel {
     private IntegerProperty wWindowHeight;
     private IntegerProperty wWindowWidth;
 
+    private List<Pair<SkyType, String>> cbIVSkyTypeItems;
     private List<DisplayLanguage> cbLDisplayLanguageItems;
     private List<MiffieTheme> cbTThemeItems;
 
@@ -53,6 +58,7 @@ public class PreferencesViewModel {
     private StringProperty errorSaveSettings;
 
     public PreferencesViewModel() {
+        ivSkyType = new SimpleObjectProperty<>();
         lDisplayLanguage = new SimpleObjectProperty<>();
         tTheme = new SimpleObjectProperty<>();
         tCustomThemeFilepath = new SimpleStringProperty();
@@ -66,7 +72,6 @@ public class PreferencesViewModel {
         ivMissionLongName = new SimpleStringProperty();
         ivMissionShortName = new SimpleStringProperty();
         ivPD1Filepath = new SimpleStringProperty();
-        ivSkyType = new SimpleIntegerProperty();
         mMaxNumHalfWidthCharactersInLine = new SimpleIntegerProperty();
         mMaxNumLines = new SimpleIntegerProperty();
         mReadEncoding = new SimpleStringProperty();
@@ -84,14 +89,44 @@ public class PreferencesViewModel {
      * Populate the view.
      * Call this method after binding is done.
      *
+     * @param resources          Text resources
+     * @param cbIVSkyType        Combobox for sky type
      * @param cbLDisplayLanguage Combobox for display language
      * @param cbTTheme           Combobox for window theme
      * @return {@code true} if success, {@code false} if error
      */
     public boolean populate(
+            ResourceBundle resources,
+            ComboBox<Pair<SkyType, String>> cbIVSkyType,
             ComboBox<DisplayLanguage> cbLDisplayLanguage,
             ComboBox<MiffieTheme> cbTTheme) {
         //Combobox
+        cbIVSkyTypeItems = new ArrayList<>();
+        cbIVSkyTypeItems.add(new Pair<>(SkyType.NONE, resources.getString("cbIVSkyType.text.none")));
+        cbIVSkyTypeItems.add(new Pair<>(SkyType.SUNNY, resources.getString("cbIVSkyType.text.sunny")));
+        cbIVSkyTypeItems.add(new Pair<>(SkyType.CLOUDY, resources.getString("cbIVSkyType.text.cloudy")));
+        cbIVSkyTypeItems.add(new Pair<>(SkyType.NIGHT, resources.getString("cbIVSkyType.text.night")));
+        cbIVSkyTypeItems.add(new Pair<>(SkyType.EVENING, resources.getString("cbIVSkyType.text.evening")));
+        cbIVSkyTypeItems.add(new Pair<>(SkyType.WILDERNESS, resources.getString("cbIVSkyType.text.wilderness")));
+
+        cbIVSkyType.getItems().addAll(cbIVSkyTypeItems);
+        cbIVSkyType.setValue(cbIVSkyTypeItems.get(0));
+        Callback<ListView<Pair<SkyType, String>>, ListCell<Pair<SkyType, String>>> skyTypeFactory
+                = lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Pair<SkyType, String> item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setText("");
+                } else {
+                    setText(item.getValue());
+                }
+            }
+        };
+        cbIVSkyType.setCellFactory(skyTypeFactory);
+        cbIVSkyType.setButtonCell(skyTypeFactory.call(null));
+
         if (DisplayLanguages.get().isEmpty()) {
             logger.error("Cannot populate the preferences view because language list is empty");
             return false;
@@ -141,17 +176,9 @@ public class PreferencesViewModel {
 
         //Initial value
         MiffieSettings.get().ifPresent(settings -> {
-            cbLDisplayLanguageItems
-                    .stream()
-                    .filter(p -> p.code.equals(settings.languageSettings.code))
-                    .findFirst()
-                    .ifPresent(this::setlDisplayLanguage);
+            this.setlDisplayLanguage(settings.languageSettings.code);
 
-            cbTThemeItems
-                    .stream()
-                    .filter(p -> p.name().equals(settings.themeSettings.name))
-                    .findFirst()
-                    .ifPresent(this::settTheme);
+            this.settTheme(settings.themeSettings.name);
             this.settCustomThemeFilepath(settings.themeSettings.fromFile);
 
             MiffieSettings.InitialValue.MainView ivMainView = settings.initialValue.mainView;
@@ -270,6 +297,22 @@ public class PreferencesViewModel {
         this.setErrorSaveSettings("");
     }
 
+    public SkyType getIvSkyType() {
+        return ivSkyType.get().getSelectedItem().getKey();
+    }
+
+    public ObjectProperty<SingleSelectionModel<Pair<SkyType, String>>> ivSkyTypeProperty() {
+        return ivSkyType;
+    }
+
+    public void setIvSkyType(SkyType skyType) {
+        cbIVSkyTypeItems
+                .stream()
+                .filter(p -> p.getKey() == skyType)
+                .findFirst()
+                .ifPresent(p -> this.ivSkyType.get().select(p));
+    }
+
     public DisplayLanguage getlDisplayLanguage() {
         return lDisplayLanguage.get().getSelectedItem();
     }
@@ -278,8 +321,16 @@ public class PreferencesViewModel {
         return lDisplayLanguage;
     }
 
-    public void setlDisplayLanguage(DisplayLanguage displayLanguage) {
-        this.lDisplayLanguage.get().select(displayLanguage);
+    public void setlDisplayLanguage(DisplayLanguage language) {
+        this.lDisplayLanguage.get().select(language);
+    }
+
+    public void setlDisplayLanguage(String languageCode) {
+        cbLDisplayLanguageItems
+                .stream()
+                .filter(p -> p.code.equals(languageCode))
+                .findFirst()
+                .ifPresent(p -> this.lDisplayLanguage.get().select(p));
     }
 
     public MiffieTheme gettTheme() {
@@ -292,6 +343,14 @@ public class PreferencesViewModel {
 
     public void settTheme(MiffieTheme theme) {
         this.tTheme.get().select(theme);
+    }
+
+    public void settTheme(String themeName) {
+        cbTThemeItems
+                .stream()
+                .filter(p -> p.name().equals(themeName))
+                .findFirst()
+                .ifPresent(p -> this.tTheme.get().select(p));
     }
 
     public boolean isIvDarkScreen() {
@@ -412,18 +471,6 @@ public class PreferencesViewModel {
 
     public void setIvPD1Filepath(String ivPD1Filepath) {
         this.ivPD1Filepath.set(ivPD1Filepath);
-    }
-
-    public int getIvSkyType() {
-        return ivSkyType.get();
-    }
-
-    public IntegerProperty ivSkyTypeProperty() {
-        return ivSkyType;
-    }
-
-    public void setIvSkyType(int ivSkyType) {
-        this.ivSkyType.set(ivSkyType);
     }
 
     public int getmMaxNumHalfWidthCharactersInLine() {

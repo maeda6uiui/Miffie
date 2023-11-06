@@ -1,5 +1,6 @@
 package com.github.maeda6uiui.miffie;
 
+import com.github.dabasan.jxm.mif.SkyType;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -8,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,8 @@ public class PreferencesController implements Initializable {
     private Button btnTPreviewTheme;
     @FXML
     private Button btnMValidateEncodings;
+    @FXML
+    private ComboBox<Pair<SkyType, String>> cbIVSkyType;
     @FXML
     private ComboBox<DisplayLanguage> cbLDisplayLanguage;
     @FXML
@@ -100,8 +104,6 @@ public class PreferencesController implements Initializable {
     @FXML
     private TextField tfIVPD1Filepath;
     @FXML
-    private TextField tfIVSkyType;
-    @FXML
     private TextField tfMMaxNumHalfWidthCharactersInLine;
     @FXML
     private TextField tfMMaxNumLines;
@@ -123,6 +125,7 @@ public class PreferencesController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         viewModel = new PreferencesViewModel();
+        viewModel.ivSkyTypeProperty().bindBidirectional(cbIVSkyType.selectionModelProperty());
         viewModel.lDisplayLanguageProperty().bindBidirectional(cbLDisplayLanguage.selectionModelProperty());
         viewModel.tThemeProperty().bindBidirectional(cbTTheme.selectionModelProperty());
         viewModel.ivDarkScreenProperty().bindBidirectional(ckbIVDarkScreen.selectedProperty());
@@ -135,11 +138,6 @@ public class PreferencesController implements Initializable {
         viewModel.ivMissionLongNameProperty().bindBidirectional(tfIVMissionLongName.textProperty());
         viewModel.ivMissionShortNameProperty().bindBidirectional(tfIVMissionShortName.textProperty());
         viewModel.ivPD1FilepathProperty().bindBidirectional(tfIVPD1Filepath.textProperty());
-        Bindings.bindBidirectional(
-                tfIVSkyType.textProperty(),
-                viewModel.ivSkyTypeProperty(),
-                new NumberStringConverter()
-        );
         Bindings.bindBidirectional(
                 tfMMaxNumHalfWidthCharactersInLine.textProperty(),
                 viewModel.mMaxNumHalfWidthCharactersInLineProperty(),
@@ -164,7 +162,12 @@ public class PreferencesController implements Initializable {
                 new NumberStringConverter()
         );
 
-        boolean b = viewModel.populate(cbLDisplayLanguage, cbTTheme);
+        boolean b = viewModel.populate(
+                resources,
+                cbIVSkyType,
+                cbLDisplayLanguage,
+                cbTTheme
+        );
         if (!b) {
             logger.error("Failed to initialize the preferences view, this application will be terminated");
             Platform.exit();
