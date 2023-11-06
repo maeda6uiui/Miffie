@@ -128,6 +128,11 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    protected void onDragDroppedMainView(ActionEvent event) {
+
+    }
+
+    @FXML
     protected void onActionMiNew(ActionEvent event) {
 
     }
@@ -214,7 +219,7 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiRedo(ActionEvent event) {
-        
+
     }
 
     @FXML

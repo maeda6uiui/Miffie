@@ -36,8 +36,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.github.maeda6uiui.miffie.MainController">
+<VBox onDragDropped="#onDragDroppedMainView" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.maeda6uiui.miffie.MainController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
