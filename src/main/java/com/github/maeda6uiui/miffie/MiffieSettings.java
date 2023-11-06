@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.github.dabasan.jxm.mif.SkyType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,7 +136,7 @@ public class MiffieSettings {
             public String tfMissionLongName;
             public String tfBD1Filepath;
             public String tfPD1Filepath;
-            public int cbSkyType;
+            public SkyType cbSkyType;
             public String tfImage1Filepath;
             public String tfImage2Filepath;
             public String tfArticleDefinitionFilepath;
@@ -153,7 +154,7 @@ public class MiffieSettings {
             mainView.tfMissionLongName = "";
             mainView.tfBD1Filepath = ".\\";
             mainView.tfPD1Filepath = ".\\addon\\";
-            mainView.cbSkyType = 0;
+            mainView.cbSkyType = SkyType.NONE;
             mainView.tfImage1Filepath = ".\\data\\briefing\\np.bmp";
             mainView.tfImage2Filepath = "!";
             mainView.tfArticleDefinitionFilepath = "!";

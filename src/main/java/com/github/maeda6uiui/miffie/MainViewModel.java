@@ -123,11 +123,7 @@ public class MainViewModel {
         this.setMissionLongName(ivMainView.tfMissionLongName);
         this.setBd1Filepath(ivMainView.tfBD1Filepath);
         this.setPd1Filepath(ivMainView.tfPD1Filepath);
-        if (ivMainView.cbSkyType >= 0 && ivMainView.cbSkyType < cbSkyTypeItems.size()) {
-            cbSkyType.setValue(cbSkyTypeItems.get(ivMainView.cbSkyType));
-        } else {
-            logger.warn("Initial index of cbSkyBox out of range (got {})", ivMainView.cbSkyType);
-        }
+        this.setSkyType(ivMainView.cbSkyType);
         this.setImage1Filepath(ivMainView.tfImage1Filepath);
         this.setImage2Filepath(ivMainView.tfImage2Filepath);
         this.setArticleDefinitionFilepath(ivMainView.tfArticleDefinitionFilepath);
