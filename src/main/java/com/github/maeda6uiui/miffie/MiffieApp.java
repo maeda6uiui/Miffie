@@ -66,6 +66,8 @@ public class MiffieApp extends Application {
         logger.info("args: {}", Arrays.toString(args));
         logger.info("Starting the Miffie app...");
 
+        CommandLineArguments.setArgs(args);
+
         launch(args);
     }
 }
