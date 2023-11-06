@@ -135,6 +135,8 @@ public class MainViewModel {
     }
 
     public void loadMIF(File file) {
+        this.setErrorMessageLoad(null);
+
         MissionInfo missionInfo;
         try {
             missionInfo = mifModel.loadMIF(file, mifSettings.readEncoding);
@@ -161,6 +163,8 @@ public class MainViewModel {
     }
 
     public void saveMIF(File file) {
+        this.setErrorMessageSave(null);
+
         var missionInfo = new MissionInfo()
                 .setMissionTitle(this.getMissionShortName())
                 .setMissionFullname(this.getMissionLongName())
