@@ -85,7 +85,7 @@ public class MainViewModel {
             ResourceBundle resources,
             ComboBox<Pair<SkyType, String>> cbSkyType) {
         //Combobox
-        cbSkyTypeItems = new ArrayList<Pair<SkyType, String>>();
+        cbSkyTypeItems = new ArrayList<>();
         cbSkyTypeItems.add(new Pair<>(SkyType.NONE, resources.getString("cbSkyType.text.none")));
         cbSkyTypeItems.add(new Pair<>(SkyType.SUNNY, resources.getString("cbSkyType.text.sunny")));
         cbSkyTypeItems.add(new Pair<>(SkyType.CLOUDY, resources.getString("cbSkyType.text.cloudy")));
