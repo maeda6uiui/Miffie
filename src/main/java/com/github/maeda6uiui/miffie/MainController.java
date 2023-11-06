@@ -140,6 +140,9 @@ public class MainController implements Initializable {
     @FXML
     protected void onActionMiOpen(ActionEvent event) {
         var fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("MIF (*.mif)", "*.mif")
+        );
         File file = fileChooser.showOpenDialog(lblMissionShortName.getScene().getWindow());
         if (file == null) {
             return;
@@ -161,6 +164,9 @@ public class MainController implements Initializable {
     @FXML
     protected void onActionMiSaveAs(ActionEvent event) {
         var fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("MIF (*.mif)", "*.mif")
+        );
         File file = fileChooser.showSaveDialog(lblMissionShortName.getScene().getWindow());
         if (file == null) {
             return;
