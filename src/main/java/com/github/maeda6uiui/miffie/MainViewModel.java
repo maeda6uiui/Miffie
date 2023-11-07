@@ -155,7 +155,16 @@ public class MainViewModel {
 
         MissionInfo missionInfo;
         try {
-            missionInfo = mifModel.loadMIF(file, mifSettings.readEncoding);
+            String extension = this.getFileExtension(file);
+            switch (extension) {
+                case "mif" -> missionInfo = mifModel.loadMIF(file, mifSettings.readEncoding);
+                case "json" -> missionInfo = mifModel.loadMIFFromJSON(file);
+                case "yaml", "yml" -> missionInfo = mifModel.loadMIFFromYAML(file);
+                default -> {
+                    logger.warn("Unknown extension '{}' specified, default to MIF format", extension);
+                    missionInfo = mifModel.loadMIF(file, mifSettings.readEncoding);
+                }
+            }
         } catch (IOException e) {
             logger.error("Failed to load MIF file", e);
             this.setErrorMessageLoad(e.toString());
