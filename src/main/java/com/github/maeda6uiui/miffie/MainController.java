@@ -25,7 +25,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -130,16 +129,15 @@ public class MainController implements Initializable {
             Platform.exit();
         }
 
-        CommandLineArguments.get().ifPresent(
-                cla -> {
-                    List<String> args = cla.getArgs();
-                    if (args.size() != 0) {
-                        var file = new File(args.get(0));
-                        viewModel.loadMIF(file);
-                        currentFile = file;
-                    }
-                }
-        );
+        CommandLineArguments.get()
+                .flatMap(cla -> cla.getArgs()
+                        .stream()
+                        .findFirst())
+                .ifPresent(filepath -> {
+                    var file = new File(filepath);
+                    viewModel.loadMIF(file);
+                    currentFile = file;
+                });
     }
 
     @FXML
