@@ -134,6 +134,22 @@ public class MainViewModel {
         return true;
     }
 
+    private String getFileExtension(File file) {
+        String filename = file.getName();
+        int lastDotPos = filename.lastIndexOf('.');
+
+        //There is no '.' in the filename
+        if (lastDotPos == -1) {
+            return "";
+        }
+        //'.' is the last character of the filename
+        if (lastDotPos + 1 >= filename.length()) {
+            return "";
+        }
+
+        return filename.substring(lastDotPos + 1).toLowerCase();
+    }
+
     public void loadMIF(File file) {
         this.setErrorMessageLoad(null);
 
@@ -178,7 +194,16 @@ public class MainViewModel {
                 .setDarkScreen(this.isDarkScreen())
                 .setBriefingText(this.getMissionBriefing());
         try {
-            mifModel.saveMIF(missionInfo, file, mifSettings.writeEncoding);
+            String extension = this.getFileExtension(file);
+            switch (extension) {
+                case "mif" -> mifModel.saveMIF(missionInfo, file, mifSettings.writeEncoding);
+                case "json" -> mifModel.saveMIFAsJSON(missionInfo, file);
+                case "yaml", "yml" -> mifModel.saveMIFAsYAML(missionInfo, file);
+                default -> {
+                    logger.warn("Unknown extension '{}' specified, default to MIF format", extension);
+                    mifModel.saveMIF(missionInfo, file, mifSettings.writeEncoding);
+                }
+            }
         } catch (IOException e) {
             logger.error("Failed to save MIF file", e);
             this.setErrorMessageSave(e.toString());

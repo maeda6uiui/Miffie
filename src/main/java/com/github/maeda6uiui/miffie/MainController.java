@@ -198,8 +198,10 @@ public class MainController implements Initializable {
     @FXML
     protected void onActionMiSaveAs(ActionEvent event) {
         var fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("MIF (*.mif)", "*.mif")
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("MIF (*.mif)", "*.mif"),
+                new FileChooser.ExtensionFilter("JSON (*.json)", "*.json"),
+                new FileChooser.ExtensionFilter("YAML (*.yaml, *.yml)", "*.yaml", "*.yml")
         );
         File file = fileChooser.showSaveDialog(lblMissionShortName.getScene().getWindow());
         if (file == null) {
