@@ -150,6 +150,35 @@ public class MainViewModel {
         return filename.substring(lastDotPos + 1).toLowerCase();
     }
 
+    private void fromMissionInfo(MissionInfo missionInfo) {
+        this.setMissionShortName(missionInfo.missionTitle);
+        this.setMissionLongName(missionInfo.missionFullname);
+        this.setBd1Filepath(missionInfo.pathnameOfBlock);
+        this.setPd1Filepath(missionInfo.pathnameOfPoint);
+        this.setSkyType(missionInfo.skyType);
+        this.setImage1Filepath(missionInfo.pathnameOfImage1);
+        this.setImage2Filepath(missionInfo.pathnameOfImage2);
+        this.setArticleDefinitionFilepath(missionInfo.pathnameOfObj);
+        this.setExtraHitcheck(missionInfo.extraCollision);
+        this.setDarkScreen(missionInfo.darkScreen);
+        this.setMissionBriefing(missionInfo.briefingText);
+    }
+
+    private MissionInfo toMissionInfo() {
+        return new MissionInfo()
+                .setMissionTitle(this.getMissionShortName())
+                .setMissionFullname(this.getMissionLongName())
+                .setPathnameOfBlock(this.getBd1Filepath())
+                .setPathnameOfPoint(this.getPd1Filepath())
+                .setSkyType(this.getSkyType())
+                .setPathnameOfImage1(this.getImage1Filepath())
+                .setPathnameOfImage2(this.getImage2Filepath())
+                .setPathnameOfObj(this.getArticleDefinitionFilepath())
+                .setExtraCollision(this.isExtraHitcheck())
+                .setDarkScreen(this.isDarkScreen())
+                .setBriefingText(this.getMissionBriefing());
+    }
+
     public void loadMIF(File file) {
         this.setErrorMessageLoad(null);
 
@@ -172,17 +201,7 @@ public class MainViewModel {
             return;
         }
 
-        this.setMissionShortName(missionInfo.missionTitle);
-        this.setMissionLongName(missionInfo.missionFullname);
-        this.setBd1Filepath(missionInfo.pathnameOfBlock);
-        this.setPd1Filepath(missionInfo.pathnameOfPoint);
-        this.setSkyType(missionInfo.skyType);
-        this.setImage1Filepath(missionInfo.pathnameOfImage1);
-        this.setImage2Filepath(missionInfo.pathnameOfImage2);
-        this.setArticleDefinitionFilepath(missionInfo.pathnameOfObj);
-        this.setExtraHitcheck(missionInfo.extraCollision);
-        this.setDarkScreen(missionInfo.darkScreen);
-        this.setMissionBriefing(missionInfo.briefingText);
+        this.fromMissionInfo(missionInfo);
 
         this.setErrorMessageLoad("");
     }
@@ -190,18 +209,7 @@ public class MainViewModel {
     public void saveMIF(File file) {
         this.setErrorMessageSave(null);
 
-        var missionInfo = new MissionInfo()
-                .setMissionTitle(this.getMissionShortName())
-                .setMissionFullname(this.getMissionLongName())
-                .setPathnameOfBlock(this.getBd1Filepath())
-                .setPathnameOfPoint(this.getPd1Filepath())
-                .setSkyType(this.getSkyType())
-                .setPathnameOfImage1(this.getImage1Filepath())
-                .setPathnameOfImage2(this.getImage2Filepath())
-                .setPathnameOfObj(this.getArticleDefinitionFilepath())
-                .setExtraCollision(this.isExtraHitcheck())
-                .setDarkScreen(this.isDarkScreen())
-                .setBriefingText(this.getMissionBriefing());
+        MissionInfo missionInfo = this.toMissionInfo();
         try {
             String extension = this.getFileExtension(file);
             switch (extension) {
