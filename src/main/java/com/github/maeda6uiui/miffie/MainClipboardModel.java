@@ -20,22 +20,10 @@ import java.util.Optional;
 public class MainClipboardModel {
     private static final Logger logger = LoggerFactory.getLogger(MainClipboardModel.class);
 
-    public static class WrappedMissionInfo {
-        public String appName;
-        public MissionInfo missionInfo;
-
-        public WrappedMissionInfo(String appName, MissionInfo missionInfo) {
-            this.appName = appName;
-            this.missionInfo = missionInfo;
-        }
-    }
-
     public boolean copyToClipboard(MissionInfo missionInfo) {
-        var wMissionInfo = new WrappedMissionInfo("Miffie", missionInfo);
-
         String json;
         try {
-            json = new ObjectMapper().writeValueAsString(wMissionInfo);
+            json = new ObjectMapper().writeValueAsString(missionInfo);
         } catch (IOException e) {
             logger.error("Failed to jsonify mission info", e);
             return false;
@@ -56,9 +44,9 @@ public class MainClipboardModel {
             return Optional.empty();
         }
 
-        WrappedMissionInfo wMissionInfo;
         try {
-            wMissionInfo = new ObjectMapper().readValue(cb.getString(), WrappedMissionInfo.class);
+            MissionInfo missionInfo = new ObjectMapper().readValue(cb.getString(), MissionInfo.class);
+            return Optional.ofNullable(missionInfo);
         } catch (JsonMappingException e) {
             logger.info("Current content of clipboard is likely to be not from this application");
             return Optional.empty();
@@ -66,7 +54,5 @@ public class MainClipboardModel {
             logger.error("Failed to parse the content of the clipboard", e);
             return Optional.empty();
         }
-
-        return Optional.ofNullable(wMissionInfo.missionInfo);
     }
 }
