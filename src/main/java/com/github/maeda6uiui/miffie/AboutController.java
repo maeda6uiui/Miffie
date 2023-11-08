@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -31,6 +32,8 @@ public class AboutController implements Initializable {
     @FXML
     private Button btnOK;
 
+    private ResourceBundle resources;
+
     private AboutViewModel viewModel;
 
     @Override
@@ -43,11 +46,27 @@ public class AboutController implements Initializable {
             logger.error("Failed to initialize the about view, this application will be terminated");
             Platform.exit();
         }
+
+        this.resources = resources;
     }
 
     @FXML
     protected void onActionBtnCopy(ActionEvent event) {
+        boolean b = viewModel.copyToClipboard();
 
+        Alert alert;
+        if (b) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(resources.getString("alt.title.info.text"));
+            alert.setHeaderText(resources.getString("alt.copy.info.header.text"));
+            alert.setContentText(resources.getString("alt.copy.info.content.text"));
+        } else {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(resources.getString("alt.title.error.text"));
+            alert.setHeaderText(resources.getString("alt.copy.error.header.text"));
+            alert.setContentText(resources.getString("alt.copy.error.content.text"));
+        }
+        alert.showAndWait();
     }
 
     @FXML

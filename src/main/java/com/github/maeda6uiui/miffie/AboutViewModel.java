@@ -2,6 +2,8 @@ package com.github.maeda6uiui.miffie;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.DataFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 /**
  * View model for the about view
@@ -42,6 +45,15 @@ public class AboutViewModel {
         }
 
         return true;
+    }
+
+    public boolean copyToClipboard() {
+        Clipboard cb = Clipboard.getSystemClipboard();
+
+        var content = new HashMap<DataFormat, Object>();
+        content.put(DataFormat.PLAIN_TEXT, this.getAppInfo());
+
+        return cb.setContent(content);
     }
 
     public String getAppInfo() {
