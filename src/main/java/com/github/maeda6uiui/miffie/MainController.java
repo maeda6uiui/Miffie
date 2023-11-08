@@ -276,9 +276,41 @@ public class MainController implements Initializable {
 
     }
 
+    private void openAboutDialog(String locale) {
+        try {
+            Path propertiesDir = Paths.get("./Data/Properties");
+            var loader = new URLClassLoader(new URL[]{propertiesDir.toUri().toURL()});
+            ResourceBundle rb = ResourceBundle.getBundle(
+                    "about_view",
+                    Locale.of(locale),
+                    loader
+            );
+
+            Parent root = FXMLLoader.load(
+                    Objects.requireNonNull(this.getClass().getResource("about_view.fxml")),
+                    rb
+            );
+            var scene = new Scene(root, 600, 400);
+            var aboutDialog = new Stage();
+            aboutDialog.setScene(scene);
+            aboutDialog.initOwner(lblMissionShortName.getScene().getWindow());
+            aboutDialog.initModality(Modality.WINDOW_MODAL);
+            aboutDialog.setTitle(rb.getString("title.text"));
+            aboutDialog.showAndWait();
+        } catch (IOException e) {
+            logger.error("Failed to open about dialog", e);
+        }
+    }
+
     @FXML
     protected void onActionMiAbout(ActionEvent event) {
-
+        MiffieSettings.get().ifPresentOrElse(
+                settings -> this.openAboutDialog(settings.languageSettings.code),
+                () -> {
+                    logger.error("Settings is not available. Fall back to default locale 'en'");
+                    this.openAboutDialog("en");
+                }
+        );
     }
 
     @FXML
