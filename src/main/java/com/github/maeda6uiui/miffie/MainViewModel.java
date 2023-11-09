@@ -1,5 +1,8 @@
 package com.github.maeda6uiui.miffie;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.dabasan.jxm.mif.MissionInfo;
 import com.github.dabasan.jxm.mif.SkyType;
 import javafx.beans.property.*;
@@ -7,6 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.DataFormat;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import org.slf4j.Logger;
@@ -15,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -229,6 +235,47 @@ public class MainViewModel {
         }
 
         this.setErrorMessageSave("");
+    }
+
+    public boolean copyToClipboard() {
+        MissionInfo missionInfo = this.toMissionInfo();
+        String json;
+        try {
+            json = new ObjectMapper().writeValueAsString(missionInfo);
+        } catch (IOException e) {
+            logger.error("Failed to jsonify mission info", e);
+            return false;
+        }
+
+        Clipboard cb = Clipboard.getSystemClipboard();
+
+        var content = new HashMap<DataFormat, Object>();
+        content.put(DataFormat.PLAIN_TEXT, json);
+
+        return cb.setContent(content);
+    }
+
+    public void pasteFromClipboard() {
+        Clipboard cb = Clipboard.getSystemClipboard();
+        if (!cb.hasString()) {
+            logger.info("Attempted to paste from clipboard, but no string available in clipboard");
+            return;
+        }
+
+        MissionInfo missionInfo;
+        try {
+            missionInfo = new ObjectMapper().readValue(cb.getString(), MissionInfo.class);
+        } catch (JsonParseException | JsonMappingException e) {
+            logger.info(
+                    "Attempted to paste from clipboard, " +
+                            "but current content of clipboard is likely to be not from this application");
+            return;
+        } catch (IOException e) {
+            logger.error("Failed to parse the content of the clipboard", e);
+            return;
+        }
+
+        this.fromMissionInfo(missionInfo);
     }
 
     public String getMissionShortName() {

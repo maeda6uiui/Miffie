@@ -106,6 +106,8 @@ public class MainController implements Initializable {
 
     private MainViewModel viewModel;
 
+    private ResourceBundle resources;
+
     private File currentFile;
 
     @Override
@@ -138,6 +140,8 @@ public class MainController implements Initializable {
                     viewModel.loadMIF(file);
                     currentFile = file;
                 });
+
+        this.resources = resources;
     }
 
     @FXML
@@ -268,12 +272,19 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiCopy(ActionEvent event) {
-
+        boolean b = viewModel.copyToClipboard();
+        if (!b) {
+            var alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(resources.getString("alt.title.error.text"));
+            alert.setHeaderText(resources.getString("alt.copyToClipboard.error.header.text"));
+            alert.setContentText(resources.getString("alt.copyToClipboard.error.content.text"));
+            alert.showAndWait();
+        }
     }
 
     @FXML
     protected void onActionMiPaste(ActionEvent event) {
-
+        viewModel.pasteFromClipboard();
     }
 
     private void openAboutDialog(String locale) {
