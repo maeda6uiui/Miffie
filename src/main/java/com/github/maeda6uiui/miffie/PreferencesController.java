@@ -162,17 +162,6 @@ public class PreferencesController implements Initializable {
                 new NumberStringConverter()
         );
 
-        boolean b = viewModel.populate(
-                resources,
-                cbIVSkyType,
-                cbLDisplayLanguage,
-                cbTTheme
-        );
-        if (!b) {
-            logger.error("Failed to initialize the preferences view, this application will be terminated");
-            Platform.exit();
-        }
-
         viewModel.errorPreviewThemeProperty().addListener((obs, ov, nv) -> {
             if (nv != null && !nv.isEmpty()) {
                 var alert = new Alert(Alert.AlertType.WARNING);
@@ -202,6 +191,27 @@ public class PreferencesController implements Initializable {
         });
 
         this.resources = resources;
+
+        Platform.runLater(() -> {
+            boolean b = viewModel.populate(
+                    resources,
+                    cbIVSkyType,
+                    cbLDisplayLanguage,
+                    cbTTheme
+            );
+            if (!b) {
+                logger.error("Failed to initialize the preferences view. This window will be closed");
+
+                var alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(resources.getString("alt.title.error.text"));
+                alert.setHeaderText(resources.getString("alt.initialize.error.header.text"));
+                alert.setContentText(resources.getString("alt.initialize.error.content.text"));
+                alert.showAndWait();
+
+                Stage stage = (Stage) lblLDisplayLanguage.getScene().getWindow();
+                stage.close();
+            }
+        });
     }
 
     private void closeWindow() {

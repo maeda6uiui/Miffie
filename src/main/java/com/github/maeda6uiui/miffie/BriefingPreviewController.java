@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +18,8 @@ import java.util.ResourceBundle;
  * @author maeda6uiui
  */
 public class BriefingPreviewController implements Initializable {
+    private static final Logger logger = LoggerFactory.getLogger(BriefingPreviewController.class);
+
     @FXML
     private TextArea taBriefingPreview;
 
@@ -31,6 +35,8 @@ public class BriefingPreviewController implements Initializable {
         Platform.runLater(() -> {
             boolean b = viewModel.trimBriefingText(originalBriefingText);
             if (!b) {
+                logger.error("Failed to trim the briefing text for preview. This window will be closed");
+
                 var alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(resources.getString("alt.title.error.text"));
                 alert.setHeaderText(resources.getString("alt.trimBriefingText.error.header.text"));

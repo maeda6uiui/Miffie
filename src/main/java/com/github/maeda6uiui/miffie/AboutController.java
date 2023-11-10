@@ -41,13 +41,23 @@ public class AboutController implements Initializable {
         viewModel = new AboutViewModel();
         taAppInfo.textProperty().bind(viewModel.appInfoProperty());
 
-        boolean b = viewModel.populate();
-        if (!b) {
-            logger.error("Failed to initialize the about view, this application will be terminated");
-            Platform.exit();
-        }
-
         this.resources = resources;
+
+        Platform.runLater(() -> {
+            boolean b = viewModel.populate();
+            if (!b) {
+                logger.error("Failed to initialize the about view. This window will be closed");
+
+                var alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(resources.getString("alt.title.error.text"));
+                alert.setHeaderText(resources.getString("alt.initialize.error.header.text"));
+                alert.setContentText(resources.getString("alt.initialize.error.content.text"));
+                alert.showAndWait();
+
+                Stage stage = (Stage) taAppInfo.getScene().getWindow();
+                stage.close();
+            }
+        });
     }
 
     @FXML
