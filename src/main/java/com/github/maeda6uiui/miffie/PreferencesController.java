@@ -169,34 +169,6 @@ public class PreferencesController implements Initializable {
                 new NumberStringConverter()
         );
 
-        viewModel.errorPreviewThemeProperty().addListener((obs, ov, nv) -> {
-            if (nv != null && !nv.isEmpty()) {
-                var alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle(resources.getString("alt.title.warn.text"));
-                alert.setHeaderText(resources.getString("alt.previewTheme.warn.header.text"));
-                alert.setContentText(resources.getString("alt.previewTheme.warn.content.text"));
-                alert.showAndWait();
-            }
-        });
-        viewModel.errorSaveSettingsProperty().addListener((obs, ov, nv) -> {
-            if (nv != null) {
-                Alert alert;
-                if (!nv.isEmpty()) {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle(resources.getString("alt.title.error.text"));
-                    alert.setHeaderText(resources.getString("alt.saveSettings.error.header.text"));
-                    alert.setContentText(resources.getString("alt.saveSettings.error.content.text"));
-                } else {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle(resources.getString("alt.title.info.text"));
-                    alert.setHeaderText(resources.getString("alt.saveSettings.info.header.text"));
-                    alert.setContentText(resources.getString("alt.saveSettings.info.content.text"));
-                }
-
-                alert.showAndWait();
-            }
-        });
-
         this.resources = resources;
 
         Platform.runLater(() -> {
@@ -253,7 +225,22 @@ public class PreferencesController implements Initializable {
 
     @FXML
     protected void onActionBtnOK(ActionEvent event) {
-        viewModel.saveSettings();
+        boolean b = viewModel.saveSettings();
+
+        Alert alert;
+        if (!b) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(resources.getString("alt.title.error.text"));
+            alert.setHeaderText(resources.getString("alt.saveSettings.error.header.text"));
+            alert.setContentText(resources.getString("alt.saveSettings.error.content.text"));
+        } else {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(resources.getString("alt.title.info.text"));
+            alert.setHeaderText(resources.getString("alt.saveSettings.info.header.text"));
+            alert.setContentText(resources.getString("alt.saveSettings.info.content.text"));
+        }
+        alert.showAndWait();
+
         this.closeWindow();
     }
 
@@ -270,7 +257,14 @@ public class PreferencesController implements Initializable {
 
     @FXML
     protected void onActionBtnTPreviewTheme(ActionEvent event) {
-        viewModel.previewSelectedTheme();
+        boolean b = viewModel.previewSelectedTheme();
+        if (!b) {
+            var alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(resources.getString("alt.title.warn.text"));
+            alert.setHeaderText(resources.getString("alt.previewTheme.warn.header.text"));
+            alert.setContentText(resources.getString("alt.previewTheme.warn.content.text"));
+            alert.showAndWait();
+        }
     }
 
     @FXML

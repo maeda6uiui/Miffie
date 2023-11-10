@@ -55,9 +55,6 @@ public class PreferencesViewModel {
 
     private String currentUserStylesheet;
 
-    private StringProperty errorPreviewTheme;
-    private StringProperty errorSaveSettings;
-
     public PreferencesViewModel() {
         ivSkyType = new SimpleObjectProperty<>();
         lDisplayLanguage = new SimpleObjectProperty<>();
@@ -82,9 +79,6 @@ public class PreferencesViewModel {
         wWindowWidth = new SimpleIntegerProperty();
 
         currentUserStylesheet = Application.getUserAgentStylesheet();
-
-        errorPreviewTheme = new SimpleStringProperty();
-        errorSaveSettings = new SimpleStringProperty();
     }
 
     /**
@@ -210,7 +204,12 @@ public class PreferencesViewModel {
         return true;
     }
 
-    public void previewSelectedTheme() {
+    /**
+     * Applies selected theme for preview.
+     *
+     * @return {@code true} if success, {@code false} if error
+     */
+    public boolean previewSelectedTheme() {
         MiffieTheme selectedTheme = this.gettTheme();
 
         var themeSettings = new MiffieSettings.ThemeSettings();
@@ -219,19 +218,14 @@ public class PreferencesViewModel {
             themeSettings.fromFile = this.gettCustomThemeFilepath();
         }
 
-        this.setErrorPreviewTheme(null);
-
         Optional<String> css = themeSettings.getCSS();
-        css.ifPresentOrElse(
-                s -> {
-                    Application.setUserAgentStylesheet(s);
-                    this.setErrorPreviewTheme("");
-                },
-                () -> {
-                    this.setErrorPreviewTheme("Returned CSS is empty");
-                    logger.warn("Failed to load and apply CSS");
-                }
-        );
+        if (css.isPresent()) {
+            Application.setUserAgentStylesheet(css.get());
+            return true;
+        } else {
+            logger.warn("Failed to load and apply CSS");
+            return false;
+        }
     }
 
     public void revertToPreviousTheme() {
@@ -254,7 +248,7 @@ public class PreferencesViewModel {
         }
     }
 
-    public void saveSettings() {
+    public boolean saveSettings() {
         //Create a new instance of settings and populate it
         var settings = new MiffieSettings();
 
@@ -287,18 +281,14 @@ public class PreferencesViewModel {
         mifSettings.halfWidthCharactersRegex = this.getmHalfWidthCharactersRegex();
 
         //Save the settings
-        this.setErrorSaveSettings(null);
-
         try {
             settings.save(MiffieSettings.FILEPATH);
         } catch (IOException e) {
             logger.error("Failed to save the settings", e);
-            this.setErrorSaveSettings(e.toString());
-
-            return;
+            return false;
         }
 
-        this.setErrorSaveSettings("");
+        return true;
     }
 
     public SkyType getIvSkyType() {
@@ -571,29 +561,5 @@ public class PreferencesViewModel {
 
     public void setwWindowWidth(int wWindowWidth) {
         this.wWindowWidth.set(wWindowWidth);
-    }
-
-    public String getErrorPreviewTheme() {
-        return errorPreviewTheme.get();
-    }
-
-    public StringProperty errorPreviewThemeProperty() {
-        return errorPreviewTheme;
-    }
-
-    public void setErrorPreviewTheme(String errorPreviewTheme) {
-        this.errorPreviewTheme.set(errorPreviewTheme);
-    }
-
-    public String getErrorSaveSettings() {
-        return errorSaveSettings.get();
-    }
-
-    public StringProperty errorSaveSettingsProperty() {
-        return errorSaveSettings;
-    }
-
-    public void setErrorSaveSettings(String errorSaveSettings) {
-        this.errorSaveSettings.set(errorSaveSettings);
     }
 }
