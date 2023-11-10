@@ -167,12 +167,14 @@ public class MiffieSettings {
     public static class MIFSettings {
         public int maxNumLines;
         public int maxNumHalfWidthCharactersInLine;
+        public String halfWidthCharactersRegex;
         public String readEncoding;
         public String writeEncoding;
 
         public MIFSettings() {
             maxNumLines = 10;
             maxNumHalfWidthCharactersInLine = 30;
+            halfWidthCharactersRegex = "[ -~]+";
             readEncoding = "shift-jis";
             writeEncoding = "shift-jis";
         }
