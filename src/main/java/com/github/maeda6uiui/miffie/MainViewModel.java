@@ -46,9 +46,6 @@ public class MainViewModel {
 
     private List<Pair<SkyType, String>> cbSkyTypeItems;
 
-    private StringProperty errorMessageLoad;
-    private StringProperty errorMessageSave;
-
     private MiffieMIFModel mifModel;
     private MiffieSettings.MIFSettings mifSettings;
 
@@ -64,9 +61,6 @@ public class MainViewModel {
         extraHitcheck = new SimpleBooleanProperty();
         darkScreen = new SimpleBooleanProperty();
         missionBriefing = new SimpleStringProperty();
-
-        errorMessageLoad = new SimpleStringProperty();
-        errorMessageSave = new SimpleStringProperty();
 
         mifModel = new MiffieMIFModel();
 
@@ -185,9 +179,13 @@ public class MainViewModel {
                 .setBriefingText(this.getMissionBriefing());
     }
 
-    public void loadMIF(File file) {
-        this.setErrorMessageLoad(null);
-
+    /**
+     * Loads mission info from a MIF file.
+     *
+     * @param file File
+     * @return Empty string when success, otherwise error message
+     */
+    public String loadMIF(File file) {
         MissionInfo missionInfo;
         try {
             String extension = this.getFileExtension(file);
@@ -202,19 +200,21 @@ public class MainViewModel {
             }
         } catch (IOException e) {
             logger.error("Failed to load MIF file", e);
-            this.setErrorMessageLoad(e.toString());
-
-            return;
+            return e.getMessage();
         }
 
         this.fromMissionInfo(missionInfo);
 
-        this.setErrorMessageLoad("");
+        return "";
     }
 
-    public void saveMIF(File file) {
-        this.setErrorMessageSave(null);
-
+    /**
+     * Saves mission info as a MIF file.
+     *
+     * @param file File
+     * @return Empty string when success, otherwise error message
+     */
+    public String saveMIF(File file) {
         MissionInfo missionInfo = this.toMissionInfo();
         try {
             String extension = this.getFileExtension(file);
@@ -229,12 +229,10 @@ public class MainViewModel {
             }
         } catch (IOException e) {
             logger.error("Failed to save MIF file", e);
-            this.setErrorMessageSave(e.toString());
-
-            return;
+            return e.getMessage();
         }
 
-        this.setErrorMessageSave("");
+        return "";
     }
 
     public boolean copyToClipboard() {
@@ -420,29 +418,5 @@ public class MainViewModel {
 
     public void setMissionBriefing(String missionBriefing) {
         this.missionBriefing.set(missionBriefing);
-    }
-
-    public String getErrorMessageLoad() {
-        return errorMessageLoad.get();
-    }
-
-    public StringProperty errorMessageLoadProperty() {
-        return errorMessageLoad;
-    }
-
-    public void setErrorMessageLoad(String errorMessageLoad) {
-        this.errorMessageLoad.set(errorMessageLoad);
-    }
-
-    public String getErrorMessageSave() {
-        return errorMessageSave.get();
-    }
-
-    public StringProperty errorMessageSaveProperty() {
-        return errorMessageSave;
-    }
-
-    public void setErrorMessageSave(String errorMessageSave) {
-        this.errorMessageSave.set(errorMessageSave);
     }
 }

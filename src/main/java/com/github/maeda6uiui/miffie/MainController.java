@@ -137,11 +137,46 @@ public class MainController implements Initializable {
                         .findFirst())
                 .ifPresent(filepath -> {
                     var file = new File(filepath);
-                    viewModel.loadMIF(file);
-                    currentFile = file;
+                    this.loadMIFWithErrorAlert(file);
                 });
 
         this.resources = resources;
+    }
+
+    private void loadMIFWithErrorAlert(File file) {
+        String errorMessage = viewModel.loadMIF(file);
+        if (errorMessage.isEmpty()) {
+            currentFile = file;
+            return;
+        }
+
+        var alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(resources.getString("alt.title.error.text"));
+        alert.setHeaderText(resources.getString("alt.loadMIF.error.header.text"));
+
+        String msgTemplate = resources.getString("alt.loadMIF.error.content.text");
+        String msg = new StringReplacer(msgTemplate).replace("${errorMessage}", errorMessage).toString();
+        alert.setContentText(msg);
+
+        alert.showAndWait();
+    }
+
+    private void saveMIFWithErrorAlert(File file) {
+        String errorMessage = viewModel.saveMIF(file);
+        if (errorMessage.isEmpty()) {
+            currentFile = file;
+            return;
+        }
+
+        var alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(resources.getString("alt.title.error.text"));
+        alert.setHeaderText(resources.getString("alt.saveMIF.error.header.text"));
+
+        String msgTemplate = resources.getString("alt.saveMIF.error.content.text");
+        String msg = new StringReplacer(msgTemplate).replace("${errorMessage}", errorMessage).toString();
+        alert.setContentText(msg);
+
+        alert.showAndWait();
     }
 
     @FXML
@@ -160,9 +195,7 @@ public class MainController implements Initializable {
         if (db.hasFiles()) {
             //Open the first file
             File file = db.getFiles().get(0);
-            viewModel.loadMIF(file);
-            currentFile = file;
-
+            this.loadMIFWithErrorAlert(file);
             ok = true;
         }
 
@@ -188,14 +221,13 @@ public class MainController implements Initializable {
             return;
         }
 
-        viewModel.loadMIF(file);
-        currentFile = file;
+        this.loadMIFWithErrorAlert(file);
     }
 
     @FXML
     protected void onActionMiSave(ActionEvent event) {
         if (currentFile != null) {
-            viewModel.saveMIF(currentFile);
+            this.saveMIFWithErrorAlert(currentFile);
         } else {
             this.onActionMiSaveAs(event);
         }
@@ -214,8 +246,7 @@ public class MainController implements Initializable {
             return;
         }
 
-        viewModel.saveMIF(file);
-        currentFile = file;
+        this.saveMIFWithErrorAlert(file);
     }
 
     private void openPreferencesDialog(String locale) {
