@@ -259,7 +259,7 @@ public class PreferencesViewModel {
         try {
             Pattern.compile(this.getmHalfWidthCharactersRegex());
         } catch (PatternSyntaxException e) {
-            return e.toString();
+            return e.getMessage();
         }
 
         return "";

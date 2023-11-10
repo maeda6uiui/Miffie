@@ -299,6 +299,26 @@ public class PreferencesController implements Initializable {
 
     @FXML
     protected void onActionBtnMValidateHalfWidthCharactersRegex(ActionEvent event) {
+        String validationResult = viewModel.validateMIFHalfWidthCharactersRegex();
 
+        Alert alert;
+        if (validationResult.isEmpty()) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(resources.getString("alt.title.info.text"));
+            alert.setHeaderText(resources.getString("alt.validateMIFHalfWidthCharactersRegex.info.header.text"));
+            alert.setContentText(resources.getString("alt.validateMIFHalfWidthCharactersRegex.info.content.text"));
+        } else {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(resources.getString("alt.title.warn.text"));
+            alert.setHeaderText(resources.getString("alt.validateMIFHalfWidthCharactersRegex.warn.header.text"));
+
+            String msgTemplate = resources.getString("alt.validateMIFHalfWidthCharactersRegex.warn.content.text");
+            String msg = new StringReplacer(msgTemplate)
+                    .replace("${validationResult}", validationResult)
+                    .toString();
+            alert.setContentText(msg);
+        }
+
+        alert.showAndWait();
     }
 }
