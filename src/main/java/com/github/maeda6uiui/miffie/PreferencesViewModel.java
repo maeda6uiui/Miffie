@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * View model for the preferences view
@@ -246,6 +248,21 @@ public class PreferencesViewModel {
         } catch (RuntimeException e) {
             return false;
         }
+    }
+
+    /**
+     * Validates the given regex to detect half-width characters.
+     *
+     * @return Empty string if valid, otherwise error message
+     */
+    public String validateMIFHalfWidthCharactersRegex() {
+        try {
+            Pattern.compile(this.getmHalfWidthCharactersRegex());
+        } catch (PatternSyntaxException e) {
+            return e.toString();
+        }
+
+        return "";
     }
 
     public boolean saveSettings() {
