@@ -12,9 +12,15 @@ public class PropertySnapshotManager {
     public static class PropertySnapshot {
         private final Instant instant = Instant.now();
         private final Object property;
+        private Object objectValue;
         private String stringValue;
         private Integer intValue;
         private Boolean booleanValue;
+
+        public PropertySnapshot(Object property, Object objectValue) {
+            this.property = property;
+            this.objectValue = objectValue;
+        }
 
         public PropertySnapshot(Object property, String stringValue) {
             this.property = property;
@@ -37,6 +43,10 @@ public class PropertySnapshotManager {
 
         public Object getProperty() {
             return property;
+        }
+
+        public Optional<Object> getObjectValue() {
+            return Optional.ofNullable(objectValue);
         }
 
         public Optional<String> getStringValue() {
