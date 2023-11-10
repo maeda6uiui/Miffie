@@ -44,6 +44,7 @@ public class PreferencesViewModel {
     private IntegerProperty mMaxNumLines;
     private StringProperty mReadEncoding;
     private StringProperty mWriteEncoding;
+    private StringProperty mHalfWidthCharactersRegex;
     private StringProperty tCustomThemeFilepath;
     private IntegerProperty wWindowHeight;
     private IntegerProperty wWindowWidth;
@@ -76,6 +77,7 @@ public class PreferencesViewModel {
         mMaxNumLines = new SimpleIntegerProperty();
         mReadEncoding = new SimpleStringProperty();
         mWriteEncoding = new SimpleStringProperty();
+        mHalfWidthCharactersRegex = new SimpleStringProperty();
         wWindowHeight = new SimpleIntegerProperty();
         wWindowWidth = new SimpleIntegerProperty();
 
@@ -199,6 +201,7 @@ public class PreferencesViewModel {
             this.setmMaxNumLines(mifSettings.maxNumLines);
             this.setmReadEncoding(mifSettings.readEncoding);
             this.setmWriteEncoding(mifSettings.writeEncoding);
+            this.setmHalfWidthCharactersRegex(mifSettings.halfWidthCharactersRegex);
 
             this.setwWindowHeight(settings.windowSettings.height);
             this.setwWindowWidth(settings.windowSettings.width);
@@ -281,6 +284,7 @@ public class PreferencesViewModel {
         mifSettings.maxNumHalfWidthCharactersInLine = this.getmMaxNumHalfWidthCharactersInLine();
         mifSettings.readEncoding = this.getmReadEncoding();
         mifSettings.writeEncoding = this.getmWriteEncoding();
+        mifSettings.halfWidthCharactersRegex = this.getmHalfWidthCharactersRegex();
 
         //Save the settings
         this.setErrorSaveSettings(null);
@@ -519,6 +523,18 @@ public class PreferencesViewModel {
 
     public void setmWriteEncoding(String mWriteEncoding) {
         this.mWriteEncoding.set(mWriteEncoding);
+    }
+
+    public String getmHalfWidthCharactersRegex() {
+        return mHalfWidthCharactersRegex.get();
+    }
+
+    public StringProperty mHalfWidthCharactersRegexProperty() {
+        return mHalfWidthCharactersRegex;
+    }
+
+    public void setmHalfWidthCharactersRegex(String mHalfWidthCharactersRegex) {
+        this.mHalfWidthCharactersRegex.set(mHalfWidthCharactersRegex);
     }
 
     public String gettCustomThemeFilepath() {

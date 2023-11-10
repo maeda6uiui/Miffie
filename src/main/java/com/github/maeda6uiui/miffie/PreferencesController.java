@@ -156,6 +156,7 @@ public class PreferencesController implements Initializable {
         );
         viewModel.mReadEncodingProperty().bindBidirectional(tfMReadEncoding.textProperty());
         viewModel.mWriteEncodingProperty().bindBidirectional(tfMWriteEncoding.textProperty());
+        viewModel.mHalfWidthCharactersRegexProperty().bindBidirectional(tfMHalfWidthCharactersRegex.textProperty());
         viewModel.tCustomThemeFilepathProperty().bindBidirectional(tfTCustomThemeFilepath.textProperty());
         Bindings.bindBidirectional(
                 tfWWindowHeight.textProperty(),
