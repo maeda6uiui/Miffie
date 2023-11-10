@@ -249,7 +249,7 @@ public class MainController implements Initializable {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> this.openPreferencesDialog(settings.languageSettings.code),
                 () -> {
-                    logger.error("Settings is not available. Fall back to default locale 'en'");
+                    logger.warn("Settings is not available. Fall back to default locale 'en'");
                     this.openPreferencesDialog("en");
                 }
         );
@@ -318,14 +318,52 @@ public class MainController implements Initializable {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> this.openAboutDialog(settings.languageSettings.code),
                 () -> {
-                    logger.error("Settings is not available. Fall back to default locale 'en'");
+                    logger.warn("Settings is not available. Fall back to default locale 'en'");
                     this.openAboutDialog("en");
                 }
         );
     }
 
+    private void openBriefingPreviewDialog(String locale) {
+        try {
+            Path propertiesDir = Paths.get("./Data/Properties");
+            var loader = new URLClassLoader(new URL[]{propertiesDir.toUri().toURL()});
+            ResourceBundle rb = ResourceBundle.getBundle(
+                    "briefing_preview_view",
+                    Locale.of(locale),
+                    loader
+            );
+
+            var fxmlLoader = new FXMLLoader(
+                    Objects.requireNonNull(this.getClass().getResource("briefing_preview_view.fxml")),
+                    rb
+            );
+
+            Parent root = fxmlLoader.load();
+
+            BriefingPreviewController controller = fxmlLoader.getController();
+            controller.setOriginalBriefingText(taMissionBriefing.getText());
+
+            var scene = new Scene(root, 600, 400);
+            var preferencesDialog = new Stage();
+            preferencesDialog.setScene(scene);
+            preferencesDialog.initOwner(lblMissionShortName.getScene().getWindow());
+            preferencesDialog.initModality(Modality.WINDOW_MODAL);
+            preferencesDialog.setTitle(rb.getString("title.text"));
+            preferencesDialog.showAndWait();
+        } catch (IOException e) {
+            logger.error("Failed to open briefing preview dialog", e);
+        }
+    }
+
     @FXML
     protected void onActionBtnPreviewText(ActionEvent event) {
-
+        MiffieSettings.get().ifPresentOrElse(
+                settings -> this.openBriefingPreviewDialog(settings.languageSettings.code),
+                () -> {
+                    logger.warn("Settings is not available. Fall back to default locale 'en'");
+                    this.openBriefingPreviewDialog("en");
+                }
+        );
     }
 }
