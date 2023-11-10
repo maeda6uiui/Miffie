@@ -38,6 +38,8 @@ public class PreferencesController implements Initializable {
     @FXML
     private Button btnMValidateEncodings;
     @FXML
+    private Button btnMValidateHalfWidthCharactersRegex;
+    @FXML
     private ComboBox<Pair<SkyType, String>> cbIVSkyType;
     @FXML
     private ComboBox<DisplayLanguage> cbLDisplayLanguage;
@@ -80,6 +82,8 @@ public class PreferencesController implements Initializable {
     @FXML
     private Label lblMWriteEncoding;
     @FXML
+    private Label lblMHalfWidthCharactersRegex;
+    @FXML
     private Label lblTTheme;
     @FXML
     private Label lblTCustomTheme;
@@ -111,6 +115,8 @@ public class PreferencesController implements Initializable {
     private TextField tfMReadEncoding;
     @FXML
     private TextField tfMWriteEncoding;
+    @FXML
+    private TextField tfMHalfWidthCharactersRegex;
     @FXML
     private TextField tfTCustomThemeFilepath;
     @FXML
@@ -294,5 +300,10 @@ public class PreferencesController implements Initializable {
         }
 
         alert.showAndWait();
+    }
+
+    @FXML
+    protected void onActionBtnMValidateHalfWidthCharactersRegex(ActionEvent event) {
+
     }
 }

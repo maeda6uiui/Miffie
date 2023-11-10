@@ -253,6 +253,8 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                             </rowConstraints>
                                             <children>
                                                 <Label fx:id="lblMMaxNumLines" text="%lblMMaxNumLines.text"/>
@@ -276,6 +278,20 @@
                                                         <Button fx:id="btnMValidateEncodings" mnemonicParsing="false"
                                                                 onAction="#onActionBtnMValidateEncodings"
                                                                 text="%btnMValidateEncodings.text"/>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="lblMHalfWidthCharactersRegex"
+                                                       text="%lblMHalfWidthCharactersRegex.text" GridPane.rowIndex="5"/>
+                                                <TextField fx:id="tfMHalfWidthCharactersRegex"
+                                                           promptText="%tfMHalfWidthCharactersRegex.promptText"
+                                                           GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                                                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0"
+                                                      GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                    <children>
+                                                        <Button fx:id="btnMValidateHalfWidthCharactersRegex"
+                                                                mnemonicParsing="false"
+                                                                onAction="#onActionBtnMValidateHalfWidthCharactersRegex"
+                                                                text="%btnMValidateHalfWidthCharactersRegex.text"/>
                                                     </children>
                                                 </HBox>
                                             </children>
