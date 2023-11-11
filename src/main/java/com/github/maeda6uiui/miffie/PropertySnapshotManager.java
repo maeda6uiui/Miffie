@@ -129,10 +129,23 @@ public class PropertySnapshotManager {
         return rebaseSnapshots.size();
     }
 
+    /**
+     * Returns the current snapshot.
+     *
+     * @return Current snapshot
+     */
     public Optional<PropertySnapshot> getCurrent() {
         return Optional.ofNullable(currentSnapshot);
     }
 
+    /**
+     * Sets the previous snapshot as current.
+     * Call this method when implementing undo.
+     * The next attempt to add a snapshot after this method has been called is ignored
+     * so that applying the snapshot value to the corresponding property will not be recorded.
+     *
+     * @return this
+     */
     public PropertySnapshotManager rebaseToPrevious() {
         if (snapshots.isEmpty()) {
             logger.warn("Attempted to rebase to previous snapshot, but there are no snapshots saved");
@@ -148,6 +161,14 @@ public class PropertySnapshotManager {
         return this;
     }
 
+    /**
+     * Sets the following snapshot as current.
+     * Call this method when implementing redo.
+     * The next attempt to add a snapshot after this method has been called is ignored
+     * so that applying the snapshot value to the corresponding property will not be recorded.
+     *
+     * @return this
+     */
     public PropertySnapshotManager rebaseToFollowing() {
         if (rebaseSnapshots.isEmpty()) {
             logger.warn("Attempted to rebase to following snapshot, but there are no snapshots saved for rebase");
