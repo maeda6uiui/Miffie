@@ -84,9 +84,41 @@ public class PropertySnapshotManager {
         return uuid;
     }
 
+    public PropertySnapshotManager put(Object property, Object value) {
+        var snapshot = new PropertySnapshot(property, value);
+        this.put(snapshot);
+
+        return this;
+    }
+
+    public PropertySnapshotManager put(Object property, String value) {
+        var snapshot = new PropertySnapshot(property, value);
+        this.put(snapshot);
+
+        return this;
+    }
+
+    public PropertySnapshotManager put(Object property, int value) {
+        var snapshot = new PropertySnapshot(property, value);
+        this.put(snapshot);
+
+        return this;
+    }
+
+    public PropertySnapshotManager put(Object property, boolean value) {
+        var snapshot = new PropertySnapshot(property, value);
+        this.put(snapshot);
+
+        return this;
+    }
+
     public void clear() {
         snapshotUUIDs.clear();
         snapshots.clear();
+    }
+
+    public boolean hasAny() {
+        return !snapshots.isEmpty();
     }
 
     /**
