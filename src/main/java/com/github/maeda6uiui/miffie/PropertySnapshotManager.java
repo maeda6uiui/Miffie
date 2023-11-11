@@ -139,9 +139,9 @@ public class PropertySnapshotManager {
             return this;
         }
 
-        rebaseSnapshots.addFirst(current);
+        rebaseSnapshots.add(0, current);
         snapshots.remove(current);
-        current = snapshots.getLast();
+        current = snapshots.get(snapshots.size() - 1);
 
         this.ignoreNextAdd = true;
 
@@ -154,7 +154,7 @@ public class PropertySnapshotManager {
             return this;
         }
 
-        PropertySnapshot previousCurrent = rebaseSnapshots.removeFirst();
+        PropertySnapshot previousCurrent = rebaseSnapshots.remove(0);
         snapshots.add(previousCurrent);
         current = previousCurrent;
 
