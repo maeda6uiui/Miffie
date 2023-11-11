@@ -307,7 +307,7 @@ public class MainViewModel {
     }
 
     public void undo() {
-
+        
     }
 
     public void redo() {

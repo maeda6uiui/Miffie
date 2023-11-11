@@ -345,12 +345,12 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiUndo(ActionEvent event) {
-
+        viewModel.undo();
     }
 
     @FXML
     protected void onActionMiRedo(ActionEvent event) {
-
+        viewModel.redo();
     }
 
     @FXML
