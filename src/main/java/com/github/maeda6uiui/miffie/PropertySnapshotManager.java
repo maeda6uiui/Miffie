@@ -129,7 +129,7 @@ public class PropertySnapshotManager {
         return rebaseSnapshots.size();
     }
 
-    public Optional<PropertySnapshot> getCurrentSnapshot() {
+    public Optional<PropertySnapshot> getCurrent() {
         return Optional.ofNullable(currentSnapshot);
     }
 
