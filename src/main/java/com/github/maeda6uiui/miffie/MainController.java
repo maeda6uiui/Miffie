@@ -191,6 +191,31 @@ public class MainController implements Initializable {
         return alert.showAndWait();
     }
 
+    /**
+     * This method runs the boilerplate procedure to ask the user
+     * whether to save the changes before continuing to the next step.
+     * This method is supposed to be called from one of the event handlers
+     * such as {@link MainController#onActionMiQuit(ActionEvent)}.
+     *
+     * @param event Event
+     * @return {@code true} if you can continue the procedure, otherwise {@code false}
+     */
+    private boolean handleSaveBeforeContinue(ActionEvent event) {
+        if (!viewModel.hasContentChanged()) {
+            return true;
+        }
+
+        ButtonType buttonType = this.showAndWaitSaveConfirmationAlert().orElse(null);
+        if (buttonType == null || buttonType == ButtonType.CANCEL) {
+            return false;
+        } else if (buttonType == ButtonType.YES) {
+            this.onActionMiSave(event);
+            return false;
+        }
+
+        return true;
+    }
+
     @FXML
     protected void onDragOverMainView(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
@@ -217,27 +242,14 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiNew(ActionEvent event) {
-        if (viewModel.hasContentChanged()) {
-            ButtonType buttonType = this.showAndWaitSaveConfirmationAlert().orElse(null);
-            if (buttonType == null || buttonType == ButtonType.CANCEL) {
-                return;
-            } else if (buttonType == ButtonType.YES) {
-                this.onActionMiSave(event);
-                return;
-            }
-        }
+        this.handleSaveBeforeContinue(event);
     }
 
     @FXML
     protected void onActionMiOpen(ActionEvent event) {
-        if (viewModel.hasContentChanged()) {
-            ButtonType buttonType = this.showAndWaitSaveConfirmationAlert().orElse(null);
-            if (buttonType == null || buttonType == ButtonType.CANCEL) {
-                return;
-            } else if (buttonType == ButtonType.YES) {
-                this.onActionMiSave(event);
-                return;
-            }
+        boolean b = this.handleSaveBeforeContinue(event);
+        if (!b) {
+            return;
         }
 
         var fileChooser = new FileChooser();
@@ -318,14 +330,9 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiQuit(ActionEvent event) {
-        if (viewModel.hasContentChanged()) {
-            ButtonType buttonType = this.showAndWaitSaveConfirmationAlert().orElse(null);
-            if (buttonType == null || buttonType == ButtonType.CANCEL) {
-                return;
-            } else if (buttonType == ButtonType.YES) {
-                this.onActionMiSave(event);
-                return;
-            }
+        boolean b = this.handleSaveBeforeContinue(event);
+        if (!b) {
+            return;
         }
 
         Platform.exit();

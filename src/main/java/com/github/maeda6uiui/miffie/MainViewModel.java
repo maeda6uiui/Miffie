@@ -70,7 +70,7 @@ public class MainViewModel {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> mifSettings = settings.mifSettings,
                 () -> {
-                    logger.warn("Settings is not available. Fall back to default settings");
+                    logger.warn("Settings is not available. Fall back to default MIF settings");
                     mifSettings = new MiffieSettings.MIFSettings();
                 }
         );
@@ -89,6 +89,30 @@ public class MainViewModel {
             darkScreen.addListener((obs, ov, nv) -> psm.add(darkScreen, nv));
             missionBriefing.addListener((obs, ov, nv) -> psm.add(missionBriefing, nv));
         });
+    }
+
+    private void setInitialValues(MiffieSettings.InitialValue.MainView ivMainView) {
+        this.setMissionShortName(ivMainView.tfMissionShortName);
+        this.setMissionLongName(ivMainView.tfMissionLongName);
+        this.setBd1Filepath(ivMainView.tfBD1Filepath);
+        this.setPd1Filepath(ivMainView.tfPD1Filepath);
+        this.setSkyType(ivMainView.cbSkyType);
+        this.setImage1Filepath(ivMainView.tfImage1Filepath);
+        this.setImage2Filepath(ivMainView.tfImage2Filepath);
+        this.setArticleDefinitionFilepath(ivMainView.tfArticleDefinitionFilepath);
+        this.setExtraHitcheck(ivMainView.ckbExtraHitcheck);
+        this.setDarkScreen(ivMainView.ckbDarkScreen);
+        this.setMissionBriefing(ivMainView.taMissionBriefing);
+    }
+
+    public void setInitialValues() {
+        MiffieSettings.get().ifPresentOrElse(
+                settings -> this.setInitialValues(settings.initialValue.mainView),
+                () -> {
+                    logger.warn("Settings is not available. Fall back to default initial values");
+                    this.setInitialValues(new MiffieSettings.InitialValue.MainView());
+                }
+        );
     }
 
     /**
@@ -131,23 +155,7 @@ public class MainViewModel {
         cbSkyType.setButtonCell(factory.call(null));
 
         //Initial value
-        if (MiffieSettings.get().isEmpty()) {
-            logger.error("Cannot populate the view because settings is empty");
-            return false;
-        }
-
-        MiffieSettings.InitialValue.MainView ivMainView = MiffieSettings.get().get().initialValue.mainView;
-        this.setMissionShortName(ivMainView.tfMissionShortName);
-        this.setMissionLongName(ivMainView.tfMissionLongName);
-        this.setBd1Filepath(ivMainView.tfBD1Filepath);
-        this.setPd1Filepath(ivMainView.tfPD1Filepath);
-        this.setSkyType(ivMainView.cbSkyType);
-        this.setImage1Filepath(ivMainView.tfImage1Filepath);
-        this.setImage2Filepath(ivMainView.tfImage2Filepath);
-        this.setArticleDefinitionFilepath(ivMainView.tfArticleDefinitionFilepath);
-        this.setExtraHitcheck(ivMainView.ckbExtraHitcheck);
-        this.setDarkScreen(ivMainView.ckbDarkScreen);
-        this.setMissionBriefing(ivMainView.taMissionBriefing);
+        this.setInitialValues();
 
         return true;
     }
