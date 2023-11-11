@@ -242,7 +242,12 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiNew(ActionEvent event) {
-        this.handleSaveBeforeContinue(event);
+        boolean b = this.handleSaveBeforeContinue(event);
+        if (!b) {
+            return;
+        }
+
+        viewModel.setInitialValues();
     }
 
     @FXML
