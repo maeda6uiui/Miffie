@@ -1,5 +1,9 @@
 package com.github.maeda6uiui.miffie;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.control.SingleSelectionModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,62 +21,85 @@ import java.util.Optional;
 public class PropertySnapshotManager {
     private static final Logger logger = LoggerFactory.getLogger(PropertySnapshotManager.class);
 
-    public static class PropertySnapshot {
-        private final Instant instant = Instant.now();
-        private final Object property;
-        private Object objectValue;
-        private String stringValue;
-        private Integer intValue;
-        private Boolean booleanValue;
+    public static abstract class PropertySnapshotBase<T> {
+        private Instant instant;
+        private T value;
 
-        public PropertySnapshot(Object property, Object objectValue) {
-            this.property = property;
-            this.objectValue = objectValue;
-        }
-
-        public PropertySnapshot(Object property, String stringValue) {
-            this.property = property;
-            this.stringValue = stringValue;
-        }
-
-        public PropertySnapshot(Object property, int intValue) {
-            this.property = property;
-            this.intValue = intValue;
-        }
-
-        public PropertySnapshot(Object property, boolean booleanValue) {
-            this.property = property;
-            this.booleanValue = booleanValue;
+        public PropertySnapshotBase(T value) {
+            instant = Instant.now();
+            this.value = value;
         }
 
         public Instant getInstant() {
             return instant;
         }
 
-        public Object getProperty() {
-            return property;
+        public T getValue() {
+            return value;
         }
 
-        public Optional<Object> getObjectValue() {
-            return Optional.ofNullable(objectValue);
+        public abstract void apply();
+    }
+
+    public static class SingleSelectionModelSnapshot<T> extends PropertySnapshotBase<T> {
+        private SingleSelectionModel<T> model;
+
+        public SingleSelectionModelSnapshot(SingleSelectionModel<T> model, T value) {
+            super(value);
+            this.model = model;
         }
 
-        public Optional<String> getStringValue() {
-            return Optional.ofNullable(stringValue);
-        }
-
-        public Optional<Integer> getIntValue() {
-            return Optional.ofNullable(intValue);
-        }
-
-        public Optional<Boolean> getBooleanValue() {
-            return Optional.ofNullable(booleanValue);
+        @Override
+        public void apply() {
+            model.select(this.getValue());
         }
     }
 
-    private List<PropertySnapshot> snapshots;
-    private List<PropertySnapshot> rebaseSnapshots;
-    private PropertySnapshot currentSnapshot;
+    public static class StringPropertySnapshot extends PropertySnapshotBase<String> {
+        private StringProperty property;
+
+        public StringPropertySnapshot(StringProperty property, String value) {
+            super(value);
+            this.property = property;
+        }
+
+        @Override
+        public void apply() {
+            property.set(this.getValue());
+        }
+    }
+
+    public static class IntegerPropertySnapshot extends PropertySnapshotBase<Integer> {
+        private IntegerProperty property;
+
+        public IntegerPropertySnapshot(IntegerProperty property, Integer value) {
+            super(value);
+            this.property = property;
+        }
+
+        @Override
+        public void apply() {
+            property.set(this.getValue());
+        }
+    }
+
+    public static class BooleanPropertySnapshot extends PropertySnapshotBase<Boolean> {
+        private BooleanProperty property;
+
+        public BooleanPropertySnapshot(BooleanProperty property, Boolean value) {
+            super(value);
+            this.property = property;
+        }
+
+        @Override
+        public void apply() {
+            property.set(this.getValue());
+        }
+    }
+
+    private List<PropertySnapshotBase> snapshots;
+    private List<PropertySnapshotBase> rebaseSnapshots;
+    private PropertySnapshotBase currentSnapshot;
     private boolean ignoreNextAdd;
 
     public PropertySnapshotManager() {
@@ -82,7 +109,7 @@ public class PropertySnapshotManager {
         ignoreNextAdd = false;
     }
 
-    public PropertySnapshotManager add(PropertySnapshot snapshot) {
+    public PropertySnapshotManager add(PropertySnapshotBase snapshot) {
         if (ignoreNextAdd) {
             ignoreNextAdd = false;
         } else {
@@ -95,23 +122,23 @@ public class PropertySnapshotManager {
         return this;
     }
 
-    public PropertySnapshotManager add(Object property, Object value) {
-        var snapshot = new PropertySnapshot(property, value);
+    public <T> PropertySnapshotManager add(SingleSelectionModel<T> model, T value) {
+        var snapshot = new SingleSelectionModelSnapshot<>(model, value);
         return this.add(snapshot);
     }
 
-    public PropertySnapshotManager add(Object property, String value) {
-        var snapshot = new PropertySnapshot(property, value);
+    public PropertySnapshotManager add(StringProperty property, String value) {
+        var snapshot = new StringPropertySnapshot(property, value);
         return this.add(snapshot);
     }
 
-    public PropertySnapshotManager add(Object property, int value) {
-        var snapshot = new PropertySnapshot(property, value);
+    public PropertySnapshotManager add(IntegerProperty property, Integer value) {
+        var snapshot = new IntegerPropertySnapshot(property, value);
         return this.add(snapshot);
     }
 
-    public PropertySnapshotManager add(Object property, boolean value) {
-        var snapshot = new PropertySnapshot(property, value);
+    public PropertySnapshotManager add(BooleanProperty property, Boolean value) {
+        var snapshot = new BooleanPropertySnapshot(property, value);
         return this.add(snapshot);
     }
 
@@ -134,7 +161,7 @@ public class PropertySnapshotManager {
      *
      * @return Current snapshot
      */
-    public Optional<PropertySnapshot> getCurrent() {
+    public Optional<PropertySnapshotBase> getCurrent() {
         return Optional.ofNullable(currentSnapshot);
     }
 
@@ -175,7 +202,7 @@ public class PropertySnapshotManager {
             return this;
         }
 
-        PropertySnapshot previousCurrent = rebaseSnapshots.remove(0);
+        PropertySnapshotBase previousCurrent = rebaseSnapshots.remove(0);
         snapshots.add(previousCurrent);
         currentSnapshot = previousCurrent;
 

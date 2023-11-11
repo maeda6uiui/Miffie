@@ -81,7 +81,8 @@ public class MainViewModel {
             missionLongName.addListener((obs, ov, nv) -> psm.add(missionLongName, nv));
             bd1Filepath.addListener((obs, ov, nv) -> psm.add(bd1Filepath, nv));
             pd1Filepath.addListener((obs, ov, nv) -> psm.add(pd1Filepath, nv));
-            skyType.get().selectedItemProperty().addListener((obs, ov, nv) -> psm.add(skyType, nv.getKey()));
+            skyType.get().selectedItemProperty().addListener(
+                    (obs, ov, nv) -> psm.add(skyType.get(), nv));
             image1Filepath.addListener((obs, ov, nv) -> psm.add(image1Filepath, nv));
             image2Filepath.addListener((obs, ov, nv) -> psm.add(image2Filepath, nv));
             articleDefinitionFilepath.addListener((obs, ov, nv) -> psm.add(articleDefinitionFilepath, nv));
@@ -307,7 +308,7 @@ public class MainViewModel {
     }
 
     public void undo() {
-        
+
     }
 
     public void redo() {
