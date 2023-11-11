@@ -117,6 +117,10 @@ public class PropertySnapshotManager {
         snapshots.clear();
     }
 
+    public int size() {
+        return snapshots.size();
+    }
+
     public boolean hasAny() {
         return !snapshots.isEmpty();
     }

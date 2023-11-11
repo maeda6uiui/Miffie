@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.dabasan.jxm.mif.MissionInfo;
 import com.github.dabasan.jxm.mif.SkyType;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -49,6 +50,8 @@ public class MainViewModel {
     private MiffieMIFModel mifModel;
     private MiffieSettings.MIFSettings mifSettings;
 
+    private PropertySnapshotManager psm;
+
     public MainViewModel() {
         missionShortName = new SimpleStringProperty();
         missionLongName = new SimpleStringProperty();
@@ -71,6 +74,21 @@ public class MainViewModel {
                     mifSettings = new MiffieSettings.MIFSettings();
                 }
         );
+
+        psm = new PropertySnapshotManager();
+        Platform.runLater(() -> {
+            missionShortName.addListener((obs, ov, nv) -> psm.put(missionShortName, nv));
+            missionLongName.addListener((obs, ov, nv) -> psm.put(missionLongName, nv));
+            bd1Filepath.addListener((obs, ov, nv) -> psm.put(bd1Filepath, nv));
+            pd1Filepath.addListener((obs, ov, nv) -> psm.put(pd1Filepath, nv));
+            skyType.addListener((obs, ov, nv) -> psm.put(skyType, nv.getSelectedItem().getKey()));
+            image1Filepath.addListener((obs, ov, nv) -> psm.put(image1Filepath, nv));
+            image2Filepath.addListener((obs, ov, nv) -> psm.put(image2Filepath, nv));
+            articleDefinitionFilepath.addListener((obs, ov, nv) -> psm.put(articleDefinitionFilepath, nv));
+            extraHitcheck.addListener((obs, ov, nv) -> psm.put(extraHitcheck, nv));
+            darkScreen.addListener((obs, ov, nv) -> psm.put(darkScreen, nv));
+            missionBriefing.addListener((obs, ov, nv) -> psm.put(missionBriefing, nv));
+        });
     }
 
     /**
@@ -161,7 +179,7 @@ public class MainViewModel {
         this.setArticleDefinitionFilepath(missionInfo.pathnameOfObj);
         this.setExtraHitcheck(missionInfo.extraCollision);
         this.setDarkScreen(missionInfo.darkScreen);
-        this.setMissionBriefing(missionInfo.briefingText);
+        this.setMissionBriefingLines(missionInfo.briefingText);
     }
 
     private MissionInfo toMissionInfo() {
@@ -176,7 +194,7 @@ public class MainViewModel {
                 .setPathnameOfObj(this.getArticleDefinitionFilepath())
                 .setExtraCollision(this.isExtraHitcheck())
                 .setDarkScreen(this.isDarkScreen())
-                .setBriefingText(this.getMissionBriefing());
+                .setBriefingText(this.getMissionBriefingLines());
     }
 
     /**
@@ -274,6 +292,10 @@ public class MainViewModel {
         }
 
         this.fromMissionInfo(missionInfo);
+    }
+
+    public int getNumSnapshots() {
+        return psm.size();
     }
 
     public String getMissionShortName() {
@@ -400,7 +422,11 @@ public class MainViewModel {
         this.darkScreen.set(darkScreen);
     }
 
-    public List<String> getMissionBriefing() {
+    public String getMissionBriefing() {
+        return missionBriefing.get();
+    }
+
+    public List<String> getMissionBriefingLines() {
         return missionBriefing.get().lines().toList();
     }
 
@@ -408,15 +434,15 @@ public class MainViewModel {
         return missionBriefing;
     }
 
-    public void setMissionBriefing(List<String> missionBriefing) {
+    public void setMissionBriefing(String missionBriefing) {
+        this.missionBriefing.set(missionBriefing);
+    }
+
+    public void setMissionBriefingLines(List<String> missionBriefing) {
         final String LINE_SEPARATOR = System.lineSeparator();
         var sb = new StringBuilder();
         missionBriefing.forEach(line -> sb.append(line + LINE_SEPARATOR));
 
         this.missionBriefing.set(sb.toString());
-    }
-
-    public void setMissionBriefing(String missionBriefing) {
-        this.missionBriefing.set(missionBriefing);
     }
 }
