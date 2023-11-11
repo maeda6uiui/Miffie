@@ -308,11 +308,11 @@ public class MainViewModel {
     }
 
     public void undo() {
-
+        psm.undo();
     }
 
     public void redo() {
-
+        psm.redo();
     }
 
     public String getMissionShortName() {

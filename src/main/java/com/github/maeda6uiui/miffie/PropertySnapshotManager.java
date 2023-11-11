@@ -11,7 +11,6 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This class manages change history of registered properties.
@@ -100,24 +99,15 @@ public class PropertySnapshotManager {
     private List<PropertySnapshotBase> snapshots;
     private List<PropertySnapshotBase> rebaseSnapshots;
     private PropertySnapshotBase currentSnapshot;
-    private boolean ignoreNextAdd;
 
     public PropertySnapshotManager() {
         snapshots = Collections.synchronizedList(new LinkedList<>());
         rebaseSnapshots = Collections.synchronizedList(new LinkedList<>());
-
-        ignoreNextAdd = false;
     }
 
     public PropertySnapshotManager add(PropertySnapshotBase snapshot) {
-        if (ignoreNextAdd) {
-            ignoreNextAdd = false;
-        } else {
-            snapshots.add(snapshot);
-            currentSnapshot = snapshot;
-
-            rebaseSnapshots.clear();
-        }
+        snapshots.add(snapshot);
+        currentSnapshot = snapshot;
 
         return this;
     }
@@ -156,58 +146,25 @@ public class PropertySnapshotManager {
         return rebaseSnapshots.size();
     }
 
-    /**
-     * Returns the current snapshot.
-     *
-     * @return Current snapshot
-     */
-    public Optional<PropertySnapshotBase> getCurrent() {
-        return Optional.ofNullable(currentSnapshot);
-    }
-
-    /**
-     * Sets the previous snapshot as current.
-     * Call this method when implementing undo.
-     * The next attempt to add a snapshot after this method has been called is ignored
-     * so that applying the snapshot value to the corresponding property will not be recorded.
-     *
-     * @return this
-     */
-    public PropertySnapshotManager rebaseToPrevious() {
-        if (snapshots.isEmpty()) {
-            logger.warn("Attempted to rebase to previous snapshot, but there are no snapshots saved");
-            return this;
+    public void undo() {
+        if (snapshots.size() <= 1) {
+            return;
         }
 
         rebaseSnapshots.add(0, currentSnapshot);
         snapshots.remove(currentSnapshot);
         currentSnapshot = snapshots.get(snapshots.size() - 1);
-
-        this.ignoreNextAdd = true;
-
-        return this;
+        currentSnapshot.apply();
     }
 
-    /**
-     * Sets the following snapshot as current.
-     * Call this method when implementing redo.
-     * The next attempt to add a snapshot after this method has been called is ignored
-     * so that applying the snapshot value to the corresponding property will not be recorded.
-     *
-     * @return this
-     */
-    public PropertySnapshotManager rebaseToFollowing() {
+    public void redo() {
         if (rebaseSnapshots.isEmpty()) {
-            logger.warn("Attempted to rebase to following snapshot, but there are no snapshots saved for rebase");
-            return this;
+            return;
         }
 
         PropertySnapshotBase previousCurrent = rebaseSnapshots.remove(0);
         snapshots.add(previousCurrent);
         currentSnapshot = previousCurrent;
-
-        this.ignoreNextAdd = true;
-
-        return this;
+        currentSnapshot.apply();
     }
 }
