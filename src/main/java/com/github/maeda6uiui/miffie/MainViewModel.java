@@ -294,6 +294,10 @@ public class MainViewModel {
         this.fromMissionInfo(missionInfo);
     }
 
+    public boolean hasContentChanged() {
+        return psm.getNumSnapshots() != 0;
+    }
+
     public void undo() {
 
     }

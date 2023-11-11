@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -179,6 +180,17 @@ public class MainController implements Initializable {
         alert.showAndWait();
     }
 
+    private Optional<ButtonType> showAndWaitSaveConfirmationAlert() {
+        var alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(resources.getString("alt.title.confirm.text"));
+        alert.setHeaderText(resources.getString("alt.shouldSave.confirm.header.text"));
+        alert.setContentText(resources.getString("alt.shouldSave.confirm.content.text"));
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
+        return alert.showAndWait();
+    }
+
     @FXML
     protected void onDragOverMainView(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
@@ -205,11 +217,29 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiNew(ActionEvent event) {
-
+        if (viewModel.hasContentChanged()) {
+            ButtonType buttonType = this.showAndWaitSaveConfirmationAlert().orElse(null);
+            if (buttonType == null || buttonType == ButtonType.CANCEL) {
+                return;
+            } else if (buttonType == ButtonType.YES) {
+                this.onActionMiSave(event);
+                return;
+            }
+        }
     }
 
     @FXML
     protected void onActionMiOpen(ActionEvent event) {
+        if (viewModel.hasContentChanged()) {
+            ButtonType buttonType = this.showAndWaitSaveConfirmationAlert().orElse(null);
+            if (buttonType == null || buttonType == ButtonType.CANCEL) {
+                return;
+            } else if (buttonType == ButtonType.YES) {
+                this.onActionMiSave(event);
+                return;
+            }
+        }
+
         var fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("MIF (*.mif)", "*.mif"),
@@ -288,6 +318,16 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiQuit(ActionEvent event) {
+        if (viewModel.hasContentChanged()) {
+            ButtonType buttonType = this.showAndWaitSaveConfirmationAlert().orElse(null);
+            if (buttonType == null || buttonType == ButtonType.CANCEL) {
+                return;
+            } else if (buttonType == ButtonType.YES) {
+                this.onActionMiSave(event);
+                return;
+            }
+        }
+
         Platform.exit();
     }
 
