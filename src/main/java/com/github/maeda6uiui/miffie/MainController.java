@@ -205,7 +205,7 @@ public class MainController implements Initializable {
 
     @FXML
     protected void onActionMiNew(ActionEvent event) {
-        
+
     }
 
     @FXML

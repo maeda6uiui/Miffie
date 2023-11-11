@@ -77,17 +77,17 @@ public class MainViewModel {
 
         psm = new PropertySnapshotManager();
         Platform.runLater(() -> {
-            missionShortName.addListener((obs, ov, nv) -> psm.put(missionShortName, nv));
-            missionLongName.addListener((obs, ov, nv) -> psm.put(missionLongName, nv));
-            bd1Filepath.addListener((obs, ov, nv) -> psm.put(bd1Filepath, nv));
-            pd1Filepath.addListener((obs, ov, nv) -> psm.put(pd1Filepath, nv));
-            skyType.addListener((obs, ov, nv) -> psm.put(skyType, nv.getSelectedItem().getKey()));
-            image1Filepath.addListener((obs, ov, nv) -> psm.put(image1Filepath, nv));
-            image2Filepath.addListener((obs, ov, nv) -> psm.put(image2Filepath, nv));
-            articleDefinitionFilepath.addListener((obs, ov, nv) -> psm.put(articleDefinitionFilepath, nv));
-            extraHitcheck.addListener((obs, ov, nv) -> psm.put(extraHitcheck, nv));
-            darkScreen.addListener((obs, ov, nv) -> psm.put(darkScreen, nv));
-            missionBriefing.addListener((obs, ov, nv) -> psm.put(missionBriefing, nv));
+            missionShortName.addListener((obs, ov, nv) -> psm.add(missionShortName, nv));
+            missionLongName.addListener((obs, ov, nv) -> psm.add(missionLongName, nv));
+            bd1Filepath.addListener((obs, ov, nv) -> psm.add(bd1Filepath, nv));
+            pd1Filepath.addListener((obs, ov, nv) -> psm.add(pd1Filepath, nv));
+            skyType.addListener((obs, ov, nv) -> psm.add(skyType, nv.getSelectedItem().getKey()));
+            image1Filepath.addListener((obs, ov, nv) -> psm.add(image1Filepath, nv));
+            image2Filepath.addListener((obs, ov, nv) -> psm.add(image2Filepath, nv));
+            articleDefinitionFilepath.addListener((obs, ov, nv) -> psm.add(articleDefinitionFilepath, nv));
+            extraHitcheck.addListener((obs, ov, nv) -> psm.add(extraHitcheck, nv));
+            darkScreen.addListener((obs, ov, nv) -> psm.add(darkScreen, nv));
+            missionBriefing.addListener((obs, ov, nv) -> psm.add(missionBriefing, nv));
         });
     }
 
@@ -294,8 +294,12 @@ public class MainViewModel {
         this.fromMissionInfo(missionInfo);
     }
 
-    public int getNumSnapshots() {
-        return psm.size();
+    public void undo() {
+
+    }
+
+    public void redo() {
+
     }
 
     public String getMissionShortName() {
