@@ -1,7 +1,13 @@
 package com.github.maeda6uiui.miffie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * This class manages change history of registered properties.
@@ -9,6 +15,8 @@ import java.util.*;
  * @author maeda6uiui
  */
 public class PropertySnapshotManager {
+    private static final Logger logger = LoggerFactory.getLogger(PropertySnapshotManager.class);
+
     public static class PropertySnapshot {
         private final Instant instant = Instant.now();
         private final Object property;
@@ -62,90 +70,96 @@ public class PropertySnapshotManager {
         }
     }
 
-    private List<String> snapshotUUIDs; //UUIDs of snapshots in chronological order
-    private Map<String, PropertySnapshot> snapshots;    //(Snapshot UUID, Snapshot)
+    private List<PropertySnapshot> snapshots;
+    private List<PropertySnapshot> rebaseSnapshots;
+    private PropertySnapshot current;
+    private boolean ignoreNextAdd;
 
     public PropertySnapshotManager() {
-        snapshotUUIDs = Collections.synchronizedList(new ArrayList<>());
-        snapshots = Collections.synchronizedSortedMap(new TreeMap<>());
+        snapshots = Collections.synchronizedList(new LinkedList<>());
+        rebaseSnapshots = Collections.synchronizedList(new LinkedList<>());
+
+        ignoreNextAdd = false;
     }
 
-    /**
-     * Registers a snapshot.
-     *
-     * @param snapshot Snapshot
-     * @return UUID of the snapshot
-     */
-    public String put(PropertySnapshot snapshot) {
-        String uuid = UUID.randomUUID().toString();
-        snapshotUUIDs.add(uuid);
-        snapshots.put(uuid, snapshot);
+    public PropertySnapshotManager add(PropertySnapshot snapshot) {
+        if (ignoreNextAdd) {
+            ignoreNextAdd = false;
+        } else {
+            snapshots.add(snapshot);
+            current = snapshot;
 
-        return uuid;
-    }
-
-    public PropertySnapshotManager put(Object property, Object value) {
-        var snapshot = new PropertySnapshot(property, value);
-        this.put(snapshot);
+            rebaseSnapshots.clear();
+        }
 
         return this;
     }
 
-    public PropertySnapshotManager put(Object property, String value) {
+    public PropertySnapshotManager add(Object property, Object value) {
         var snapshot = new PropertySnapshot(property, value);
-        this.put(snapshot);
-
-        return this;
+        return this.add(snapshot);
     }
 
-    public PropertySnapshotManager put(Object property, int value) {
+    public PropertySnapshotManager add(Object property, String value) {
         var snapshot = new PropertySnapshot(property, value);
-        this.put(snapshot);
-
-        return this;
+        return this.add(snapshot);
     }
 
-    public PropertySnapshotManager put(Object property, boolean value) {
+    public PropertySnapshotManager add(Object property, int value) {
         var snapshot = new PropertySnapshot(property, value);
-        this.put(snapshot);
+        return this.add(snapshot);
+    }
 
-        return this;
+    public PropertySnapshotManager add(Object property, boolean value) {
+        var snapshot = new PropertySnapshot(property, value);
+        return this.add(snapshot);
     }
 
     public void clear() {
-        snapshotUUIDs.clear();
         snapshots.clear();
+        rebaseSnapshots.clear();
+        current = null;
     }
 
-    public int size() {
+    public int getNumSnapshots() {
         return snapshots.size();
     }
 
-    public boolean hasAny() {
-        return !snapshots.isEmpty();
+    public int getNumRebaseSnapshots() {
+        return rebaseSnapshots.size();
     }
 
-    /**
-     * Returns the last snapshot and removes it from the list.
-     * This method returns empty value if there is no snapshot saved.
-     *
-     * @return Last snapshot
-     */
-    public Optional<PropertySnapshot> getLast() {
-        if (snapshotUUIDs.isEmpty()) {
-            return Optional.empty();
+    public Optional<PropertySnapshot> getCurrent() {
+        return Optional.ofNullable(current);
+    }
+
+    public PropertySnapshotManager rebaseToPrevious() {
+        if (snapshots.isEmpty()) {
+            logger.warn("Attempted to rebase to previous, but there are no snapshots saved");
+            return this;
         }
 
-        String lastUUID = snapshotUUIDs.get(snapshotUUIDs.size() - 1);
-        PropertySnapshot lastSnapshot = snapshots.get(lastUUID);
+        rebaseSnapshots.addFirst(current);
+        snapshots.remove(current);
+        current = snapshots.getLast();
 
-        snapshotUUIDs.remove(snapshotUUIDs.size() - 1);
-        snapshots.remove(lastUUID);
+        this.ignoreNextAdd = true;
 
-        return Optional.ofNullable(lastSnapshot);
+        return this;
     }
 
-    public Optional<PropertySnapshot> findByUUID(String uuid) {
-        return Optional.ofNullable(snapshots.get(uuid));
+    public PropertySnapshotManager rebaseToPreviousCurrent() {
+        if (rebaseSnapshots.isEmpty()) {
+            logger.warn("Attempted to rebase to previous current, but there are no snapshots saved for rebase");
+            return this;
+        }
+
+        PropertySnapshot previousCurrent = rebaseSnapshots.removeFirst();
+        snapshots.add(previousCurrent);
+        current = previousCurrent;
+
+        this.ignoreNextAdd = true;
+
+        return this;
     }
 }
