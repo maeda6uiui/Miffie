@@ -72,7 +72,7 @@ public class PropertySnapshotManager {
 
     private List<PropertySnapshot> snapshots;
     private List<PropertySnapshot> rebaseSnapshots;
-    private PropertySnapshot current;
+    private PropertySnapshot currentSnapshot;
     private boolean ignoreNextAdd;
 
     public PropertySnapshotManager() {
@@ -87,7 +87,7 @@ public class PropertySnapshotManager {
             ignoreNextAdd = false;
         } else {
             snapshots.add(snapshot);
-            current = snapshot;
+            currentSnapshot = snapshot;
 
             rebaseSnapshots.clear();
         }
@@ -118,7 +118,7 @@ public class PropertySnapshotManager {
     public void clear() {
         snapshots.clear();
         rebaseSnapshots.clear();
-        current = null;
+        currentSnapshot = null;
     }
 
     public int getNumSnapshots() {
@@ -129,34 +129,34 @@ public class PropertySnapshotManager {
         return rebaseSnapshots.size();
     }
 
-    public Optional<PropertySnapshot> getCurrent() {
-        return Optional.ofNullable(current);
+    public Optional<PropertySnapshot> getCurrentSnapshot() {
+        return Optional.ofNullable(currentSnapshot);
     }
 
     public PropertySnapshotManager rebaseToPrevious() {
         if (snapshots.isEmpty()) {
-            logger.warn("Attempted to rebase to previous, but there are no snapshots saved");
+            logger.warn("Attempted to rebase to previous snapshot, but there are no snapshots saved");
             return this;
         }
 
-        rebaseSnapshots.add(0, current);
-        snapshots.remove(current);
-        current = snapshots.get(snapshots.size() - 1);
+        rebaseSnapshots.add(0, currentSnapshot);
+        snapshots.remove(currentSnapshot);
+        currentSnapshot = snapshots.get(snapshots.size() - 1);
 
         this.ignoreNextAdd = true;
 
         return this;
     }
 
-    public PropertySnapshotManager rebaseToPreviousCurrent() {
+    public PropertySnapshotManager rebaseToFollowing() {
         if (rebaseSnapshots.isEmpty()) {
-            logger.warn("Attempted to rebase to previous current, but there are no snapshots saved for rebase");
+            logger.warn("Attempted to rebase to following snapshot, but there are no snapshots saved for rebase");
             return this;
         }
 
         PropertySnapshot previousCurrent = rebaseSnapshots.remove(0);
         snapshots.add(previousCurrent);
-        current = previousCurrent;
+        currentSnapshot = previousCurrent;
 
         this.ignoreNextAdd = true;
 
