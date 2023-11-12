@@ -84,7 +84,7 @@ public class PreferencesViewModel {
     }
 
     /**
-     * Populate the view.
+     * Populates the view.
      * Call this method after binding is done.
      *
      * @param resources          Text resources

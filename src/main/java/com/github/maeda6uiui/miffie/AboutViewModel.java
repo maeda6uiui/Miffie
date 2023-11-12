@@ -29,7 +29,7 @@ public class AboutViewModel {
     }
 
     /**
-     * Populate the view.
+     * Populates the view.
      * Call this method after binding is done.
      *
      * @return {@code true} if success, {@code false} if error
