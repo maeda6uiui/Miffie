@@ -77,6 +77,7 @@ public class MainViewModel {
 
         contentChanged = false;
         Platform.runLater(() -> {
+            //Add a change listener to each property to detect if the value has changed
             missionShortName.addListener((obs, ov, nv) -> contentChanged = true);
             missionLongName.addListener((obs, ov, nv) -> contentChanged = true);
             bd1Filepath.addListener((obs, ov, nv) -> contentChanged = true);

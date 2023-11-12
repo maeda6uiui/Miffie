@@ -138,6 +138,15 @@ public class MainController implements Initializable {
                 });
 
         this.resources = resources;
+
+        Platform.runLater(() -> {
+            lblMissionShortName.getScene().getWindow().setOnCloseRequest(event -> {
+                boolean b2 = this.handleSaveBeforeContinue(new ActionEvent());
+                if (!b2) {
+                    event.consume();
+                }
+            });
+        });
     }
 
     private void loadMIFWithErrorAlert(File file) {
