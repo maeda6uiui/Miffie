@@ -8,9 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Optional;
 
 /**
  * This class manages change history of registered properties.
@@ -20,17 +18,51 @@ import java.util.List;
 public class PropertySnapshotManager {
     private static final Logger logger = LoggerFactory.getLogger(PropertySnapshotManager.class);
 
-    public static abstract class PropertySnapshotBase<T> {
+    public static abstract class PropertySnapshotBase {
         private Instant instant;
-        private T value;
+        private Object value;
 
-        public PropertySnapshotBase(T value) {
+        private PropertySnapshotBase previousSnapshot;
+        private PropertySnapshotBase nextSnapshot;
+
+        public PropertySnapshotBase(Object value) {
             instant = Instant.now();
             this.value = value;
         }
 
         public Instant getInstant() {
             return instant;
+        }
+
+        public Object getObjectValue() {
+            return value;
+        }
+
+        public Optional<PropertySnapshotBase> getPreviousSnapshot() {
+            return Optional.ofNullable(previousSnapshot);
+        }
+
+        public void setPreviousSnapshot(PropertySnapshotBase previousSnapshot) {
+            this.previousSnapshot = previousSnapshot;
+        }
+
+        public Optional<PropertySnapshotBase> getNextSnapshot() {
+            return Optional.ofNullable(nextSnapshot);
+        }
+
+        public void setNextSnapshot(PropertySnapshotBase nextSnapshot) {
+            this.nextSnapshot = nextSnapshot;
+        }
+
+        public abstract void apply();
+    }
+
+    public static abstract class PropertySnapshot<T> extends PropertySnapshotBase {
+        private T value;
+
+        public PropertySnapshot(T value) {
+            super(value);
+            this.value = value;
         }
 
         public T getValue() {
@@ -40,7 +72,7 @@ public class PropertySnapshotManager {
         public abstract void apply();
     }
 
-    public static class SingleSelectionModelSnapshot<T> extends PropertySnapshotBase<T> {
+    public static class SingleSelectionModelSnapshot<T> extends PropertySnapshot<T> {
         private SingleSelectionModel<T> model;
 
         public SingleSelectionModelSnapshot(SingleSelectionModel<T> model, T value) {
@@ -54,7 +86,7 @@ public class PropertySnapshotManager {
         }
     }
 
-    public static class StringPropertySnapshot extends PropertySnapshotBase<String> {
+    public static class StringPropertySnapshot extends PropertySnapshot<String> {
         private StringProperty property;
 
         public StringPropertySnapshot(StringProperty property, String value) {
@@ -68,7 +100,7 @@ public class PropertySnapshotManager {
         }
     }
 
-    public static class IntegerPropertySnapshot extends PropertySnapshotBase<Integer> {
+    public static class IntegerPropertySnapshot extends PropertySnapshot<Integer> {
         private IntegerProperty property;
 
         public IntegerPropertySnapshot(IntegerProperty property, Integer value) {
@@ -82,7 +114,7 @@ public class PropertySnapshotManager {
         }
     }
 
-    public static class BooleanPropertySnapshot extends PropertySnapshotBase<Boolean> {
+    public static class BooleanPropertySnapshot extends PropertySnapshot<Boolean> {
         private BooleanProperty property;
 
         public BooleanPropertySnapshot(BooleanProperty property, Boolean value) {
@@ -96,17 +128,23 @@ public class PropertySnapshotManager {
         }
     }
 
-    private List<PropertySnapshotBase> snapshots;
-    private List<PropertySnapshotBase> rebaseSnapshots;
     private PropertySnapshotBase currentSnapshot;
 
     public PropertySnapshotManager() {
-        snapshots = Collections.synchronizedList(new LinkedList<>());
-        rebaseSnapshots = Collections.synchronizedList(new LinkedList<>());
+
     }
 
-    public PropertySnapshotManager add(PropertySnapshotBase snapshot) {
-        snapshots.add(snapshot);
+    public synchronized PropertySnapshotManager add(PropertySnapshotBase snapshot) {
+        if (currentSnapshot == null) {
+            currentSnapshot = snapshot;
+            return this;
+        }
+        if (snapshot.getObjectValue().equals(currentSnapshot.getObjectValue())) {
+            return this;
+        }
+
+        currentSnapshot.setNextSnapshot(snapshot);
+        snapshot.setPreviousSnapshot(currentSnapshot);
         currentSnapshot = snapshot;
 
         return this;
@@ -132,39 +170,33 @@ public class PropertySnapshotManager {
         return this.add(snapshot);
     }
 
-    public void clear() {
-        snapshots.clear();
-        rebaseSnapshots.clear();
-        currentSnapshot = null;
-    }
-
-    public int getNumSnapshots() {
-        return snapshots.size();
-    }
-
-    public int getNumRebaseSnapshots() {
-        return rebaseSnapshots.size();
+    public boolean snapshotExists() {
+        return currentSnapshot != null;
     }
 
     public void undo() {
-        if (snapshots.size() <= 1) {
+        if (currentSnapshot == null) {
             return;
         }
 
-        rebaseSnapshots.add(0, currentSnapshot);
-        snapshots.remove(currentSnapshot);
-        currentSnapshot = snapshots.get(snapshots.size() - 1);
-        currentSnapshot.apply();
+        currentSnapshot
+                .getPreviousSnapshot()
+                .ifPresent(p -> {
+                    p.apply();
+                    currentSnapshot = p;
+                });
     }
 
     public void redo() {
-        if (rebaseSnapshots.isEmpty()) {
+        if (currentSnapshot == null) {
             return;
         }
 
-        PropertySnapshotBase previousCurrent = rebaseSnapshots.remove(0);
-        snapshots.add(previousCurrent);
-        currentSnapshot = previousCurrent;
-        currentSnapshot.apply();
+        currentSnapshot
+                .getNextSnapshot()
+                .ifPresent(p -> {
+                    p.apply();
+                    currentSnapshot = p;
+                });
     }
 }

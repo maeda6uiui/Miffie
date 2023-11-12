@@ -304,7 +304,7 @@ public class MainViewModel {
     }
 
     public boolean hasContentChanged() {
-        return psm.getNumSnapshots() != 0;
+        return psm.snapshotExists();
     }
 
     public void undo() {
