@@ -195,7 +195,7 @@ public class MainController implements Initializable {
      * This method runs the boilerplate procedure to ask the user
      * whether to save the changes before continuing to the next step.
      * This method is supposed to be called from one of the event handlers
-     * such as {@link MainController#onActionMiQuit(ActionEvent)}.
+     * such as {@link #onActionMiQuit(ActionEvent)}.
      *
      * @param event Event
      * @return {@code true} if you can continue the procedure, otherwise {@code false}
