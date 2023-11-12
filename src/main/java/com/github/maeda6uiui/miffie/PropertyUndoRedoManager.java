@@ -20,22 +20,16 @@ public class PropertyUndoRedoManager {
 
     public static abstract class PropertySnapshotBase {
         private Instant instant;
-        private Object value;
 
         private PropertySnapshotBase previousSnapshot;
         private PropertySnapshotBase nextSnapshot;
 
-        public PropertySnapshotBase(Object value) {
+        public PropertySnapshotBase() {
             instant = Instant.now();
-            this.value = value;
         }
 
         public Instant getInstant() {
             return instant;
-        }
-
-        public Object getObjectValue() {
-            return value;
         }
 
         public Optional<PropertySnapshotBase> getPreviousSnapshot() {
@@ -61,7 +55,6 @@ public class PropertyUndoRedoManager {
         private T value;
 
         public PropertySnapshot(T value) {
-            super(value);
             this.value = value;
         }
 
@@ -132,6 +125,10 @@ public class PropertyUndoRedoManager {
 
     public PropertyUndoRedoManager() {
 
+    }
+
+    public void reset() {
+        currentSnapshot = null;
     }
 
     public synchronized PropertyUndoRedoManager add(PropertySnapshotBase snapshot) {
