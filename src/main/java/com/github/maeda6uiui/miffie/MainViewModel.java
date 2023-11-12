@@ -50,7 +50,7 @@ public class MainViewModel {
     private MiffieMIFModel mifModel;
     private MiffieSettings.MIFSettings mifSettings;
 
-    private PropertyUndoRedoManager psm;
+    private PropertyUndoRedoManager undoRedoMgr;
 
     public MainViewModel() {
         missionShortName = new SimpleStringProperty();
@@ -75,20 +75,20 @@ public class MainViewModel {
                 }
         );
 
-        psm = new PropertyUndoRedoManager();
+        undoRedoMgr = new PropertyUndoRedoManager();
         Platform.runLater(() -> {
-            missionShortName.addListener((obs, ov, nv) -> psm.add(missionShortName, nv));
-            missionLongName.addListener((obs, ov, nv) -> psm.add(missionLongName, nv));
-            bd1Filepath.addListener((obs, ov, nv) -> psm.add(bd1Filepath, nv));
-            pd1Filepath.addListener((obs, ov, nv) -> psm.add(pd1Filepath, nv));
+            missionShortName.addListener((obs, ov, nv) -> undoRedoMgr.add(missionShortName, nv));
+            missionLongName.addListener((obs, ov, nv) -> undoRedoMgr.add(missionLongName, nv));
+            bd1Filepath.addListener((obs, ov, nv) -> undoRedoMgr.add(bd1Filepath, nv));
+            pd1Filepath.addListener((obs, ov, nv) -> undoRedoMgr.add(pd1Filepath, nv));
             skyType.get().selectedItemProperty().addListener(
-                    (obs, ov, nv) -> psm.add(skyType.get(), nv));
-            image1Filepath.addListener((obs, ov, nv) -> psm.add(image1Filepath, nv));
-            image2Filepath.addListener((obs, ov, nv) -> psm.add(image2Filepath, nv));
-            articleDefinitionFilepath.addListener((obs, ov, nv) -> psm.add(articleDefinitionFilepath, nv));
-            extraHitcheck.addListener((obs, ov, nv) -> psm.add(extraHitcheck, nv));
-            darkScreen.addListener((obs, ov, nv) -> psm.add(darkScreen, nv));
-            missionBriefing.addListener((obs, ov, nv) -> psm.add(missionBriefing, nv));
+                    (obs, ov, nv) -> undoRedoMgr.add(skyType.get(), nv));
+            image1Filepath.addListener((obs, ov, nv) -> undoRedoMgr.add(image1Filepath, nv));
+            image2Filepath.addListener((obs, ov, nv) -> undoRedoMgr.add(image2Filepath, nv));
+            articleDefinitionFilepath.addListener((obs, ov, nv) -> undoRedoMgr.add(articleDefinitionFilepath, nv));
+            extraHitcheck.addListener((obs, ov, nv) -> undoRedoMgr.add(extraHitcheck, nv));
+            darkScreen.addListener((obs, ov, nv) -> undoRedoMgr.add(darkScreen, nv));
+            missionBriefing.addListener((obs, ov, nv) -> undoRedoMgr.add(missionBriefing, nv));
         });
     }
 
@@ -117,7 +117,7 @@ public class MainViewModel {
     }
 
     /**
-     * Populate the view.
+     * Populates the view.
      * Call this method after binding is done.
      *
      * @param resources Resources for i18n
@@ -304,15 +304,15 @@ public class MainViewModel {
     }
 
     public boolean hasContentChanged() {
-        return psm.snapshotExists();
+        return undoRedoMgr.snapshotExists();
     }
 
     public void undo() {
-        psm.undo();
+        undoRedoMgr.undo();
     }
 
     public void redo() {
-        psm.redo();
+        undoRedoMgr.redo();
     }
 
     public String getMissionShortName() {

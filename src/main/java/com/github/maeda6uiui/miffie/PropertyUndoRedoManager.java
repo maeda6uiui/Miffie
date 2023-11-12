@@ -139,9 +139,6 @@ public class PropertyUndoRedoManager {
             currentSnapshot = snapshot;
             return this;
         }
-        if (snapshot.getObjectValue().equals(currentSnapshot.getObjectValue())) {
-            return this;
-        }
 
         currentSnapshot.setNextSnapshot(snapshot);
         snapshot.setPreviousSnapshot(currentSnapshot);
