@@ -50,7 +50,7 @@ public class MainViewModel {
     private MiffieMIFModel mifModel;
     private MiffieSettings.MIFSettings mifSettings;
 
-    private PropertySnapshotManager psm;
+    private PropertyUndoRedoManager psm;
 
     public MainViewModel() {
         missionShortName = new SimpleStringProperty();
@@ -75,7 +75,7 @@ public class MainViewModel {
                 }
         );
 
-        psm = new PropertySnapshotManager();
+        psm = new PropertyUndoRedoManager();
         Platform.runLater(() -> {
             missionShortName.addListener((obs, ov, nv) -> psm.add(missionShortName, nv));
             missionLongName.addListener((obs, ov, nv) -> psm.add(missionLongName, nv));

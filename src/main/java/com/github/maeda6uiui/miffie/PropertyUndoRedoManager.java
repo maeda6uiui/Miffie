@@ -11,12 +11,12 @@ import java.time.Instant;
 import java.util.Optional;
 
 /**
- * This class manages change history of registered properties.
+ * This class manages undo and redo of registered properties.
  *
  * @author maeda6uiui
  */
-public class PropertySnapshotManager {
-    private static final Logger logger = LoggerFactory.getLogger(PropertySnapshotManager.class);
+public class PropertyUndoRedoManager {
+    private static final Logger logger = LoggerFactory.getLogger(PropertyUndoRedoManager.class);
 
     public static abstract class PropertySnapshotBase {
         private Instant instant;
@@ -130,11 +130,11 @@ public class PropertySnapshotManager {
 
     private PropertySnapshotBase currentSnapshot;
 
-    public PropertySnapshotManager() {
+    public PropertyUndoRedoManager() {
 
     }
 
-    public synchronized PropertySnapshotManager add(PropertySnapshotBase snapshot) {
+    public synchronized PropertyUndoRedoManager add(PropertySnapshotBase snapshot) {
         if (currentSnapshot == null) {
             currentSnapshot = snapshot;
             return this;
@@ -150,22 +150,22 @@ public class PropertySnapshotManager {
         return this;
     }
 
-    public <T> PropertySnapshotManager add(SingleSelectionModel<T> model, T value) {
+    public <T> PropertyUndoRedoManager add(SingleSelectionModel<T> model, T value) {
         var snapshot = new SingleSelectionModelSnapshot<>(model, value);
         return this.add(snapshot);
     }
 
-    public PropertySnapshotManager add(StringProperty property, String value) {
+    public PropertyUndoRedoManager add(StringProperty property, String value) {
         var snapshot = new StringPropertySnapshot(property, value);
         return this.add(snapshot);
     }
 
-    public PropertySnapshotManager add(IntegerProperty property, Integer value) {
+    public PropertyUndoRedoManager add(IntegerProperty property, Integer value) {
         var snapshot = new IntegerPropertySnapshot(property, value);
         return this.add(snapshot);
     }
 
-    public PropertySnapshotManager add(BooleanProperty property, Boolean value) {
+    public PropertyUndoRedoManager add(BooleanProperty property, Boolean value) {
         var snapshot = new BooleanPropertySnapshot(property, value);
         return this.add(snapshot);
     }
