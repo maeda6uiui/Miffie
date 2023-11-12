@@ -51,10 +51,6 @@ public class MainController implements Initializable {
     @FXML
     private MenuItem miQuit;
     @FXML
-    private MenuItem miUndo;
-    @FXML
-    private MenuItem miRedo;
-    @FXML
     private MenuItem miCopy;
     @FXML
     private MenuItem miPaste;
@@ -248,6 +244,7 @@ public class MainController implements Initializable {
         }
 
         viewModel.setInitialValues();
+        viewModel.setContentChanged(false);
     }
 
     @FXML
@@ -341,16 +338,6 @@ public class MainController implements Initializable {
         }
 
         Platform.exit();
-    }
-
-    @FXML
-    protected void onActionMiUndo(ActionEvent event) {
-        viewModel.undo();
-    }
-
-    @FXML
-    protected void onActionMiRedo(ActionEvent event) {
-        viewModel.redo();
     }
 
     @FXML

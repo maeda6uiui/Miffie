@@ -50,7 +50,7 @@ public class MainViewModel {
     private MiffieMIFModel mifModel;
     private MiffieSettings.MIFSettings mifSettings;
 
-    private PropertyUndoRedoManager undoRedoMgr;
+    private boolean contentChanged;
 
     public MainViewModel() {
         missionShortName = new SimpleStringProperty();
@@ -75,20 +75,19 @@ public class MainViewModel {
                 }
         );
 
-        undoRedoMgr = new PropertyUndoRedoManager();
+        contentChanged = false;
         Platform.runLater(() -> {
-            missionShortName.addListener((obs, ov, nv) -> undoRedoMgr.add(missionShortName, nv));
-            missionLongName.addListener((obs, ov, nv) -> undoRedoMgr.add(missionLongName, nv));
-            bd1Filepath.addListener((obs, ov, nv) -> undoRedoMgr.add(bd1Filepath, nv));
-            pd1Filepath.addListener((obs, ov, nv) -> undoRedoMgr.add(pd1Filepath, nv));
-            skyType.get().selectedItemProperty().addListener(
-                    (obs, ov, nv) -> undoRedoMgr.add(skyType.get(), nv));
-            image1Filepath.addListener((obs, ov, nv) -> undoRedoMgr.add(image1Filepath, nv));
-            image2Filepath.addListener((obs, ov, nv) -> undoRedoMgr.add(image2Filepath, nv));
-            articleDefinitionFilepath.addListener((obs, ov, nv) -> undoRedoMgr.add(articleDefinitionFilepath, nv));
-            extraHitcheck.addListener((obs, ov, nv) -> undoRedoMgr.add(extraHitcheck, nv));
-            darkScreen.addListener((obs, ov, nv) -> undoRedoMgr.add(darkScreen, nv));
-            missionBriefing.addListener((obs, ov, nv) -> undoRedoMgr.add(missionBriefing, nv));
+            missionShortName.addListener((obs, ov, nv) -> contentChanged = true);
+            missionLongName.addListener((obs, ov, nv) -> contentChanged = true);
+            bd1Filepath.addListener((obs, ov, nv) -> contentChanged = true);
+            pd1Filepath.addListener((obs, ov, nv) -> contentChanged = true);
+            skyType.get().selectedItemProperty().addListener((obs, ov, nv) -> contentChanged = true);
+            image1Filepath.addListener((obs, ov, nv) -> contentChanged = true);
+            image2Filepath.addListener((obs, ov, nv) -> contentChanged = true);
+            articleDefinitionFilepath.addListener((obs, ov, nv) -> contentChanged = true);
+            extraHitcheck.addListener((obs, ov, nv) -> contentChanged = true);
+            darkScreen.addListener((obs, ov, nv) -> contentChanged = true);
+            missionBriefing.addListener((obs, ov, nv) -> contentChanged = true);
         });
     }
 
@@ -303,18 +302,6 @@ public class MainViewModel {
         this.fromMissionInfo(missionInfo);
     }
 
-    public boolean hasContentChanged() {
-        return undoRedoMgr.snapshotExists();
-    }
-
-    public void undo() {
-        undoRedoMgr.undo();
-    }
-
-    public void redo() {
-        undoRedoMgr.redo();
-    }
-
     public String getMissionShortName() {
         return missionShortName.get();
     }
@@ -461,5 +448,13 @@ public class MainViewModel {
         missionBriefing.forEach(line -> sb.append(line + LINE_SEPARATOR));
 
         this.missionBriefing.set(sb.toString());
+    }
+
+    public boolean hasContentChanged() {
+        return contentChanged;
+    }
+
+    public void setContentChanged(boolean contentChanged) {
+        this.contentChanged = contentChanged;
     }
 }
