@@ -103,6 +103,8 @@ public class MainViewModel {
         this.setExtraHitcheck(ivMainView.ckbExtraHitcheck);
         this.setDarkScreen(ivMainView.ckbDarkScreen);
         this.setMissionBriefing(ivMainView.taMissionBriefing);
+
+        contentChanged = false;
     }
 
     public void setInitialValues() {
@@ -230,6 +232,7 @@ public class MainViewModel {
         }
 
         this.fromMissionInfo(missionInfo);
+        contentChanged = false;
 
         return "";
     }
@@ -257,6 +260,8 @@ public class MainViewModel {
             logger.error("Failed to save MIF file", e);
             return e.getMessage();
         }
+
+        contentChanged = false;
 
         return "";
     }
@@ -452,9 +457,5 @@ public class MainViewModel {
 
     public boolean hasContentChanged() {
         return contentChanged;
-    }
-
-    public void setContentChanged(boolean contentChanged) {
-        this.contentChanged = contentChanged;
     }
 }

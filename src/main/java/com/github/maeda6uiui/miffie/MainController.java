@@ -244,7 +244,6 @@ public class MainController implements Initializable {
         }
 
         viewModel.setInitialValues();
-        viewModel.setContentChanged(false);
     }
 
     @FXML
