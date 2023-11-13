@@ -70,7 +70,7 @@ public class MainViewModel {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> mifSettings = settings.mifSettings,
                 () -> {
-                    logger.warn("Settings is not available. Fall back to default MIF settings");
+                    logger.warn("Settings are not available. Fall back to default MIF settings");
                     mifSettings = new MiffieSettings.MIFSettings();
                 }
         );
@@ -112,7 +112,7 @@ public class MainViewModel {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> this.setInitialValues(settings.initialValue.mainView),
                 () -> {
-                    logger.warn("Settings is not available. Fall back to default initial values");
+                    logger.warn("Settings are not available. Fall back to default initial values");
                     this.setInitialValues(new MiffieSettings.InitialValue.MainView());
                 }
         );

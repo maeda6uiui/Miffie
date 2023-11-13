@@ -31,7 +31,7 @@ public class BriefingPreviewViewModel {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> mifSettings = settings.mifSettings,
                 () -> {
-                    logger.warn("Settings is not available. Fall back to default settings");
+                    logger.warn("Settings are not available. Fall back to default settings");
                     mifSettings = new MiffieSettings.MIFSettings();
                 }
         );

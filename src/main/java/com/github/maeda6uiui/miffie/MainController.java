@@ -332,7 +332,7 @@ public class MainController implements Initializable {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> this.openPreferencesDialog(settings.languageSettings.code),
                 () -> {
-                    logger.warn("Settings is not available. Fall back to default locale 'en'");
+                    logger.warn("Settings are not available. Fall back to default locale 'en'");
                     this.openPreferencesDialog("en");
                 }
         );
@@ -396,7 +396,7 @@ public class MainController implements Initializable {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> this.openAboutDialog(settings.languageSettings.code),
                 () -> {
-                    logger.warn("Settings is not available. Fall back to default locale 'en'");
+                    logger.warn("Settings are not available. Fall back to default locale 'en'");
                     this.openAboutDialog("en");
                 }
         );
@@ -439,7 +439,7 @@ public class MainController implements Initializable {
         MiffieSettings.get().ifPresentOrElse(
                 settings -> this.openBriefingPreviewDialog(settings.languageSettings.code),
                 () -> {
-                    logger.warn("Settings is not available. Fall back to default locale 'en'");
+                    logger.warn("Settings are not available. Fall back to default locale 'en'");
                     this.openBriefingPreviewDialog("en");
                 }
         );
