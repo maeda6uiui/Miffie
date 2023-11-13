@@ -23,7 +23,7 @@ import java.util.Optional;
 public class DisplayLanguages {
     private static final Logger logger = LoggerFactory.getLogger(DisplayLanguages.class);
 
-    public static final String FILEPATH = "./Data/Properties/languages.yaml";
+    public static final String FILEPATH = "./Data/languages.yaml";
 
     @JsonProperty("languages")
     public List<DisplayLanguage> displayLanguages;
