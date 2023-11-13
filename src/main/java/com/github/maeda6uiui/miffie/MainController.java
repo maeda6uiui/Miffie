@@ -253,6 +253,7 @@ public class MainController implements Initializable {
         }
 
         viewModel.setInitialValues();
+        currentFile = null;
     }
 
     @FXML
