@@ -52,10 +52,6 @@ public class MiffieApp extends Application {
                 settings.windowSettings.height
         );
 
-        stage.setOnCloseRequest(event -> {
-            logger.info("Exiting the Miffie app...");
-        });
-
         stage.setTitle("Miffie - MIF Editor");
         stage.setScene(scene);
         stage.show();

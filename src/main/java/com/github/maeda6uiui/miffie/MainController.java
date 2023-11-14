@@ -145,6 +145,8 @@ public class MainController implements Initializable {
                 if (!b2) {
                     event.consume();
                 }
+
+                logger.info("Exiting the Miffie app...");
             });
         });
     }
