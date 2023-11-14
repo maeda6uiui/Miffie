@@ -44,6 +44,8 @@ public class AboutController implements Initializable {
         this.resources = resources;
 
         Platform.runLater(() -> {
+            Stage stage = (Stage) taAppInfo.getScene().getWindow();
+
             boolean b = viewModel.populate();
             if (!b) {
                 logger.error("Failed to initialize the about view. This window will be closed");
@@ -54,9 +56,10 @@ public class AboutController implements Initializable {
                 alert.setContentText(resources.getString("alt.initialize.error.content.text"));
                 alert.showAndWait();
 
-                Stage stage = (Stage) taAppInfo.getScene().getWindow();
                 stage.close();
             }
+
+            MiffieIcons.get().ifPresent(p -> p.addIconToStage(stage, MiffieIcons.DEFAULT_ICON_FILENAME));
         });
     }
 

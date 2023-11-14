@@ -172,6 +172,8 @@ public class PreferencesController implements Initializable {
         this.resources = resources;
 
         Platform.runLater(() -> {
+            Stage stage = (Stage) lblLDisplayLanguage.getScene().getWindow();
+
             boolean b = viewModel.populate(
                     resources,
                     cbIVSkyType,
@@ -187,9 +189,10 @@ public class PreferencesController implements Initializable {
                 alert.setContentText(resources.getString("alt.initialize.error.content.text"));
                 alert.showAndWait();
 
-                Stage stage = (Stage) lblLDisplayLanguage.getScene().getWindow();
                 stage.close();
             }
+
+            MiffieIcons.get().ifPresent(p -> p.addIconToStage(stage, MiffieIcons.DEFAULT_ICON_FILENAME));
         });
     }
 

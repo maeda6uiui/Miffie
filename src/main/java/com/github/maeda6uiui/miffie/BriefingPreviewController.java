@@ -33,6 +33,8 @@ public class BriefingPreviewController implements Initializable {
         taBriefingPreview.textProperty().bind(viewModel.briefingPreviewProperty());
 
         Platform.runLater(() -> {
+            Stage stage = (Stage) taBriefingPreview.getScene().getWindow();
+
             boolean b = viewModel.trimBriefingText(originalBriefingText);
             if (!b) {
                 logger.error("Failed to trim the briefing text for preview. This window will be closed");
@@ -43,9 +45,10 @@ public class BriefingPreviewController implements Initializable {
                 alert.setContentText(resources.getString("alt.trimBriefingText.error.content.text"));
                 alert.showAndWait();
 
-                Stage stage = (Stage) taBriefingPreview.getScene().getWindow();
                 stage.close();
             }
+
+            MiffieIcons.get().ifPresent(p -> p.addIconToStage(stage, MiffieIcons.DEFAULT_ICON_FILENAME));
         });
     }
 

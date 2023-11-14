@@ -1,6 +1,7 @@
 package com.github.maeda6uiui.miffie;
 
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ public class MiffieIcons {
     private static final Logger logger = LoggerFactory.getLogger(MiffieIcons.class);
 
     public static final String DIRNAME = "./Data/Icon";
+    public static final String DEFAULT_ICON_FILENAME = "miffie.png";
 
     public Map<String, Image> icons;
 
@@ -33,6 +35,10 @@ public class MiffieIcons {
 
     public Optional<Image> getIcon(String filename) {
         return Optional.ofNullable(icons.get(filename));
+    }
+
+    public void addIconToStage(Stage stage, String filename) {
+        this.getIcon(filename).ifPresent(icon -> stage.getIcons().add(icon));
     }
 
     /**
@@ -51,7 +57,7 @@ public class MiffieIcons {
             stream
                     .filter(Files::isRegularFile)
                     .forEach(iconFile -> {
-                        var icon = new Image(iconFile.toString());
+                        var icon = new Image(iconFile.toUri().toString());
                         if (icon.isError()) {
                             logger.error("Failed to load an icon image", icon.getException());
                         } else {

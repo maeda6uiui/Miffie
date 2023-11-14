@@ -31,6 +31,7 @@ public class MiffieApp extends Application {
         MiffieSettings settings = MiffieSettings.load(MiffieSettings.FILEPATH);
         DisplayLanguages.load(DisplayLanguages.FILEPATH);
         MiffieThemes.load(MiffieThemes.FILEPATH);
+        MiffieIcons.load(MiffieIcons.DIRNAME);
 
         Path propertiesDir = Paths.get("./Data/Properties");
         var loader = new URLClassLoader(new URL[]{propertiesDir.toUri().toURL()});
@@ -51,6 +52,8 @@ public class MiffieApp extends Application {
                 settings.windowSettings.width,
                 settings.windowSettings.height
         );
+
+        MiffieIcons.get().ifPresent(p -> p.addIconToStage(stage, MiffieIcons.DEFAULT_ICON_FILENAME));
 
         stage.setTitle("Miffie - MIF Editor");
         stage.setScene(scene);
