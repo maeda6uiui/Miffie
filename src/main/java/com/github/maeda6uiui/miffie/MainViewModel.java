@@ -227,7 +227,7 @@ public class MainViewModel {
                     missionInfo = mifModel.loadMIF(file, mifSettings.readEncoding);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             logger.error("Failed to load MIF file", e);
             return e.getMessage();
         }
@@ -257,7 +257,7 @@ public class MainViewModel {
                     mifModel.saveMIF(missionInfo, file, mifSettings.writeEncoding);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             logger.error("Failed to save MIF file", e);
             return e.getMessage();
         }
