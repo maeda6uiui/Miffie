@@ -26,7 +26,7 @@ public class DisplayLanguages {
     public static final String FILEPATH = "./Data/languages.yaml";
 
     @JsonProperty("languages")
-    public List<DisplayLanguage> displayLanguages;
+    public final List<DisplayLanguage> displayLanguages;
 
     private static DisplayLanguages instance;
 

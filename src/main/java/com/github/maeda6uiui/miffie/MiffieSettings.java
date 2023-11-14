@@ -181,12 +181,12 @@ public class MiffieSettings {
     }
 
     @JsonProperty("language")
-    public LanguageSettings languageSettings;
+    public final LanguageSettings languageSettings;
     @JsonProperty("window")
-    public WindowSettings windowSettings;
+    public final WindowSettings windowSettings;
     @JsonProperty("theme")
-    public ThemeSettings themeSettings;
-    public InitialValue initialValue;
+    public final ThemeSettings themeSettings;
+    public final InitialValue initialValue;
     @JsonProperty("mif")
     public MIFSettings mifSettings;
 

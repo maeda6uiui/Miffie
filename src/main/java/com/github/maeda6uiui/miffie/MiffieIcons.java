@@ -25,7 +25,7 @@ public class MiffieIcons {
     public static final String DIRNAME = "./Data/Icon";
     public static final String DEFAULT_ICON_FILENAME = "miffie.png";
 
-    public Map<String, Image> icons;
+    public final Map<String, Image> icons;
 
     private static MiffieIcons instance;
 

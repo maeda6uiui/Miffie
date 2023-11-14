@@ -23,7 +23,7 @@ public class MiffieThemes {
 
     public static final String FILEPATH = "./Data/themes.yaml";
 
-    public List<MiffieTheme> themes;
+    public final List<MiffieTheme> themes;
 
     private static MiffieThemes instance;
 
