@@ -23,7 +23,7 @@ public class MiffieIcons {
 
     public static final String DIRNAME = "./Data/Icon";
 
-    private Map<String, Image> icons;
+    public Map<String, Image> icons;
 
     private static MiffieIcons instance;
 
