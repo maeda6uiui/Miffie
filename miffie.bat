@@ -1,3 +1,3 @@
 @echo off
 
-.\target\app\bin\app.bat %*
+.\Data\Java\app\bin\app.bat %*
