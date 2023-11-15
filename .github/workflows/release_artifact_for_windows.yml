@@ -29,7 +29,7 @@ jobs:
       - name: Create directory for packaging and copy required files to there
         shell: powershell
         run: |
-          New-Item -Name .\Miffie\Data\Java
+          New-Item -Path . -Name .\Miffie\Data\Java -ItemType directory
           Copy-Item -Path .\Data -Destination .\Miffie\ -Recurse
           Copy-Item -Path .\target\app -Destination .\Miffie\Data\Java\ -Recurse
           Copy-Item -Path .\target\classes -Destination .\Miffie\Data\Java\ -Recurse
