@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./Data/Java/app/bin/app $@
+./Data/Java/app/bin/appw $@
