@@ -30,7 +30,7 @@ jobs:
         shell: powershell
         run: |
           New-Item -Path . -Name .\Miffie\Data\Java -ItemType directory
-          Copy-Item -Path .\Data\* -Destination .\Miffie\ -Recurse
+          Copy-Item -Path .\Data\* -Destination .\Miffie\Data\ -Recurse
           Copy-Item -Path .\target\app -Destination .\Miffie\Data\Java\ -Recurse
           Copy-Item -Path .\target\classes -Destination .\Miffie\Data\Java\ -Recurse
           Copy-Item -Path .\miffie.bat -Destination .\Miffie\
