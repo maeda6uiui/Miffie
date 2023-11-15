@@ -172,8 +172,8 @@ public class MiffieSettings {
         public String writeEncoding;
 
         public MIFSettings() {
-            maxNumLines = 10;
-            maxNumHalfWidthCharactersInLine = 30;
+            maxNumLines = 13;
+            maxNumHalfWidthCharactersInLine = 45;
             halfWidthCharactersRegex = "[ -~]+";
             readEncoding = "shift-jis";
             writeEncoding = "shift-jis";
