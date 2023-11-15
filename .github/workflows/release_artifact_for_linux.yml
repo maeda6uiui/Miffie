@@ -1,0 +1,39 @@
+name: Release artifact for Linux
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release_artifact:
+    name: Release artifact for Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get current tag
+        id: get_tag
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: Set up JDK 17 for x64
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+          architecture: x64
+      - name: "Run mvn clean javafx:jlink"
+        run: "mvn clean javafx:jlink"
+      - name: Create directory for packaging and copy required files to there
+        run: |
+          mkdir -p ./Miffie/Data
+          mkdir -p ./Miffie/Java
+          cp -r ./Data ./Miffie/
+          cp -r ./target/app ./Data/Java/
+          cp -r ./target/classes ./Data/Java/
+          cp ./miffie.sh ./Miffie/
+      - name: Create tar.gz file (miffie_${{steps.get_tag.outputs.tag}}_linux_x64.tar.gz)
+        run: tar -zcf miffie_${{steps.get_tag.outputs.tag}}_linux_x64.tar.gz ./Miffie
+      - name: Publish artifact to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: miffie_${{steps.get_tag.outputs.tag}}_linux_x64.tar.gz

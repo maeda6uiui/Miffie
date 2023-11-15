@@ -1,0 +1,41 @@
+name: Release artifact for Windows
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release_artifact:
+    name: Release artifact for Windows
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get current tag
+        id: get_tag
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: Set up JDK 17 for x64
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+          architecture: x64
+      - name: "Run mvn clean javafx:jlink"
+        run: "mvn clean javafx:jlink"
+      - name: Create directory for packaging and copy required files to there
+        shell: powershell
+        run: |
+          New-Item -Name .\Miffie\Data
+          New-Item -Name .\Miffie\Java
+          Copy-Item -Path .\Data -Destination .\Miffie\ -Recurse
+          Copy-Item -Path .\target\app -Destination .\Data\Java\ -Recurse
+          Copy-Item -Path .\target\classes -Destination .\Data\Java\ -Recurse
+          Copy-Item -Path .\miffie.bat -Destination .\Miffie\
+      - name: Create zip file (miffie_${{steps.get_tag.outputs.tag}}_windows_x64.zip)
+        shell: powershell
+        run: Compress-Archive -Path .\Miffie -DestinationPath .\miffie_${{steps.get_tag.outputs.tag}}_windows_x64.zip
+      - name: Publish artifact to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: miffie_${{steps.get_tag.outputs.tag}}_windows_x64.zip
