@@ -25,11 +25,10 @@ jobs:
         run: "mvn clean javafx:jlink"
       - name: Create directory for packaging and copy required files to there
         run: |
-          mkdir -p ./Miffie/Data
-          mkdir -p ./Miffie/Java
+          mkdir -p ./Miffie/Data/Java
           cp -r ./Data ./Miffie/
-          cp -r ./target/app ./Data/Java/
-          cp -r ./target/classes ./Data/Java/
+          cp -r ./target/app ./Miffie/Data/Java/
+          cp -r ./target/classes ./Miffie/Data/Java/
           cp ./miffie.sh ./Miffie/
       - name: Copy laucher script to use 'javaw'
         run: cp ./appw ./Miffie/Data/Java/app/bin/appw

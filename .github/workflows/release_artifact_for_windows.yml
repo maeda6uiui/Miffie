@@ -26,11 +26,10 @@ jobs:
       - name: Create directory for packaging and copy required files to there
         shell: powershell
         run: |
-          New-Item -Name .\Miffie\Data
-          New-Item -Name .\Miffie\Java
+          New-Item -Name .\Miffie\Data\Java
           Copy-Item -Path .\Data -Destination .\Miffie\ -Recurse
-          Copy-Item -Path .\target\app -Destination .\Data\Java\ -Recurse
-          Copy-Item -Path .\target\classes -Destination .\Data\Java\ -Recurse
+          Copy-Item -Path .\target\app -Destination .\Miffie\Data\Java\ -Recurse
+          Copy-Item -Path .\target\classes -Destination .\Miffie\Data\Java\ -Recurse
           Copy-Item -Path .\miffie.bat -Destination .\Miffie\
       - name: Copy laucher script to use 'javaw'
         shell: powershell
