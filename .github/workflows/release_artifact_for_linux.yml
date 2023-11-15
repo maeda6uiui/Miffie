@@ -30,8 +30,6 @@ jobs:
           cp -r ./target/app ./Miffie/Data/Java/
           cp -r ./target/classes ./Miffie/Data/Java/
           cp ./miffie.sh ./Miffie/
-      - name: Copy laucher script to use 'javaw'
-        run: cp ./appw ./Miffie/Data/Java/app/bin/appw
       - name: Create tar.gz file (miffie_${{github.ref_name}}_linux_x64.tar.gz)
         run: tar -zcf miffie_${{github.ref_name}}_linux_x64.tar.gz ./Miffie
       - name: Publish artifact to release
