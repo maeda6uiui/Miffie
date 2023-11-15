@@ -2,11 +2,8 @@ name: Release artifact for Linux
 
 on:
   push:
-    branches:
-      - main
-      - develop
     tags:
-      - "*"
+      - "v*"
 
 permissions:
   contents: write
