@@ -32,6 +32,9 @@ jobs:
           Copy-Item -Path .\target\app -Destination .\Data\Java\ -Recurse
           Copy-Item -Path .\target\classes -Destination .\Data\Java\ -Recurse
           Copy-Item -Path .\miffie.bat -Destination .\Miffie\
+      - name: Copy laucher script to use 'javaw'
+        shell: powershell
+        run: Copy-Item -Path .\appw.bat -Destination .\Miffie\Data\Java\app\bin\appw.bat
       - name: Create zip file (miffie_${{steps.get_tag.outputs.tag}}_windows_x64.zip)
         shell: powershell
         run: Compress-Archive -Path .\Miffie -DestinationPath .\miffie_${{steps.get_tag.outputs.tag}}_windows_x64.zip
