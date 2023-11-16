@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Miffie** is a MIF editor that comes with refined modern UI, and its properties are customizable to *my* heart's content; but I hope you *xopsplayers* would also enjoy this brand-new tool for your life that couldn't do without a blessing from X operations.
+**Miffie** is a MIF editor that comes with refined modern UI, and its properties are customizable to *my* heart's content; but I hope you *xopsplayers* would also enjoy this brand-new tool for your life that couldn't do without a blessing from [X operations](https://hp.vector.co.jp/authors/VA022962/xops/).
 
 Supported platforms are as follows:
 
