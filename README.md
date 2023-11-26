@@ -46,12 +46,3 @@ Voila, your language will appear in the preferences view the next time you start
 
 You can start the app with `mvn javafx:run`.
 
-## Known issues
-
-### Terminal is shown along with main application window
-
-This affects especially to Windows users.
-There is no easy way to hide the terminal opened when running a .bat file, so I have decided to leave it as it is.
-Some custom launcher for Windows (maybe .exe) might be developed in the future, but currently there is no such plan.
-I apologize for degrading your experience.
-
