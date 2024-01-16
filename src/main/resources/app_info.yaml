@@ -1,6 +1,6 @@
 appInfo:
   name: Miffie
-  version: "0.0.1"
+  version: "0.0.2"
   githubRepo: https://github.com/maeda6uiui/Miffie
   contributors:
     - name: maeda6uiui
@@ -10,7 +10,7 @@ appInfo:
           - 前田さん aka 駄場(Maeda-san aka Daba)
           - Sergey Dabansky
         contact:
-          email: contact.daxie@gmail.com
+          email: maeda6uiui@gmail.com
           x: "@maeda6uiui"
           misskey: "@maeda6uiui@misskey-dabansky.com"
         message: Thank you for finding this software in the crevasse of the Internet!
