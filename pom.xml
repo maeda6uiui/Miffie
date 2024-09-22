@@ -6,7 +6,7 @@
 
     <groupId>com.github.maeda6uiui</groupId>
     <artifactId>miffie</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.3</version>
     <name>Miffie</name>
 
     <properties>
