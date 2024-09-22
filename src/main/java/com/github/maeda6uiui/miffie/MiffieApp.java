@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.im.InputContext;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -28,6 +29,8 @@ public class MiffieApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        InputContext.getInstance(); //Required to enable IME on Linux
+
         MiffieSettings settings = MiffieSettings.load(MiffieSettings.FILEPATH);
         DisplayLanguages.load(DisplayLanguages.FILEPATH);
         MiffieThemes.load(MiffieThemes.FILEPATH);

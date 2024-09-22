@@ -9,6 +9,7 @@ module com.github.maeda6uiui.miffie {
     requires org.slf4j;
     requires ch.qos.logback.classic;
     requires com.github.dabasan.jxm.mif;
+    requires java.desktop;
 
     opens com.github.maeda6uiui.miffie to javafx.fxml, com.fasterxml.jackson.databind;
     exports com.github.maeda6uiui.miffie;
