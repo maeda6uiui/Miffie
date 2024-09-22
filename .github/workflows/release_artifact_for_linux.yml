@@ -25,10 +25,9 @@ jobs:
         run: "mvn clean javafx:jlink"
       - name: Create directory for packaging and copy required files to there
         run: |
-          mkdir -p ./Miffie/Data/Java
-          cp -r ./Data ./Miffie/
-          cp -r ./target/app ./Miffie/Data/Java/
-          cp -r ./target/classes ./Miffie/Data/Java/
+          rsync -a ./Data ./Miffie
+          rsync -a ./target/app ./Miffie/Data/Java
+          rsync -a ./target/classes ./Miffie/Data/Java
           cp ./miffie.sh ./Miffie/
       - name: Create tar.gz file (miffie_${{github.ref_name}}_linux_x64.tar.gz)
         run: tar -zcf miffie_${{github.ref_name}}_linux_x64.tar.gz ./Miffie
