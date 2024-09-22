@@ -6,7 +6,7 @@
 
 **Miffie** is a MIF editor that comes with a refined modern UI.
 
-Supported platforms are as follows:
+Supports following platforms:
 
 - Windows x64
 - Linux x64
