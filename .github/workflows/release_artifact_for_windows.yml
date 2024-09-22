@@ -1,9 +1,7 @@
 name: Release artifact for Windows
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
 
 permissions:
   contents: write
